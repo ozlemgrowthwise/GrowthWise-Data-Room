@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta charset="UTF-8"><title>GrowthWise · Team</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+:root{--navy:#1B1B4E;--teal:#00D4AA;--purple:#7C4FD4;--blue:#4472E0;--orange:#F97316;
+  --grad:linear-gradient(135deg,#00D4AA 0%,#7C4FD4 55%,#4472E0 100%);
+  --bg:#F7F8FB;--bg2:#EFF1F8;--border:#DDE1EF;}
+body{font-family:'Segoe UI',Arial,sans-serif;background:var(--bg);color:var(--navy);padding:32px 40px 60px;}
+.lang-bar{display:flex;gap:6px;margin-bottom:28px;}
+.lang-btn{padding:5px 14px;border-radius:20px;border:1.5px solid var(--border);background:#fff;font-size:11px;font-weight:700;color:#6B7280;cursor:pointer;transition:all .2s;}
+.lang-btn.active{background:var(--navy);color:#fff;border-color:var(--navy);}
+.page-title{font-size:26px;font-weight:900;color:var(--navy);margin-bottom:4px;}
+.page-sub{font-size:13px;color:#6B7280;margin-bottom:36px;}
+.section-label{font-size:10px;font-weight:800;letter-spacing:1.2px;text-transform:uppercase;color:var(--teal);margin-bottom:14px;display:flex;align-items:center;gap:8px;}
+.section-label::after{content:'';flex:1;height:1px;background:var(--border);}
+/* Founder cards */
+.founders-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-bottom:36px;}
+.founder-card{background:#fff;border:1.5px solid var(--border);border-radius:18px;padding:28px;display:flex;gap:24px;align-items:flex-start;transition:box-shadow .2s,transform .2s;}
+.founder-card:hover{box-shadow:0 8px 32px rgba(124,79,212,.12);transform:translateY(-2px);}
+.founder-card.active{border-color:var(--teal);box-shadow:0 0 0 3px rgba(0,212,170,.1);}
+.av-wrap{flex-shrink:0;position:relative;}
+.av-lg{width:72px;height:72px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:22px;font-weight:900;color:#fff;margin-bottom:8px;}
+.av-li{width:72px;display:flex;justify-content:center;}
+.li-btn{display:flex;align-items:center;justify-content:center;width:32px;height:32px;border-radius:50%;background:#0A66C2;color:#fff;text-decoration:none;font-size:14px;font-weight:700;transition:transform .2s;}
+.li-btn:hover{transform:scale(1.1);}
+.founder-body{flex:1;min-width:0;}
+.f-name{font-size:16px;font-weight:800;color:var(--navy);margin-bottom:2px;}
+.f-role{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--purple);margin-bottom:12px;}
+.f-bio{font-size:12.5px;color:#374151;line-height:1.65;margin-bottom:14px;}
+.f-tags{display:flex;flex-wrap:wrap;gap:6px;}
+.tag{display:inline-block;padding:4px 11px;border-radius:20px;font-size:10.5px;font-weight:700;}
+.tag-teal{background:rgba(0,212,170,.12);color:#065F46;}
+.tag-purple{background:rgba(124,79,212,.12);color:#5B21B6;}
+.tag-blue{background:rgba(68,114,224,.12);color:#1E40AF;}
+.tag-orange{background:rgba(249,115,22,.12);color:#9A3412;}
+.tag-navy{background:rgba(27,27,78,.08);color:var(--navy);}
+.company-line{display:flex;align-items:center;gap:8px;margin-bottom:12px;}
+.co-chip{display:inline-flex;align-items:center;gap:5px;padding:3px 10px;border-radius:20px;font-size:11px;font-weight:600;background:var(--bg2);color:var(--navy);border:1px solid var(--border);}
+.co-dot{width:7px;height:7px;border-radius:50%;flex-shrink:0;}
+/* Team grid (smaller cards) */
+.team-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:36px;}
+.team-card{background:#fff;border:1.5px solid var(--border);border-radius:16px;padding:22px;text-align:center;transition:box-shadow .2s,transform .2s;}
+.team-card:hover{box-shadow:0 6px 24px rgba(68,114,224,.1);transform:translateY(-2px);}
+.av-md{width:56px;height:56px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:17px;font-weight:900;color:#fff;margin:0 auto 10px;}
+.t-name{font-size:13.5px;font-weight:800;color:var(--navy);margin-bottom:2px;}
+.t-role{font-size:11px;color:var(--purple);font-weight:700;text-transform:uppercase;letter-spacing:.4px;margin-bottom:10px;}
+.t-bio{font-size:11.5px;color:#4B5563;line-height:1.55;margin-bottom:12px;text-align:left;}
+.t-tags{display:flex;flex-wrap:wrap;gap:5px;justify-content:center;}
+.t-li{display:inline-flex;align-items:center;justify-content:center;width:26px;height:26px;border-radius:50%;background:#0A66C2;color:#fff;text-decoration:none;font-size:12px;font-weight:700;margin-top:10px;transition:transform .2s;}
+.t-li:hover{transform:scale(1.1);}
+/* Advisor card */
+.advisor-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;}
+.advisor-card{background:#fff;border:1.5px solid var(--purple);border-radius:16px;padding:24px;display:flex;gap:20px;align-items:flex-start;transition:box-shadow .2s;}
+.advisor-card:hover{box-shadow:0 6px 24px rgba(124,79,212,.12);}
+.av-adv{width:56px;height:56px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:17px;font-weight:900;color:#fff;flex-shrink:0;}
+.a-name{font-size:14px;font-weight:800;color:var(--navy);margin-bottom:2px;}
+.a-role{font-size:11px;color:var(--purple);font-weight:700;text-transform:uppercase;letter-spacing:.4px;margin-bottom:8px;}
+.a-bio{font-size:12px;color:#374151;line-height:1.6;margin-bottom:10px;}
+/* Stats row */
+.stats-row{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;background:linear-gradient(135deg,rgba(27,27,78,.96),rgba(68,114,224,.9));border-radius:16px;padding:24px 28px;margin:4px 0 36px;}
+.stat-item{text-align:center;}
+.stat-val{font-size:22px;font-weight:900;color:var(--teal);line-height:1;}
+.stat-lbl{font-size:10px;color:rgba(255,255,255,.7);margin-top:4px;font-weight:600;text-transform:uppercase;letter-spacing:.5px;}
+/* Section dividers */
+.section-wrap{margin-bottom:8px;}
+</style>
+</head>
+<body>
+
+<div class="lang-bar">
+  <button class="lang-btn active" onclick="setLang('en')">EN</button>
+  <button class="lang-btn" onclick="setLang('tr')">TR</button>
+  <button class="lang-btn" onclick="setLang('es')">ES</button>
+</div>
+
+<div class="page-title" data-i18n="team_title">Team</div>
+<div class="page-sub" data-i18n="team_sub">The people building GrowthWise.</div>
+
+<!-- Stats -->
+<div class="stats-row">
+  <div class="stat-item"><div class="stat-val">9</div><div class="stat-lbl" data-i18n="s_members">Team Members</div></div>
+  <div class="stat-item"><div class="stat-val">20+</div><div class="stat-lbl" data-i18n="s_startups">EMEA Startups Diagnosed</div></div>
+  <div class="stat-item"><div class="stat-val">3</div><div class="stat-lbl" data-i18n="s_countries">Countries</div></div>
+  <div class="stat-item"><div class="stat-val">EN·TR·ES</div><div class="stat-lbl" data-i18n="s_langs">Languages</div></div>
+</div>
+
+<!-- Founders -->
+<div class="section-wrap">
+  <div class="section-label" data-i18n="sub_founders">Founders</div>
+  <div class="founders-grid">
+
+    <!-- Ozlem -->
+    <div class="founder-card active">
+      <div class="av-wrap">
+        <div class="av-lg" style="background:linear-gradient(135deg,#00D4AA,#7C4FD4)">OD</div>
+        <div class="av-li"><a class="li-btn" href="https://www.linkedin.com/in/ozlemdegirmencigulser/" target="_blank" title="LinkedIn">in</a></div>
+      </div>
+      <div class="founder-body">
+        <div class="f-name">Özlem Değirmenci Gülser</div>
+        <div class="f-role" data-i18n="role_ceo">CEO &amp; Co-Founder</div>
+        <div class="company-line">
+          <span class="co-chip"><span class="co-dot" style="background:var(--teal)"></span>GrowthWise</span>
+          <span class="co-chip"><span class="co-dot" style="background:#E02020"></span>ex-Innogate</span>
+          <span class="co-chip"><span class="co-dot" style="background:#4472E0"></span>ex-KWorks</span>
+        </div>
+        <div class="f-bio" data-i18n="bio_ozlem">Diagnosed growth stacks for 20+ EMEA startups before co-founding GrowthWise. Previously at Innogate and KWorks where she built and scaled growth operations across Turkey and EMEA. Leads product vision, investor relations, and customer success. Deep hands-on experience in GA4, paid attribution, and growth strategy.</div>
+        <div class="f-tags">
+          <span class="tag tag-teal">Growth Strategy</span>
+          <span class="tag tag-purple">GA4 &amp; Attribution</span>
+          <span class="tag tag-blue">EMEA Markets</span>
+          <span class="tag tag-navy">ex-Innogate · KWorks</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Dilara -->
+    <div class="founder-card">
+      <div class="av-wrap">
+        <div class="av-lg" style="background:linear-gradient(135deg,#7C4FD4,#4472E0)">DH</div>
+        <div class="av-li"><a class="li-btn" href="https://www.linkedin.com/search/results/people/?keywords=Dilara+Holat+G%C3%BCldiker" target="_blank" title="LinkedIn">in</a></div>
+      </div>
+      <div class="founder-body">
+        <div class="f-name">Dilara Holat Güldiker</div>
+        <div class="f-role" data-i18n="role_hog">Head of Growth &amp; Co-Founder</div>
+        <div class="company-line">
+          <span class="co-chip"><span class="co-dot" style="background:var(--teal)"></span>GrowthWise</span>
+          <span class="co-chip"><span class="co-dot" style="background:#FF6900"></span>ex-Insider</span>
+          <span class="co-chip"><span class="co-dot" style="background:#232F3E"></span>ex-Amazon</span>
+          <span class="co-chip"><span class="co-dot" style="background:#E31837"></span>ex-Watsons</span>
+        </div>
+        <div class="f-bio" data-i18n="bio_dilara">Co-diagnosed growth stacks alongside Özlem across 20+ EMEA startups. Previously Growth Lead at Insider, Amazon, and Watsons — built performance marketing and retention systems at scale. Owns GrowthWise's growth methodology, data models, and Sprint Planner logic.</div>
+        <div class="f-tags">
+          <span class="tag tag-purple">Funnel Analysis</span>
+          <span class="tag tag-teal">Sprint Planning</span>
+          <span class="tag tag-orange">ex-Insider · Amazon</span>
+          <span class="tag tag-blue">ex-Watsons</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- Engineering -->
+<div class="section-wrap">
+  <div class="section-label" data-i18n="sub_eng">Engineering</div>
+  <div class="team-grid">
+
+    <!-- Hitesh -->
+    <div class="team-card">
+      <div class="av-md" style="background:linear-gradient(135deg,#3B72E8,#1E40AF)">HC</div>
+      <div class="t-name">Hitesh Chopra</div>
+      <div class="t-role" data-i18n="role_cto">CTO</div>
+      <div class="t-bio" data-i18n="bio_hitesh">Leads all engineering at GrowthWise. Previously at Accenture. Architected the Claude AI integration, Health Score engine, and connector framework. Full-stack with deep backend and ML infrastructure experience.</div>
+      <div class="t-tags">
+        <span class="tag tag-blue">Architecture</span>
+        <span class="tag tag-purple">AI / Claude</span>
+        <span class="tag tag-navy">ex-Accenture</span>
+      </div>
+      <a class="t-li" href="https://www.linkedin.com/search/results/people/?keywords=Hitesh+Chopra+CTO" target="_blank" title="LinkedIn">in</a>
+    </div>
+
+    <!-- Tolga -->
+    <div class="team-card">
+      <div class="av-md" style="background:linear-gradient(135deg,#0891b2,#06b6d4)">TU</div>
+      <div class="t-name">Tolga Uzun</div>
+      <div class="t-role" data-i18n="role_be">AI Engineer</div>
+      <div class="t-bio" data-i18n="bio_tolga">Builds and maintains GrowthWise's data pipeline, API layer, and connector integrations (GA4, GSC, Meta Ads, GTM). Focused on reliability, latency, and audit accuracy at scale.</div>
+      <div class="t-tags">
+        <span class="tag tag-blue">Node.js / Python</span>
+        <span class="tag tag-teal">APIs &amp; Pipelines</span>
+        <span class="tag tag-navy">GA4 Integration</span>
+      </div>
+      <a class="t-li" href="https://www.linkedin.com/search/results/people/?keywords=Tolga+Uzun+backend+engineer" target="_blank" title="LinkedIn">in</a>
+    </div>
+
+    <!-- Kadri Bugra -->
+    <div class="team-card">
+      <div class="av-md" style="background:linear-gradient(135deg,#0891b2,#4472E0)">KB</div>
+      <div class="t-name">Kadri Buğra Özütemiz</div>
+      <div class="t-role" data-i18n="role_fe">Product Owner</div>
+      <div class="t-bio" data-i18n="bio_kadri">Owns the GrowthWise dashboard and Health Score UI. Built the data visualisation layer, sprint board interface, and the multi-language white-label framework.</div>
+      <div class="t-tags">
+        <span class="tag tag-blue">React / TypeScript</span>
+        <span class="tag tag-teal">Data Viz</span>
+        <span class="tag tag-purple">UI Systems</span>
+      </div>
+      <a class="t-li" href="https://www.linkedin.com/search/results/people/?keywords=Kadri+Bugra+Ozutemiz+frontend" target="_blank" title="LinkedIn">in</a>
+    </div>
+
+  </div>
+</div>
+
+<!-- Marketing & Growth -->
+<div class="section-wrap">
+  <div class="section-label" data-i18n="sub_mktg">Marketing &amp; Growth</div>
+  <div class="team-grid">
+
+    <!-- Ceren -->
+    <div class="team-card">
+      <div class="av-md" style="background:linear-gradient(135deg,#7c3aed,#a855f7)">CB</div>
+      <div class="t-name">Ceren Baran</div>
+      <div class="t-role" data-i18n="role_ge">Growth Engineer</div>
+      <div class="t-bio" data-i18n="bio_ceren">Runs GrowthWise's freemium acquisition funnel and onboarding flows. Owns A/B testing, activation analytics, and the product-led growth experiments that drive free-to-paid conversion.</div>
+      <div class="t-tags">
+        <span class="tag tag-purple">PLG</span>
+        <span class="tag tag-teal">Activation</span>
+        <span class="tag tag-orange">A/B Testing</span>
+      </div>
+      <a class="t-li" href="https://www.linkedin.com/search/results/people/?keywords=Ceren+Baran+growth+engineer" target="_blank" title="LinkedIn">in</a>
+    </div>
+
+    <!-- Dogukan -->
+    <div class="team-card">
+      <div class="av-md" style="background:linear-gradient(135deg,#7c3aed,#4472E0)">DR</div>
+      <div class="t-name">Doğukan Rendeci</div>
+      <div class="t-role" data-i18n="role_ge">Growth Engineer</div>
+      <div class="t-bio" data-i18n="bio_dogukan">Growth & Revenue Partner at GrowthWise. Specialist in paid acquisition (Meta, Google), revenue operations, and attribution modelling. Validates GrowthWise's audit recommendations by testing them on the product's own growth stack.</div>
+      <div class="t-tags">
+        <span class="tag tag-blue">Paid Ads</span>
+        <span class="tag tag-purple">Revenue Ops</span>
+        <span class="tag tag-orange">Growth Hacker</span>
+      </div>
+      <a class="t-li" href="https://www.linkedin.com/search/results/people/?keywords=Dogukan+Rendeci+growth" target="_blank" title="LinkedIn">in</a>
+    </div>
+
+    <!-- Umay -->
+    <div class="team-card">
+      <div class="av-md" style="background:linear-gradient(135deg,#F97316,#FBBF24)">UY</div>
+      <div class="t-name">Umay Yıldız Bahçeli</div>
+      <div class="t-role" data-i18n="role_uyb">Growth &amp; Marketing</div>
+      <div class="t-bio" data-i18n="bio_umay">Supports GrowthWise's organic content strategy, SEO positioning, and community-led growth. Focused on building brand presence across EMEA startup ecosystems.</div>
+      <div class="t-tags">
+        <span class="tag tag-orange">SEO &amp; Content</span>
+        <span class="tag tag-teal">Community</span>
+        <span class="tag tag-purple">Brand</span>
+      </div>
+      <a class="t-li" href="https://www.linkedin.com/search/results/people/?keywords=Umay+Yildiz+Bahceli" target="_blank" title="LinkedIn">in</a>
+    </div>
+
+  </div>
+</div>
+
+<!-- Advisory Board -->
+<div class="section-wrap">
+  <div class="section-label" data-i18n="sub_adv">Advisory Board</div>
+  <div class="advisor-grid">
+
+    <!-- Lawrence -->
+    <div class="advisor-card">
+      <div>
+        <div class="av-adv" style="background:linear-gradient(135deg,#4472E0,#7C4FD4)">LD</div>
+      </div>
+      <div>
+        <div class="a-name">Lawrence Du Pre</div>
+        <div class="a-role" data-i18n="role_adv">Strategic Advisor · ex-Salesforce VP</div>
+        <div class="a-bio" data-i18n="bio_lawrence">Former VP at Salesforce with deep enterprise SaaS and GTM experience across EMEA and North America. Advises GrowthWise on enterprise sales motion, channel partnerships, and post-seed scaling strategy.</div>
+        <div class="f-tags">
+          <span class="tag tag-blue">Enterprise SaaS</span>
+          <span class="tag tag-purple">GTM Strategy</span>
+          <span class="tag tag-navy">ex-Salesforce</span>
+          <span class="tag tag-teal">Partnerships</span>
+        </div>
+        <a class="t-li" href="https://www.linkedin.com/search/results/people/?keywords=Lawrence+Du+Pre+Salesforce" target="_blank" title="LinkedIn" style="margin-top:12px;">in</a>
+      </div>
+    </div>
+
+    <!-- Placeholder for future advisor -->
+    <div class="advisor-card" style="border-color:var(--border);border-style:dashed;opacity:.6;align-items:center;justify-content:center;min-height:160px;">
+      <div style="text-align:center;color:#9CA3AF;">
+        <div style="font-size:28px;margin-bottom:8px;">+</div>
+        <div style="font-size:12px;font-weight:700;" data-i18n="adv_pending">Advisor position open</div>
+        <div style="font-size:11px;margin-top:4px;" data-i18n="adv_pending_sub">Fintech / DACH market focus</div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+const T={
+  team_title:{en:"Team",tr:"Ekip",es:"Equipo"},
+  team_sub:{en:"The people building GrowthWise.",tr:"GrowthWise'ı inşa eden ekip.",es:"Las personas que construyen GrowthWise."},
+  s_members:{en:"Team Members",tr:"Ekip Üyesi",es:"Miembros del Equipo"},
+  s_startups:{en:"EMEA Startups Diagnosed",tr:"EMEA Startup Denetimi",es:"Startups EMEA Diagnosticadas"},
+  s_countries:{en:"Countries",tr:"Ülke",es:"Países"},
+  s_langs:{en:"Languages",tr:"Dil",es:"Idiomas"},
+  sub_founders:{en:"Founders",tr:"Kurucular",es:"Fundadores"},
+  sub_eng:{en:"Engineering",tr:"Mühendislik",es:"Ingeniería"},
+  sub_mktg:{en:"Marketing & Growth",tr:"Pazarlama ve Büyüme",es:"Marketing y Crecimiento"},
+  sub_adv:{en:"Advisory Board",tr:"Danışma Kurulu",es:"Consejo Asesor"},
+  role_ceo:{en:"CEO & Co-Founder",tr:"CEO ve Kurucu Ortak",es:"CEO y Cofundadora"},
+  role_hog:{en:"Head of Growth & Co-Founder",tr:"Büyüme Direktörü ve Kurucu Ortak",es:"Directora de Crecimiento y Cofundadora"},
+  role_cto:{en:"CTO",tr:"CTO",es:"CTO"},
+  role_be:{en:"AI Engineer",tr:"Yapay Zeka Mühendisi",es:"Ingeniero de IA"},
+  role_fe:{en:"Product Owner",tr:"Ürün Sahibi",es:"Product Owner"},
+  role_ge:{en:"Growth Engineer",tr:"Büyüme Mühendisi",es:"Ingeniero de Crecimiento"},
+  role_uyb:{en:"Growth & Marketing",tr:"Büyüme ve Pazarlama",es:"Crecimiento y Marketing"},
+  role_adv:{en:"Strategic Advisor · ex-Salesforce VP",tr:"Stratejik Danışman · eski Salesforce VP",es:"Asesor Estratégico · ex-VP Salesforce"},
+  co_consultant:{en:"Growth Consultant",tr:"Büyüme Danışmanı",es:"Consultor de Crecimiento"},
+  co_growth_lead:{en:"Growth Lead",tr:"Büyüme Lideri",es:"Líder de Crecimiento"},
+  bio_ozlem:{
+    en:"Diagnosed growth stacks for 20+ EMEA startups before co-founding GrowthWise. Previously at Innogate and KWorks where she built and scaled growth operations across Turkey and EMEA. Leads product vision, investor relations, and customer success. Deep hands-on experience in GA4, paid attribution, and growth strategy.",
+    tr:"GrowthWise'ı kurmadan önce 20'den fazla EMEA startupının büyüme altyapısını bizzat denetledi. Daha önce Innogate ve KWorks'te Türkiye ve EMEA genelinde büyüme operasyonları kurdu ve ölçeklendirdi. Ürün vizyonunu, yatırımcı ilişkilerini ve müşteri başarısını yönetiyor.",
+    es:"Diagnosticó los stacks de crecimiento de más de 20 startups de EMEA antes de cofundar GrowthWise. Anteriormente en Innogate y KWorks, donde construyó y escaló operaciones de crecimiento en Turquía y EMEA. Lidera la visión de producto, relaciones con inversores y éxito del cliente."
+  },
+  bio_dilara:{
+    en:"Co-diagnosed growth stacks alongside Özlem across 20+ EMEA startups. Previously Growth Lead at Insider, Amazon, and Watsons — built performance marketing and retention systems at scale. Owns GrowthWise's growth methodology, data models, and Sprint Planner logic.",
+    tr:"Özlem ile birlikte 20'den fazla EMEA startupının büyüme altyapısını inceledi. Daha önce Insider, Amazon ve Watsons'ta Büyüme Lideri — ölçeklenebilir performans pazarlaması ve tutma sistemleri kurdu. GrowthWise'ın büyüme metodolojisini, veri modellerini ve Sprint Planlayıcı mantığını yönetiyor.",
+    es:"Co-diagnosticó stacks junto a Özlem en más de 20 startups de EMEA. Anteriormente Growth Lead en Insider, Amazon y Watsons — construyó sistemas de marketing de rendimiento y retención a escala. Gestiona la metodología de crecimiento, los modelos de datos y la lógica del Sprint Planner de GrowthWise."
+  },
+  bio_hitesh:{
+    en:"Leads all engineering at GrowthWise. Previously at Accenture. Architected the Claude AI integration, Health Score engine, and connector framework. Full-stack with deep backend and ML infrastructure experience.",
+    tr:"GrowthWise'daki tüm mühendislik süreçlerini yönetiyor. Daha önce Accenture'da. Claude AI entegrasyonunu, Health Score motorunu ve connector çerçevesini tasarladı. Full-stack, derin backend ve ML altyapısı deneyimine sahip.",
+    es:"Lidera toda la ingeniería en GrowthWise. Anteriormente en Accenture. Diseñó la integración de Claude AI, el motor de Health Score y el framework de conectores. Full-stack con profunda experiencia en backend e infraestructura de ML."
+  },
+  bio_tolga:{
+    en:"Builds and maintains GrowthWise's data pipeline, API layer, and connector integrations (GA4, GSC, Meta Ads, GTM). Focused on reliability, latency, and audit accuracy at scale.",
+    tr:"GrowthWise'ın veri pipeline'ını, API katmanını ve connector entegrasyonlarını (GA4, GSC, Meta Ads, GTM) geliştiriyor ve bakımını yapıyor. Güvenilirlik, gecikme süresi ve ölçekte denetim doğruluğuna odaklanıyor.",
+    es:"Construye y mantiene el pipeline de datos, la capa API y las integraciones de conectores de GrowthWise (GA4, GSC, Meta Ads, GTM). Enfocado en fiabilidad, latencia y precisión de auditoría a escala."
+  },
+  bio_kadri:{
+    en:"Owns the GrowthWise dashboard and Health Score UI. Built the data visualisation layer, sprint board interface, and the multi-language white-label framework.",
+    tr:"GrowthWise dashboard'unu ve Health Score arayüzünü yönetiyor. Veri görselleştirme katmanını, sprint board arayüzünü ve çok dilli white-label çerçevesini geliştirdi.",
+    es:"Gestiona el dashboard de GrowthWise y la UI del Health Score. Construyó la capa de visualización de datos, la interfaz del sprint board y el framework white-label multilingüe."
+  },
+  bio_ceren:{
+    en:"Runs GrowthWise's freemium acquisition funnel and onboarding flows. Owns A/B testing, activation analytics, and the product-led growth experiments that drive free-to-paid conversion.",
+    tr:"GrowthWise'ın freemium kullanıcı kazanım hunisini ve onboarding süreçlerini yönetiyor. A/B testleri, aktivasyon analizleri ve ücretsizden ücretliye dönüşümü artıran ürün odaklı büyüme deneylerinden sorumlu.",
+    es:"Gestiona el embudo de adquisición freemium y los flujos de onboarding de GrowthWise. Responsable de los A/B tests, análisis de activación y experimentos de crecimiento liderado por producto."
+  },
+  bio_dogukan:{
+    en:"Growth & Revenue Partner at GrowthWise. Specialist in paid acquisition (Meta, Google), revenue operations, and attribution modelling. Validates GrowthWise's audit recommendations by testing them on the product's own growth stack.",
+    tr:"GrowthWise'da Büyüme ve Gelir Ortağı. Ücretli kullanıcı kazanımı (Meta, Google), gelir operasyonları ve attribution modellemesi uzmanı. Ürünün kendi büyüme altyapısında test ederek denetim önerilerini doğruluyor.",
+    es:"Partner de Crecimiento e Ingresos en GrowthWise. Especialista en adquisición de pago (Meta, Google), operaciones de ingresos y modelado de atribución. Valida las recomendaciones de auditoría probándolas en el propio stack de crecimiento del producto."
+  },
+  bio_umay:{
+    en:"Supports GrowthWise's organic content strategy, SEO positioning, and community-led growth. Focused on building brand presence across EMEA startup ecosystems.",
+    tr:"GrowthWise'ın organik içerik stratejisini, SEO konumlandırmasını ve topluluk odaklı büyümesini destekliyor. EMEA startup ekosistemlerinde marka bilinirliği oluşturmaya odaklanıyor.",
+    es:"Apoya la estrategia de contenido orgánico, el posicionamiento SEO y el crecimiento liderado por la comunidad de GrowthWise. Enfocada en construir presencia de marca en los ecosistemas de startups de EMEA."
+  },
+  bio_lawrence:{
+    en:"Former VP at Salesforce with deep enterprise SaaS and GTM experience across EMEA and North America. Advises GrowthWise on enterprise sales motion, channel partnerships, and post-seed scaling strategy.",
+    tr:"Salesforce'ta eski VP. EMEA ve Kuzey Amerika genelinde derin kurumsal SaaS ve GTM deneyimine sahip. GrowthWise'a kurumsal satış süreci, kanal ortaklıkları ve seed sonrası büyüme stratejisi konularında danışmanlık yapıyor.",
+    es:"Ex-VP en Salesforce con profunda experiencia en SaaS empresarial y GTM en EMEA y Norteamérica. Asesora a GrowthWise en estrategia de ventas enterprise, alianzas de canal y escalado post-seed."
+  },
+  adv_pending:{en:"Advisor position open",tr:"Danışman pozisyonu açık",es:"Posición de asesor abierta"},
+  adv_pending_sub:{en:"Fintech / DACH market focus",tr:"Fintech / DACH pazarı odağı",es:"Enfoque en Fintech / mercado DACH"}
+};
+
+var curLang='en';
+
+function setLang(l){
+  curLang=l;
+  document.querySelectorAll('.lang-btn').forEach(b=>b.classList.toggle('active',b.textContent===l.toUpperCase()));
+  document.querySelectorAll('[data-i18n]').forEach(el=>{
+    const k=el.getAttribute('data-i18n');
+    if(T[k]&&T[k][l])el.innerHTML=T[k][l];
+  });
+}
+
+// Alias so portal's syncIframeLang() can call applyLang()
+function applyLang(){ setLang(curLang); }
+
+// Read lang from URL param
+(function(){
+  const p=new URLSearchParams(location.search);
+  const l=p.get('lang')||'en';
+  setLang(l);
+})();
+</script>
+</body>
+</html>

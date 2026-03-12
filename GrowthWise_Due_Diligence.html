@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>GrowthWise Due Diligence</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+:root{
+  --navy:#1B1B4E;--teal:#00D4AA;--purple:#7C4FD4;--blue:#4472E0;--orange:#F97316;
+  --grad:linear-gradient(135deg,#00D4AA 0%,#7C4FD4 55%,#4472E0 100%);
+  --bg:#F7F8FB;--bg2:#EFF1F8;--border:#DDE1EF;
+  --drive-blue:#1a73e8;--drive-bg:#f8f9fa;--drive-hover:#e8f0fe;
+}
+body{font-family:'Segoe UI',Arial,sans-serif;background:var(--bg);color:var(--navy);padding:32px 40px 60px;}
+.page-title{font-size:26px;font-weight:900;color:var(--navy);margin-bottom:4px;}
+.page-sub{font-size:13px;color:#6B7280;margin-bottom:28px;}
+
+/* Breadcrumb */
+.breadcrumb{display:flex;align-items:center;gap:6px;font-size:13px;color:#6B7280;margin-bottom:24px;padding:10px 16px;background:#fff;border:1.5px solid var(--border);border-radius:10px;}
+.bc-icon{font-size:18px;}
+.bc-sep{color:#CBD5E1;}
+.bc-current{color:var(--navy);font-weight:600;}
+
+/* Section */
+.section-title{font-size:15px;font-weight:800;color:var(--navy);margin:28px 0 12px;display:flex;align-items:center;gap:8px;}
+.section-title::before{content:'';display:inline-block;width:3px;height:15px;background:var(--grad);border-radius:2px;}
+
+/* Drive grid */
+.drive-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:4px;}
+.file-card{display:flex;flex-direction:column;align-items:center;padding:16px 12px 14px;border-radius:10px;cursor:pointer;transition:background .15s;border:1.5px solid transparent;text-decoration:none;color:inherit;}
+.file-card:hover{background:var(--drive-hover);border-color:rgba(68,114,224,.2);}
+.file-card.clickable:hover{background:#E8F5E9;border-color:rgba(0,180,100,.25);}
+.file-icon{width:56px;height:72px;display:flex;align-items:center;justify-content:center;margin-bottom:10px;position:relative;}
+.file-icon svg{width:56px;height:72px;}
+.file-name{font-size:12px;font-weight:500;color:#202124;text-align:center;line-height:1.4;max-width:160px;word-break:break-word;}
+.file-meta{font-size:11px;color:#6B7280;margin-top:4px;text-align:center;}
+
+/* Status badge on file */
+.status-dot{position:absolute;top:2px;right:2px;width:14px;height:14px;border-radius:50%;border:2px solid #fff;display:flex;align-items:center;justify-content:center;font-size:8px;font-weight:700;}
+.dot-green{background:#22C55E;}
+.dot-orange{background:#F97316;}
+.dot-gray{background:#9CA3AF;}
+
+/* Folder card */
+.folder-card{display:flex;align-items:center;gap:12px;padding:10px 14px;border-radius:8px;cursor:pointer;transition:background .15s;border:1.5px solid transparent;}
+.folder-card:hover{background:var(--drive-hover);border-color:rgba(68,114,224,.15);}
+.folder-icon{font-size:22px;color:#fbbc04;flex-shrink:0;}
+.folder-name{font-size:13px;font-weight:600;color:#202124;}
+.folder-count{font-size:11px;color:#6B7280;margin-top:1px;}
+.folders-row{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:6px;margin-bottom:8px;}
+
+/* Invoice highlight box */
+.invoice-highlight{background:linear-gradient(135deg,rgba(0,212,170,.06),rgba(68,114,224,.06));border:1.5px solid rgba(0,212,170,.3);border-radius:14px;padding:18px 22px;margin-bottom:20px;display:flex;align-items:center;gap:16px;}
+.inv-icon{font-size:32px;flex-shrink:0;}
+.inv-body{flex:1;}
+.inv-title{font-size:14px;font-weight:800;color:var(--navy);margin-bottom:4px;}
+.inv-sub{font-size:12px;color:#6B7280;}
+.inv-amount{font-size:22px;font-weight:900;background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;white-space:nowrap;}
+
+/* Drive toolbar */
+.drive-toolbar{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;}
+.drive-view-label{font-size:12px;color:#6B7280;display:flex;align-items:center;gap:6px;}
+.toolbar-right{display:flex;gap:8px;}
+.tb-btn{padding:6px 12px;border-radius:6px;font-size:12px;font-weight:600;border:1.5px solid var(--border);background:#fff;color:var(--navy);cursor:default;}
+.tb-btn.active{background:var(--navy);color:#fff;border-color:var(--navy);}
+
+.footer-note{margin-top:44px;font-size:11px;color:#9CA3AF;border-top:1px solid var(--border);padding-top:16px;}
+
+/* PDF icon SVG colors */
+.pdf-bg{fill:#EA4335;}
+.pdf-page{fill:#fff;}
+.pdf-corner{fill:#C62828;}
+.pdf-text{fill:#EA4335;font-size:11px;font-weight:900;font-family:'Segoe UI',sans-serif;}
+
+.sheet-bg{fill:#34A853;}
+.doc-bg{fill:#4285F4;}
+.lock-bg{fill:#9E9E9E;}
+.folder-bg{fill:#fbbc04;}
+</style>
+</head>
+<body>
+
+<div class="page-title" data-i18n="title">Due Diligence</div>
+<div class="page-sub" data-i18n="sub">GrowthWise · Documents for qualified investors · Confidential</div>
+
+<!-- Breadcrumb mimicking Google Drive -->
+<div class="breadcrumb">
+  <span class="bc-icon">&#128190;</span>
+  <span>My Drive</span>
+  <span class="bc-sep">›</span>
+  <span>GrowthWise</span>
+  <span class="bc-sep">›</span>
+  <span class="bc-current">Due Diligence 2026</span>
+</div>
+
+<!-- Revenue proof highlight -->
+<div class="invoice-highlight">
+  <span class="inv-icon">🧾</span>
+  <div class="inv-body">
+    <div class="inv-title">Verified Revenue · 2 Paid Invoices · March 2026</div>
+    <div class="inv-sub">Extenship LLC (USA · €2,450) &nbsp;·&nbsp; Bulung Logistics GmbH (Austria · €2,400)</div>
+  </div>
+  <div class="inv-amount">€4,850</div>
+</div>
+
+<!-- Drive toolbar -->
+<div class="drive-toolbar">
+  <div class="drive-view-label">
+    <span>📁</span>
+    <span>Due Diligence 2026 &nbsp;·&nbsp; 12 items</span>
+  </div>
+  <div class="toolbar-right">
+    <div class="tb-btn active">⊞ Grid</div>
+    <div class="tb-btn">☰ List</div>
+  </div>
+</div>
+
+<!-- Sub-folders -->
+<div class="section-title" data-i18n="s_legal">Legal & Corporate</div>
+<div class="folders-row">
+  <div class="folder-card"><span class="folder-icon">📁</span><div><div class="folder-name">Incorporation Documents</div><div class="folder-count">Spain + Turkey · 2024–2025</div></div></div>
+  <div class="folder-card"><span class="folder-icon">📁</span><div><div class="folder-name">NIF / Tax Registration</div><div class="folder-count">NIF: Z22845164T (Barcelona)</div></div></div>
+  <div class="folder-card"><span class="folder-icon">📁</span><div><div class="folder-name">Cap Table</div><div class="folder-count">Available on request</div></div></div>
+</div>
+
+<!-- Financial Evidence — key files as Drive cards -->
+<div class="section-title" data-i18n="s_financial">Financial Evidence</div>
+<div class="drive-grid">
+
+  <!-- Invoice 1 — clickable PDF -->
+  <a class="file-card clickable" href="Invoice_2026_7_Extenship_LLC.pdf" target="_blank">
+    <div class="file-icon">
+      <svg viewBox="0 0 56 72" xmlns="http://www.w3.org/2000/svg">
+        <path class="pdf-page" d="M4 0h36l12 12v56a4 4 0 01-4 4H4a4 4 0 01-4-4V4a4 4 0 014-4z"/>
+        <path class="pdf-corner" d="M40 0l12 12H40V0z"/>
+        <rect x="0" y="28" width="56" height="22" rx="3" class="pdf-bg"/>
+        <text x="28" y="43" text-anchor="middle" class="pdf-text" fill="#fff" font-size="13" font-weight="900" font-family="Arial,sans-serif">PDF</text>
+      </svg>
+      <div class="status-dot dot-green">✓</div>
+    </div>
+    <div class="file-name">Invoice_2026_7<br>Extenship LLC</div>
+    <div class="file-meta">€2,450 · 04/03/2026</div>
+  </a>
+
+  <!-- Invoice 2 — clickable PDF -->
+  <a class="file-card clickable" href="Invoice_2026_6_Bulung_Logistics.pdf" target="_blank">
+    <div class="file-icon">
+      <svg viewBox="0 0 56 72" xmlns="http://www.w3.org/2000/svg">
+        <path class="pdf-page" d="M4 0h36l12 12v56a4 4 0 01-4 4H4a4 4 0 01-4-4V4a4 4 0 014-4z"/>
+        <path class="pdf-corner" d="M40 0l12 12H40V0z"/>
+        <rect x="0" y="28" width="56" height="22" rx="3" class="pdf-bg"/>
+        <text x="28" y="43" text-anchor="middle" fill="#fff" font-size="13" font-weight="900" font-family="Arial,sans-serif">PDF</text>
+      </svg>
+      <div class="status-dot dot-green">✓</div>
+    </div>
+    <div class="file-name">Invoice_2026_6<br>Bulung Logistics</div>
+    <div class="file-meta">€2,400 · 04/03/2026</div>
+  </a>
+
+  <!-- Bank statement placeholder -->
+  <div class="file-card">
+    <div class="file-icon">
+      <svg viewBox="0 0 56 72" xmlns="http://www.w3.org/2000/svg">
+        <path fill="#fff" d="M4 0h36l12 12v56a4 4 0 01-4 4H4a4 4 0 01-4-4V4a4 4 0 014-4z"/>
+        <path fill="#ddd" d="M40 0l12 12H40V0z"/>
+        <rect x="0" y="28" width="56" height="22" rx="3" fill="#607D8B"/>
+        <text x="28" y="43" text-anchor="middle" fill="#fff" font-size="10" font-weight="900" font-family="Arial,sans-serif">BANK</text>
+      </svg>
+      <div class="status-dot dot-orange">→</div>
+    </div>
+    <div class="file-name">Bank Statement<br>BBVA Q1 2026</div>
+    <div class="file-meta" data-i18n="avail">Available on request</div>
+  </div>
+
+  <!-- MRR sheet placeholder -->
+  <div class="file-card">
+    <div class="file-icon">
+      <svg viewBox="0 0 56 72" xmlns="http://www.w3.org/2000/svg">
+        <path fill="#fff" d="M4 0h36l12 12v56a4 4 0 01-4 4H4a4 4 0 01-4-4V4a4 4 0 014-4z"/>
+        <path fill="#2E7D32" d="M40 0l12 12H40V0z"/>
+        <rect x="0" y="28" width="56" height="22" rx="3" fill="#34A853"/>
+        <text x="28" y="43" text-anchor="middle" fill="#fff" font-size="10" font-weight="900" font-family="Arial,sans-serif">XLSX</text>
+      </svg>
+      <div class="status-dot dot-orange">→</div>
+    </div>
+    <div class="file-name">MRR Tracker<br>Jan–Mar 2026</div>
+    <div class="file-meta" data-i18n="avail">Available on request</div>
+  </div>
+
+</div>
+
+<!-- Live Product & Website -->
+<div class="section-title" data-i18n="s_live">Live Product &amp; Website</div>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:24px;">
+
+  <!-- Website -->
+  <a class="file-card clickable" href="https://www.growthwisebusiness.com" target="_blank" style="flex-direction:row;align-items:center;gap:16px;padding:18px 20px;background:#f0fdf4;border:1.5px solid #86efac;border-radius:12px;text-decoration:none;">
+    <div style="width:44px;height:44px;border-radius:10px;background:linear-gradient(135deg,#00D4AA,#4472E0);display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0;">🌐</div>
+    <div style="flex:1;min-width:0;">
+      <div style="font-size:13px;font-weight:800;color:#065F46;margin-bottom:2px;" data-i18n="lp_website_t">Company Website</div>
+      <div style="font-size:11.5px;color:#047857;font-weight:600;">www.growthwisebusiness.com</div>
+      <div style="font-size:10.5px;color:#6B7280;margin-top:2px;" data-i18n="lp_website_s">Public · No auth required</div>
+    </div>
+    <div style="background:#22C55E;color:#fff;font-size:10px;font-weight:800;padding:3px 9px;border-radius:20px;flex-shrink:0;">LIVE</div>
+  </a>
+
+  <!-- Product App -->
+  <a class="file-card" href="https://dev.duzkm9bx6p5z2.amplifyapp.com/" target="_blank" style="flex-direction:row;align-items:center;gap:16px;padding:18px 20px;background:#FFF7ED;border:1.5px solid #FCD34D;border-radius:12px;text-decoration:none;cursor:pointer;">
+    <div style="width:44px;height:44px;border-radius:10px;background:linear-gradient(135deg,#7C4FD4,#4472E0);display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0;">🚀</div>
+    <div style="flex:1;min-width:0;">
+      <div style="font-size:13px;font-weight:800;color:#92400E;margin-bottom:2px;" data-i18n="lp_app_t">Live Product (Dev)</div>
+      <div style="font-size:11px;color:#374151;font-weight:500;word-break:break-all;">dev.duzkm9bx6p5z2.amplifyapp.com</div>
+      <div style="display:flex;align-items:center;gap:5px;margin-top:4px;">
+        <span style="font-size:13px;">🔐</span>
+        <span style="font-size:11px;color:#B45309;font-weight:700;" data-i18n="lp_app_s">Auth required — request access from Özlem</span>
+      </div>
+    </div>
+    <div style="background:#F97316;color:#fff;font-size:10px;font-weight:800;padding:3px 9px;border-radius:20px;flex-shrink:0;white-space:nowrap;">AUTH REQ</div>
+  </a>
+
+</div>
+
+<!-- Product & Technical -->
+<div class="section-title" data-i18n="s_product">Product & Technical</div>
+<div class="drive-grid">
+
+  <a class="file-card clickable" href="GrowthWise_Product_Roadmap.html" target="_blank">
+    <div class="file-icon">
+      <svg viewBox="0 0 56 72" xmlns="http://www.w3.org/2000/svg">
+        <path fill="#fff" d="M4 0h36l12 12v56a4 4 0 01-4 4H4a4 4 0 01-4-4V4a4 4 0 014-4z"/>
+        <path fill="#1557B0" d="M40 0l12 12H40V0z"/>
+        <rect x="0" y="28" width="56" height="22" rx="3" fill="#4285F4"/>
+        <text x="28" y="43" text-anchor="middle" fill="#fff" font-size="9" font-weight="900" font-family="Arial,sans-serif">HTML</text>
+      </svg>
+      <div class="status-dot dot-green">✓</div>
+    </div>
+    <div class="file-name">Product Roadmap<br>2026–2027</div>
+    <div class="file-meta">Phase 1 + Claude AI</div>
+  </a>
+
+  <div class="file-card">
+    <div class="file-icon">
+      <svg viewBox="0 0 56 72" xmlns="http://www.w3.org/2000/svg">
+        <path fill="#fff" d="M4 0h36l12 12v56a4 4 0 01-4 4H4a4 4 0 01-4-4V4a4 4 0 014-4z"/>
+        <path fill="#ddd" d="M40 0l12 12H40V0z"/>
+        <rect x="0" y="28" width="56" height="22" rx="3" fill="#9E9E9E"/>
+        <text x="28" y="43" text-anchor="middle" fill="#fff" font-size="9" font-weight="900" font-family="Arial,sans-serif">DEMO</text>
+      </svg>
+      <div class="status-dot dot-orange">→</div>
+    </div>
+    <div class="file-name">Product Demo<br>Recording</div>
+    <div class="file-meta" data-i18n="avail">Available on request</div>
+  </div>
+
+  <div class="file-card">
+    <div class="file-icon">
+      <svg viewBox="0 0 56 72" xmlns="http://www.w3.org/2000/svg">
+        <path fill="#fff" d="M4 0h36l12 12v56a4 4 0 01-4 4H4a4 4 0 01-4-4V4a4 4 0 014-4z"/>
+        <path fill="#ddd" d="M40 0l12 12H40V0z"/>
+        <rect x="0" y="28" width="56" height="22" rx="3" fill="#607D8B"/>
+        <text x="28" y="43" text-anchor="middle" fill="#fff" font-size="9" font-weight="900" font-family="Arial,sans-serif">ARCH</text>
+      </svg>
+      <div class="status-dot dot-orange">→</div>
+    </div>
+    <div class="file-name">Technical Architecture<br>Diagram</div>
+    <div class="file-meta" data-i18n="avail">Available on request</div>
+  </div>
+
+</div>
+
+<!-- Commercial Traction -->
+<div class="section-title" data-i18n="s_commercial">Commercial Traction</div>
+<div class="drive-grid">
+
+  <div class="file-card">
+    <div class="file-icon">
+      <svg viewBox="0 0 56 72" xmlns="http://www.w3.org/2000/svg">
+        <path fill="#fff" d="M4 0h36l12 12v56a4 4 0 01-4 4H4a4 4 0 01-4-4V4a4 4 0 014-4z"/>
+        <path fill="#2E7D32" d="M40 0l12 12H40V0z"/>
+        <rect x="0" y="28" width="56" height="22" rx="3" fill="#34A853"/>
+        <text x="28" y="43" text-anchor="middle" fill="#fff" font-size="9" font-weight="900" font-family="Arial,sans-serif">XLSX</text>
+      </svg>
+      <div class="status-dot dot-orange">→</div>
+    </div>
+    <div class="file-name">Customer List<br>21 customers · Mar 2026</div>
+    <div class="file-meta" data-i18n="avail">Available on request</div>
+  </div>
+
+  <div class="file-card">
+    <div class="file-icon">
+      <svg viewBox="0 0 56 72" xmlns="http://www.w3.org/2000/svg">
+        <path fill="#fff" d="M4 0h36l12 12v56a4 4 0 01-4 4H4a4 4 0 01-4-4V4a4 4 0 014-4z"/>
+        <path fill="#2E7D32" d="M40 0l12 12H40V0z"/>
+        <rect x="0" y="28" width="56" height="22" rx="3" fill="#34A853"/>
+        <text x="28" y="43" text-anchor="middle" fill="#fff" font-size="9" font-weight="900" font-family="Arial,sans-serif">XLSX</text>
+      </svg>
+      <div class="status-dot dot-orange">→</div>
+    </div>
+    <div class="file-name">NPS Survey Results<br>NPS 62 · Q1 2026</div>
+    <div class="file-meta" data-i18n="avail">Available on request</div>
+  </div>
+
+  <div class="file-card">
+    <div class="file-icon">
+      <svg viewBox="0 0 56 72" xmlns="http://www.w3.org/2000/svg">
+        <path fill="#fff" d="M4 0h36l12 12v56a4 4 0 01-4 4H4a4 4 0 01-4-4V4a4 4 0 014-4z"/>
+        <path fill="#ddd" d="M40 0l12 12H40V0z"/>
+        <rect x="0" y="28" width="56" height="22" rx="3" fill="#EA4335"/>
+        <text x="28" y="43" text-anchor="middle" fill="#fff" font-size="9" font-weight="900" font-family="Arial,sans-serif">PDF</text>
+      </svg>
+      <div class="status-dot dot-orange">→</div>
+    </div>
+    <div class="file-name">ODS Pilot Results<br>ROAS +34%</div>
+    <div class="file-meta" data-i18n="avail">Available on request</div>
+  </div>
+
+</div>
+
+<!-- Team & References -->
+<div class="section-title" data-i18n="s_team">Team & References</div>
+<div class="drive-grid">
+
+  <div class="file-card">
+    <div class="file-icon">
+      <svg viewBox="0 0 56 72" xmlns="http://www.w3.org/2000/svg">
+        <path fill="#fff" d="M4 0h36l12 12v56a4 4 0 01-4 4H4a4 4 0 01-4-4V4a4 4 0 014-4z"/>
+        <path fill="#1557B0" d="M40 0l12 12H40V0z"/>
+        <rect x="0" y="28" width="56" height="22" rx="3" fill="#4285F4"/>
+        <text x="28" y="43" text-anchor="middle" fill="#fff" font-size="9" font-weight="900" font-family="Arial,sans-serif">DOC</text>
+      </svg>
+      <div class="status-dot dot-orange">→</div>
+    </div>
+    <div class="file-name">Founder CVs<br>Ozlem + Dilara</div>
+    <div class="file-meta" data-i18n="avail">Available on request</div>
+  </div>
+
+  <div class="file-card">
+    <div class="file-icon">
+      <svg viewBox="0 0 56 72" xmlns="http://www.w3.org/2000/svg">
+        <path fill="#fff" d="M4 0h36l12 12v56a4 4 0 01-4 4H4a4 4 0 01-4-4V4a4 4 0 014-4z"/>
+        <path fill="#ddd" d="M40 0l12 12H40V0z"/>
+        <rect x="0" y="28" width="56" height="22" rx="3" fill="#0077B5"/>
+        <text x="28" y="43" text-anchor="middle" fill="#fff" font-size="8" font-weight="900" font-family="Arial,sans-serif">in</text>
+      </svg>
+      <div class="status-dot dot-orange">→</div>
+    </div>
+    <div class="file-name">LinkedIn Profiles<br>Full team</div>
+    <div class="file-meta" data-i18n="avail">Available on request</div>
+  </div>
+
+  <div class="file-card">
+    <div class="file-icon">
+      <svg viewBox="0 0 56 72" xmlns="http://www.w3.org/2000/svg">
+        <path fill="#fff" d="M4 0h36l12 12v56a4 4 0 01-4 4H4a4 4 0 01-4-4V4a4 4 0 014-4z"/>
+        <path fill="#ddd" d="M40 0l12 12H40V0z"/>
+        <rect x="0" y="28" width="56" height="22" rx="3" fill="#607D8B"/>
+        <text x="28" y="43" text-anchor="middle" fill="#fff" font-size="8" font-weight="900" font-family="Arial,sans-serif">REF</text>
+      </svg>
+      <div class="status-dot dot-orange">→</div>
+    </div>
+    <div class="file-name">Customer References<br>3 contacts</div>
+    <div class="file-meta" data-i18n="avail">Available on request</div>
+  </div>
+
+</div>
+
+<div class="footer-note" data-i18n="footer">GrowthWise · Confidential · For qualified investors only · growthwisetech.com</div>
+
+<script>
+const T={"title": {"en": "Due Diligence", "tr": "Ön İnceleme", "es": "Due Diligence"}, "sub": {"en": "GrowthWise · Documents for qualified investors · Confidential", "tr": "GrowthWise · Nitelikli yatırımcılar için belgeler · Gizlidir", "es": "GrowthWise · Documentos para inversores cualificados · Confidencial"}, "s_legal": {"en": "Legal & Corporate", "tr": "Hukuki ve Kurumsal", "es": "Legal y Corporativo"}, "s_live": {"en": "Live Product & Website", "tr": "Canlı Ürün ve Web Sitesi", "es": "Producto en Vivo y Web"}, "lp_website_t": {"en": "Company Website", "tr": "Şirket Web Sitesi", "es": "Sitio Web"}, "lp_website_s": {"en": "Public · No auth required", "tr": "Herkese açık · Giriş gerekmez", "es": "Público · Sin autenticación"}, "lp_app_t": {"en": "Live Product (Dev)", "tr": "Canlı Ürün (Dev)", "es": "Producto en Vivo (Dev)"}, "lp_app_s": {"en": "Auth required — request access from Özlem", "tr": "Giriş gerekli — erişim için Özlem ile iletişime geçin", "es": "Auth requerida — solicita acceso a Özlem"}, "s_financial": {"en": "Financial Evidence", "tr": "Finansal Kanıtlar", "es": "Evidencia Financiera"}, "s_product": {"en": "Product & Technical", "tr": "Ürün ve Teknik", "es": "Producto y Técnico"}, "s_team": {"en": "Team & References", "tr": "Ekip ve Referanslar", "es": "Equipo y Referencias"}, "s_commercial": {"en": "Commercial Traction", "tr": "Ticari Traction", "es": "Tracción Comercial"}, "avail": {"en": "Available on request", "tr": "Talep üzerine", "es": "Disponible previa solicitud"}, "ready": {"en": "Ready", "tr": "Hazır", "es": "Listo"}, "pending": {"en": "Pending", "tr": "Beklemede", "es": "Pendiente"}, "footer": {"en": "GrowthWise · Confidential · For qualified investors only · growthwisetech.com", "tr": "GrowthWise · Gizlidir · Yalnızca nitelikli yatırımcılar içindir · growthwisetech.com", "es": "GrowthWise · Confidencial · Solo para inversores cualificados · growthwisetech.com"}};
+var curLang='en';
+function getLangFromURL(){var m=location.search.match(/lang=([a-z]{2})/);return m?m[1]:'en';}
+function applyLang(){
+  document.querySelectorAll('[data-i18n]').forEach(function(el){
+    var k=el.getAttribute('data-i18n');
+    if(T[k]){var v=T[k][curLang]||T[k]['en'];el.textContent=v;}
+  });
+}
+window.addEventListener('DOMContentLoaded',function(){
+  curLang=getLangFromURL();
+  applyLang();
+});
+</script>
+</body>
+</html>

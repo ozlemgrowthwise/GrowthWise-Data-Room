@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta charset="UTF-8"><title>GrowthWise Product Roadmap</title>
+<style>*{box-sizing:border-box;margin:0;padding:0;}
+:root{--navy:#1B1B4E;--teal:#00D4AA;--purple:#7C4FD4;--blue:#4472E0;--orange:#F97316;
+  --grad:linear-gradient(135deg,#00D4AA 0%,#7C4FD4 55%,#4472E0 100%);
+  --bg:#F7F8FB;--bg2:#EFF1F8;--border:#DDE1EF;}
+body{font-family:'Segoe UI',Arial,sans-serif;background:var(--bg);color:var(--navy);padding:32px 40px 60px;}
+.page-title{font-size:26px;font-weight:900;color:var(--navy);margin-bottom:4px;}
+.page-sub{font-size:13px;color:#6B7280;margin-bottom:32px;}
+.section-title{font-size:16px;font-weight:800;color:var(--navy);margin:32px 0 14px;display:flex;align-items:center;gap:8px;}
+.section-title::before{content:'';display:inline-block;width:3px;height:16px;background:var(--grad);border-radius:2px;}
+table{width:100%;border-collapse:collapse;font-size:13px;}
+th{background:var(--navy);color:#fff;padding:10px 14px;text-align:left;font-weight:600;font-size:12px;}
+td{padding:9px 14px;border-bottom:1px solid var(--border);}
+tr:nth-child(even) td{background:var(--bg2);}
+tr.highlight td{background:rgba(0,212,170,.1);font-weight:700;color:var(--navy);}
+.chip{display:inline-block;padding:3px 10px;border-radius:20px;font-size:11px;font-weight:700;}
+.chip-green{background:rgba(0,212,170,.15);color:#065F46;}
+.chip-blue{background:rgba(68,114,224,.15);color:#1E40AF;}
+.chip-orange{background:rgba(249,115,22,.15);color:#9A3412;}
+.chip-purple{background:rgba(124,79,212,.15);color:#5B21B6;}
+.phase-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;}
+.phase-card{background:#fff;border:1.5px solid var(--border);border-radius:14px;padding:22px;}
+.phase-card.active{border-color:var(--teal);box-shadow:0 0 0 3px rgba(0,212,170,.1);}
+.phase-label{font-size:10px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;margin-bottom:8px;}
+.p1{color:var(--teal);} .p2{color:var(--purple);} .p3{color:var(--blue);}
+.phase-title{font-size:15px;font-weight:800;color:var(--navy);margin-bottom:12px;}
+.phase-item{font-size:12px;color:#374151;line-height:1.5;padding:5px 0;border-bottom:1px solid var(--bg2);display:flex;gap:8px;align-items:flex-start;}
+.phase-item:last-child{border-bottom:none;}
+.phase-item.ai{color:var(--purple);font-weight:600;}
+.phase-arrow{color:var(--teal);font-weight:700;flex-shrink:0;margin-top:1px;}
+.phase-item.ai .phase-arrow{color:var(--purple);}
+.live-badge{display:inline-block;padding:2px 8px;border-radius:20px;font-size:10px;font-weight:700;background:rgba(0,212,170,.15);color:#065F46;margin-left:6px;vertical-align:middle;}
+.timeline{display:grid;grid-template-columns:repeat(6,1fr);border:1.5px solid var(--border);border-radius:14px;overflow:hidden;}
+.tq{padding:14px 10px;background:#fff;border-right:1px solid var(--border);}
+.tq:last-child{border-right:none;}
+.tq-label{font-size:9px;font-weight:700;color:#6B7280;margin-bottom:8px;text-transform:uppercase;text-align:center;}
+.tq-item{font-size:11px;color:var(--navy);background:var(--bg2);border-radius:6px;padding:4px 7px;margin-bottom:4px;line-height:1.4;text-align:center;}
+.tq-item.seed{background:rgba(0,212,170,.2);color:#065F46;font-weight:700;}
+.tq-item.breakeven{background:rgba(124,79,212,.15);color:var(--purple);font-weight:700;}
+.tq-item.ai{background:rgba(124,79,212,.12);color:#5B21B6;font-weight:600;}
+.principles-grid{display:grid;gap:0;border:1.5px solid var(--border);border-radius:14px;overflow:hidden;}
+.principle-row{display:grid;grid-template-columns:240px 1fr;border-bottom:1px solid var(--border);}
+.principle-row:last-child{border-bottom:none;}
+.pr-label{background:var(--bg2);padding:14px 18px;display:flex;align-items:center;gap:10px;}
+.pr-check{color:var(--teal);font-size:16px;flex-shrink:0;}
+.pr-title{font-size:13px;font-weight:700;color:var(--navy);}
+.pr-body{background:#fff;padding:14px 18px;font-size:13px;color:#374151;line-height:1.6;display:flex;align-items:center;}
+.alert-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;}
+.alert-card{border-radius:12px;padding:16px;}
+.alert-card.critical{background:#FEF2F2;border:1.5px solid #FCA5A5;}
+.alert-card.warning{background:#FFFBEB;border:1.5px solid #FCD34D;}
+.alert-card.info{background:rgba(68,114,224,.06);border:1.5px solid rgba(68,114,224,.25);}
+.alert-title{font-size:13px;font-weight:700;margin-bottom:8px;}
+.alert-card.critical .alert-title{color:#991B1B;}
+.alert-card.warning .alert-title{color:#92400E;}
+.alert-card.info .alert-title{color:var(--blue);}
+.alert-ex{font-size:11px;color:#4B5563;line-height:1.5;}
+.ai-box{background:linear-gradient(135deg,rgba(124,79,212,.07),rgba(68,114,224,.07));border:1.5px solid rgba(124,79,212,.25);border-radius:14px;padding:20px 24px;margin-bottom:8px;}
+.ai-box-title{font-size:14px;font-weight:800;color:var(--purple);margin-bottom:8px;display:flex;align-items:center;gap:8px;}
+.ai-box-body{font-size:13px;color:#374151;line-height:1.7;}
+.footer-note{margin-top:40px;font-size:11px;color:#9CA3AF;border-top:1px solid var(--border);padding-top:16px;}</style>
+</head>
+<body>
+<div class="page-title" data-i18n="title">Product Roadmap</div>
+<div class="page-sub" data-i18n="sub">GrowthWise · Your Full-Stack Digital Growth Companion · 2026–2027</div>
+
+<div class="section-title" data-i18n="s_ai">AI Engine — Claude (Live in Phase 1)</div>
+<div class="ai-box">
+  <div class="ai-box-title" data-i18n="ai_box_title">Claude AI is integrated and running in Phase 1</div>
+  <div class="ai-box-body" data-i18n="ai_box_body">GrowthWise uses Claude to power automated daily growth audits, identify anomalies across connected channels, and generate a weekly prioritised sprint plan with actionable to-dos for each team. This is live today — not Phase 3.</div>
+</div>
+
+<div class="section-title" data-i18n="s_build">Three-Phase Build</div>
+<div class="phase-grid">
+  <div class="phase-card active">
+    <div class="phase-label p1" data-i18n="p1_lbl">Phase 1 · MVP · Q1–Q2 2026 · LIVE</div>
+    <div class="phase-title" data-i18n="p1_title">Foundation + Claude AI</div>
+    <div class="phase-item"><span class="phase-arrow">&#8594;</span><span data-i18n="p1_i1">GA4 connector: sessions, engagement rate, conversions, revenue</span></div>
+    <div class="phase-item ai"><span class="phase-arrow">&#9670;</span><span data-i18n="p1_i2">Claude AI automated daily growth audit</span></div>
+    <div class="phase-item ai"><span class="phase-arrow">&#9670;</span><span data-i18n="p1_i3">Weekly sprint plan and prioritised to-do list (generated by Claude)</span></div>
+    <div class="phase-item"><span class="phase-arrow">&#8594;</span><span data-i18n="p1_i4">Health Score 0–100 weekly</span></div>
+    <div class="phase-item"><span class="phase-arrow">&#8594;</span><span data-i18n="p1_i5">Dashboard with AI-ranked issue list</span></div>
+    <div class="phase-item"><span class="phase-arrow">&#8594;</span><span data-i18n="p1_i6">Email alert delivery</span></div>
+    <div class="phase-item"><span class="phase-arrow">&#8594;</span><span data-i18n="p1_i7">First 50 paying customers</span></div>
+  </div>
+  <div class="phase-card">
+    <div class="phase-label p2" data-i18n="p2_lbl">Phase 2 · Q3–Q4 2026</div>
+    <div class="phase-title" data-i18n="p2_title">Full Connectors and Alerts</div>
+    <div class="phase-item"><span class="phase-arrow">&#8594;</span><span data-i18n="p2_i1">Google Ads connector</span></div>
+    <div class="phase-item"><span class="phase-arrow">&#8594;</span><span data-i18n="p2_i2">Meta Ads connector</span></div>
+    <div class="phase-item"><span class="phase-arrow">&#8594;</span><span data-i18n="p2_i3">LinkedIn Ads connector</span></div>
+    <div class="phase-item"><span class="phase-arrow">&#8594;</span><span data-i18n="p2_i4">Google Search Console connector</span></div>
+    <div class="phase-item"><span class="phase-arrow">&#8594;</span><span data-i18n="p2_i5">GTM audit and tag health checks</span></div>
+    <div class="phase-item"><span class="phase-arrow">&#8594;</span><span data-i18n="p2_i6">Real-time anomaly alert engine</span></div>
+    <div class="phase-item"><span class="phase-arrow">&#8594;</span><span data-i18n="p2_i7">Slack alert delivery</span></div>
+    <div class="phase-item"><span class="phase-arrow">&#8594;</span><span data-i18n="p2_i8">Seed round closes Q4 2026</span></div>
+  </div>
+  <div class="phase-card" style="border-color:var(--blue);box-shadow:0 0 0 3px rgba(68,114,224,.12);">
+    <div class="phase-label p3" data-i18n="p3_lbl">Phase 3 · Q1–Q2 2027 · KILLER FEATURE</div>
+    <div class="phase-title" data-i18n="p3_title">Full-Stack Growth Agent</div>
+    <div class="phase-item ai"><span class="phase-arrow">&#8594;</span><span data-i18n="p3_i1">Autonomous Growth Agent: end-to-end digital growth companion</span></div>
+    <div class="phase-item ai"><span class="phase-arrow">&#8594;</span><span data-i18n="p3_i2">Analytics Infrastructure Audit: validates tracking, tag health, attribution setup</span></div>
+    <div class="phase-item"><span class="phase-arrow">&#8594;</span><span data-i18n="p3_i3">Leaking point detection: identifies where growth drops off across the funnel</span></div>
+    <div class="phase-item"><span class="phase-arrow">&#8594;</span><span data-i18n="p3_i4">Predictive scoring, trend forecasting and benchmark database (100+ verticals)</span></div>
+    <div class="phase-item"><span class="phase-arrow">&#8594;</span><span data-i18n="p3_i5">Natural language query: "Why did my CAC spike last week?"</span></div>
+    <div class="phase-item"><span class="phase-arrow">&#8594;</span><span data-i18n="p3_i6">White-label for agencies + EBITDA breakeven Q2 2027</span></div>
+  </div>
+</div>
+
+<div class="section-title" data-i18n="s_timeline">Milestone Timeline</div>
+<div class="timeline">
+  <div class="tq"><div class="tq-label" data-i18n="tq1_l">Q1–Q2 2026</div><div class="tq-item" data-i18n="tq1_i1">GA4</div><div class="tq-item ai" data-i18n="tq1_i2">Claude AI audit</div><div class="tq-item ai" data-i18n="tq1_i3">Sprint planner</div><div class="tq-item" data-i18n="tq1_i4">50 customers</div></div>
+  <div class="tq"><div class="tq-label" data-i18n="tq2_l">Q3 2026</div><div class="tq-item" data-i18n="tq2_i1">Google Ads</div><div class="tq-item" data-i18n="tq2_i2">Meta Ads</div><div class="tq-item" data-i18n="tq2_i3">LinkedIn</div><div class="tq-item" data-i18n="tq2_i4">Search Console</div><div class="tq-item" data-i18n="tq2_i5">100 customers</div></div>
+  <div class="tq"><div class="tq-label" data-i18n="tq3_l">Q4 2026</div><div class="tq-item seed" data-i18n="tq3_i1">Seed $750K</div><div class="tq-item" data-i18n="tq3_i2">GTM audit</div><div class="tq-item" data-i18n="tq3_i3">Alert engine</div><div class="tq-item" data-i18n="tq3_i4">150 customers</div></div>
+  <div class="tq"><div class="tq-label" data-i18n="tq4_l">Q1 2027</div><div class="tq-item ai" data-i18n="tq4_i1">Predictive AI</div><div class="tq-item" data-i18n="tq4_i2">Benchmarks</div><div class="tq-item" data-i18n="tq4_i3">200 customers</div></div>
+  <div class="tq"><div class="tq-label" data-i18n="tq5_l">Q2 2027</div><div class="tq-item breakeven" data-i18n="tq5_i1">EBITDA Breakeven</div><div class="tq-item" data-i18n="tq5_i2">NL query</div><div class="tq-item" data-i18n="tq5_i3">250 customers</div></div>
+  <div class="tq"><div class="tq-label" data-i18n="tq6_l">Q3–Q4 2027</div><div class="tq-item" data-i18n="tq6_i1">White-label</div><div class="tq-item" data-i18n="tq6_i2">DACH/Nordics</div><div class="tq-item" data-i18n="tq6_i3">Series A</div></div>
+</div>
+
+<div class="section-title" data-i18n="s_principles">Core Principles</div>
+<div class="principles-grid">
+  <div class="principle-row"><div class="pr-label"><span class="pr-check">&#10003;</span><span class="pr-title" data-i18n="pr1_t">Consistency over completeness</span></div><div class="pr-body" data-i18n="pr1_b">Stable, repeatable metrics over edge-case coverage</div></div>
+  <div class="principle-row"><div class="pr-label"><span class="pr-check">&#10003;</span><span class="pr-title" data-i18n="pr2_t">Daily-first data model</span></div><div class="pr-body" data-i18n="pr2_b">Daily is source of truth; weekly scorecards derived from daily aggregates</div></div>
+  <div class="principle-row"><div class="pr-label"><span class="pr-check">&#10003;</span><span class="pr-title" data-i18n="pr3_t">Cross-platform comparability</span></div><div class="pr-body" data-i18n="pr3_b">Metrics normalised to allow trend comparison across channels</div></div>
+  <div class="principle-row"><div class="pr-label"><span class="pr-check">&#10003;</span><span class="pr-title" data-i18n="pr4_t">Measurement confidence layer</span></div><div class="pr-body" data-i18n="pr4_b">Health is surfaced explicitly, not assumed</div></div>
+  <div class="principle-row"><div class="pr-label"><span class="pr-check">&#10003;</span><span class="pr-title" data-i18n="pr5_t">Proactive signal delivery</span></div><div class="pr-body" data-i18n="pr5_b">Critical changes surface via alerts, not only dashboards</div></div>
+  <div class="principle-row"><div class="pr-label"><span class="pr-check">&#10003;</span><span class="pr-title" data-i18n="pr6_t">Campaign and UTM normalisation</span></div><div class="pr-body" data-i18n="pr6_b">Canonical campaign IDs across GA4, Ads, and paid social</div></div>
+</div>
+
+<div class="section-title" data-i18n="s_connectors">Connector Status</div>
+<table>
+  <thead><tr><th data-i18n="th_platform">Platform</th><th data-i18n="th_metrics">Metrics</th><th data-i18n="th_phase">Phase</th><th data-i18n="th_status">Status</th></tr></thead>
+  <tbody>
+    <tr><td>GA4</td><td data-i18n="con_ga4_m">Sessions, Engagement Rate, Conversions, Revenue</td><td data-i18n="con_ga4_p">Phase 1</td><td><span class="chip chip-green" data-i18n="con_ga4_s">Live</span></td></tr>
+    <tr style="background:rgba(124,79,212,.04)"><td data-i18n="con_claude">Claude AI</td><td data-i18n="con_claude_m">Daily audit, anomaly detection, sprint plan, to-do list</td><td data-i18n="con_ga4_p">Phase 1</td><td><span class="chip chip-purple" data-i18n="con_claude_s">Live</span></td></tr>
+    <tr><td>Google Ads</td><td data-i18n="con_gads_m">Spend, Impressions, CTR, CPA</td><td data-i18n="con_gads_p">Phase 2</td><td><span class="chip chip-blue">Q3 2026</span></td></tr>
+    <tr><td>Meta Ads</td><td data-i18n="con_meta_m">Spend, Impressions, Link CTR, CPA</td><td data-i18n="con_gads_p">Phase 2</td><td><span class="chip chip-blue">Q3 2026</span></td></tr>
+    <tr><td>LinkedIn Ads</td><td data-i18n="con_li_m">Spend, Impressions, CTR, Lead Gen CPL</td><td data-i18n="con_gads_p">Phase 2</td><td><span class="chip chip-blue">Q3 2026</span></td></tr>
+    <tr><td>Google Search Console</td><td data-i18n="con_sc_m">Impressions, Clicks, CTR, Avg Position</td><td data-i18n="con_gads_p">Phase 2</td><td><span class="chip chip-blue">Q3 2026</span></td></tr>
+    <tr><td>GTM</td><td data-i18n="con_gtm_m">Tag health, firing rate, missing triggers</td><td data-i18n="con_gads_p">Phase 2</td><td><span class="chip chip-orange">Q4 2026</span></td></tr>
+    <tr><td>CRM (HubSpot / Pipedrive)</td><td data-i18n="con_crm_m">Pipeline velocity, MQL-SQL conversion</td><td data-i18n="con_crm_p">Phase 3</td><td><span class="chip chip-orange">Q1 2027</span></td></tr>
+  </tbody>
+</table>
+
+<div class="section-title" data-i18n="s_alerts">Alert System (3 Levels)</div>
+<div class="alert-grid">
+  <div class="alert-card critical"><div class="alert-title" data-i18n="alert_crit">Critical</div><div class="alert-ex" data-i18n="alert_crit_b">Conversion tracking stopped. GA4 sessions dropped 30%+. Ad spend above 2x budget. Immediate action required.</div></div>
+  <div class="alert-card warning"><div class="alert-title" data-i18n="alert_warn">Warning</div><div class="alert-ex" data-i18n="alert_warn_b">ROAS below target 3 days. Organic CTR declining 2 weeks. GTM tag misfiring on mobile. Review within 48h.</div></div>
+  <div class="alert-card info"><div class="alert-title" data-i18n="alert_info">Informational</div><div class="alert-ex" data-i18n="alert_info_b">New keyword in top 10. Campaign entering learning phase. Monthly Health Score report ready.</div></div>
+</div>
+
+<div class="footer-note" data-i18n="footer">GrowthWise · Growth Companion Platform · Confidential · growthwisetech.com</div>
+<script>
+const T={"title": {"en": "Product Roadmap", "tr": "Ürün Yol Haritası", "es": "Hoja de Ruta del Producto"}, "sub": {"en": "GrowthWise · Growth Companion Platform · 2026–2027", "tr": "GrowthWise · Your Full-Stack Digital Growth Companion · 2026–2027", "es": "GrowthWise · Plataforma Compañera de Crecimiento · 2026–2027"}, "s_ai": {"en": "AI Engine — Claude (Live in Phase 1)", "tr": "AI Motoru — Claude (Aşama 1'de Canlı)", "es": "Motor IA — Claude (Activo en Fase 1)"}, "ai_box_title": {"en": "Claude AI is integrated and running in Phase 1", "tr": "Claude AI Aşama 1'de entegre edildi ve çalışıyor", "es": "Claude AI está integrado y funcionando en Fase 1"}, "ai_box_body": {"en": "GrowthWise uses Claude to power automated daily growth audits, identify anomalies across connected channels, and generate a weekly prioritised sprint plan with actionable to-dos for each team. This is live today — not Phase 3.", "tr": "GrowthWise, otomatik günlük büyüme denetimleri yapmak, bağlı kanallardaki anormallikleri tespit etmek ve her ekip için haftalık öncelikli sprint planı ile yapılacaklar listesi oluşturmak için Claude'u kullanıyor. Bu bugün canlı; Aşama 3 değil.", "es": "GrowthWise usa Claude para realizar auditorías de crecimiento diarias automatizadas, identificar anomalías en los canales conectados y generar un plan de sprint semanal priorizado con tareas accionables para cada equipo. Esto está activo hoy, no en Fase 3."}, "s_build": {"en": "Three-Phase Build", "tr": "Üç Aşamalı Geliştirme", "es": "Construcción en Tres Fases"}, "s_timeline": {"en": "Milestone Timeline", "tr": "Kilometre Taşı Zaman Çizelgesi", "es": "Línea de Tiempo de Hitos"}, "s_principles": {"en": "Core Principles", "tr": "Temel İlkeler", "es": "Principios Fundamentales"}, "s_connectors": {"en": "Connector Status", "tr": "Bağlayıcı Durumu", "es": "Estado de Conectores"}, "s_alerts": {"en": "Alert System (3 Levels)", "tr": "Uyarı Sistemi (3 Seviye)", "es": "Sistema de Alertas (3 Niveles)"}, "p1_lbl": {"en": "Phase 1 · MVP · Q1–Q2 2026 · LIVE", "tr": "Aşama 1 · MVP · Q1–Q2 2026 · CANLI", "es": "Fase 1 · MVP · Q1–Q2 2026 · EN VIVO"}, "p1_title": {"en": "Foundation + Claude AI", "tr": "Temel + Claude AI", "es": "Fundación + Claude AI"}, "p1_i1": {"en": "GA4 connector: sessions, engagement rate, conversions, revenue", "tr": "GA4 bağlayıcı: oturumlar, etkileşim oranı, dönüşümler, gelir", "es": "Conector GA4: sesiones, tasa de engagement, conversiones, ingresos"}, "p1_i2": {"en": "Claude AI automated daily growth audit", "tr": "Claude AI otomatik günlük büyüme denetimi", "es": "Auditoría de crecimiento diaria automatizada con Claude AI"}, "p1_i3": {"en": "Weekly sprint plan and prioritised to-do list (generated by Claude)", "tr": "Haftalık sprint planı ve öncelikli yapılacaklar listesi (Claude tarafından oluşturuluyor)", "es": "Plan de sprint semanal y lista de tareas priorizada (generado por Claude)"}, "p1_i4": {"en": "Health Score 0–100 weekly", "tr": "Haftalık 0–100 Sağlık Skoru", "es": "Health Score 0–100 semanal"}, "p1_i5": {"en": "Dashboard with AI-ranked issue list", "tr": "AI tarafından sıralanmış sorun listesiyle gösterge paneli", "es": "Dashboard con lista de problemas ordenada por IA"}, "p1_i6": {"en": "Email alert delivery", "tr": "E-posta ile uyarı iletimi", "es": "Entrega de alertas por email"}, "p1_i7": {"en": "First 50 paying customers", "tr": "İlk 50 ödeme yapan müşteri", "es": "Primeros 50 clientes de pago"}, "p2_lbl": {"en": "Phase 2 · Q3–Q4 2026", "tr": "Aşama 2 · Q3–Q4 2026", "es": "Fase 2 · Q3–Q4 2026"}, "p2_title": {"en": "Full Connectors and Alerts", "tr": "Tam Bağlayıcılar ve Uyarılar", "es": "Conectores Completos y Alertas"}, "p2_i1": {"en": "Google Ads connector", "tr": "Google Ads bağlayıcı", "es": "Conector Google Ads"}, "p2_i2": {"en": "Meta Ads connector", "tr": "Meta Ads bağlayıcı", "es": "Conector Meta Ads"}, "p2_i3": {"en": "LinkedIn Ads connector", "tr": "LinkedIn Ads bağlayıcı", "es": "Conector LinkedIn Ads"}, "p2_i4": {"en": "Google Search Console connector", "tr": "Google Search Console bağlayıcı", "es": "Conector Google Search Console"}, "p2_i5": {"en": "GTM audit and tag health checks", "tr": "GTM denetimi ve etiket sağlık kontrolleri", "es": "Auditoría GTM y verificación de etiquetas"}, "p2_i6": {"en": "Real-time anomaly alert engine", "tr": "Gerçek zamanlı anomali uyarı motoru", "es": "Motor de alertas de anomalías en tiempo real"}, "p2_i7": {"en": "Slack alert delivery", "tr": "Slack ile uyarı iletimi", "es": "Entrega de alertas por Slack"}, "p2_i8": {"en": "Seed round closes Q4 2026", "tr": "Seed turu Q4 2026'da kapanıyor", "es": "Ronda seed cierra Q4 2026"}, "p3_lbl": {"en": "Phase 3 · Q1–Q2 2027", "tr": "Aşama 3 · Q1–Q2 2027", "es": "Fase 3 · Q1–Q2 2027"}, "p3_title": {"en": "Advanced AI Intelligence", "tr": "Gelişmiş Yapay Zeka", "es": "Inteligencia IA Avanzada"}, "p3_i1": {"en": "Predictive scoring and trend forecasting", "tr": "Tahmine dayalı puanlama ve trend tahmini", "es": "Puntuación predictiva y pronóstico de tendencias"}, "p3_i2": {"en": "Benchmark database 100+ verticals", "tr": "100'den fazla sektör için kıyaslama veri tabanı", "es": "Base de datos de benchmarks 100+ verticales"}, "p3_i3": {"en": "Natural language query interface", "tr": "Doğal dil sorgu arayüzü", "es": "Interfaz de consulta en lenguaje natural"}, "p3_i4": {"en": "Proactive AI recommendations before issues surface", "tr": "Sorunlar ortaya çıkmadan önce proaktif AI önerileri", "es": "Recomendaciones proactivas de IA antes de que surjan problemas"}, "p3_i5": {"en": "White-label for agencies", "tr": "Ajanslar için özel marka", "es": "Marca blanca para agencias"}, "p3_i6": {"en": "EBITDA breakeven Q2 2027", "tr": "FAVÖK başabaş noktası Q2 2027", "es": "EBITDA equilibrio Q2 2027"}, "tq1_l": {"en": "Q1–Q2 2026", "tr": "Q1–Q2 2026", "es": "Q1–Q2 2026"}, "tq1_i1": {"en": "GA4", "tr": "GA4", "es": "GA4"}, "tq1_i2": {"en": "Claude AI audit", "tr": "Claude AI denetimi", "es": "Auditoría Claude AI"}, "tq1_i3": {"en": "Sprint planner", "tr": "Sprint planner", "es": "Sprint planner"}, "tq1_i4": {"en": "50 customers", "tr": "50 müşteri", "es": "50 clientes"}, "tq2_l": {"en": "Q3 2026", "tr": "Q3 2026", "es": "Q3 2026"}, "tq2_i1": {"en": "Google Ads", "tr": "Google Ads", "es": "Google Ads"}, "tq2_i2": {"en": "Meta Ads", "tr": "Meta Ads", "es": "Meta Ads"}, "tq2_i3": {"en": "LinkedIn", "tr": "LinkedIn", "es": "LinkedIn"}, "tq2_i4": {"en": "Search Console", "tr": "Search Console", "es": "Search Console"}, "tq2_i5": {"en": "100 customers", "tr": "100 müşteri", "es": "100 clientes"}, "tq3_l": {"en": "Q4 2026", "tr": "Q4 2026", "es": "Q4 2026"}, "tq3_i1": {"en": "Seed $750K", "tr": "Seed $750K", "es": "Seed $750K"}, "tq3_i2": {"en": "GTM audit", "tr": "GTM denetimi", "es": "Auditoría GTM"}, "tq3_i3": {"en": "Alert engine", "tr": "Uyarı motoru", "es": "Motor alertas"}, "tq3_i4": {"en": "150 customers", "tr": "150 müşteri", "es": "150 clientes"}, "tq4_l": {"en": "Q1 2027", "tr": "Q1 2027", "es": "Q1 2027"}, "tq4_i1": {"en": "Predictive AI", "tr": "Tahminsel AI", "es": "IA Predictiva"}, "tq4_i2": {"en": "Benchmarks", "tr": "Kıyaslamalar", "es": "Benchmarks"}, "tq4_i3": {"en": "200 customers", "tr": "200 müşteri", "es": "200 clientes"}, "tq5_l": {"en": "Q2 2027", "tr": "Q2 2027", "es": "Q2 2027"}, "tq5_i1": {"en": "EBITDA Breakeven", "tr": "FAVÖK Başabaş", "es": "EBITDA Equilibrio"}, "tq5_i2": {"en": "NL query", "tr": "Doğal dil sorgusu", "es": "Consulta NL"}, "tq5_i3": {"en": "250 customers", "tr": "250 müşteri", "es": "250 clientes"}, "tq6_l": {"en": "Q3–Q4 2027", "tr": "Q3–Q4 2027", "es": "Q3–Q4 2027"}, "tq6_i1": {"en": "White-label", "tr": "Özel marka", "es": "Marca blanca"}, "tq6_i2": {"en": "DACH/Nordics", "tr": "DACH/Kuzey Avrupa", "es": "DACH/Nórdicos"}, "tq6_i3": {"en": "Series A", "tr": "Seri A", "es": "Serie A"}, "pr1_t": {"en": "Consistency over completeness", "tr": "Bütünlük yerine tutarlılık", "es": "Consistencia sobre completitud"}, "pr1_b": {"en": "Stable, repeatable metrics over edge-case coverage", "tr": "Kenar durum kapsamı yerine istikrarlı, tekrarlanabilir metrikler", "es": "Métricas estables y repetibles sobre cobertura de casos límite"}, "pr2_t": {"en": "Daily-first data model", "tr": "Günlük öncelikli veri modeli", "es": "Modelo de datos con prioridad diaria"}, "pr2_b": {"en": "Daily is source of truth; weekly scorecards are derived from daily aggregates", "tr": "Gerçeğin kaynağı günlük veridir; haftalık puan kartları günlük toplamalardan türetilir", "es": "Lo diario es la fuente de verdad; los scorecards semanales se derivan de agregados diarios"}, "pr3_t": {"en": "Cross-platform comparability", "tr": "Platformlar arası karşılaştırılabilirlik", "es": "Comparabilidad entre plataformas"}, "pr3_b": {"en": "Metrics normalised to allow trend comparison across channels", "tr": "Kanallar arası trend karşılaştırmasına olanak sağlamak için normalleştirilmiş metrikler", "es": "Métricas normalizadas para comparación de tendencias entre canales"}, "pr4_t": {"en": "Measurement confidence layer", "tr": "Ölçüm güven katmanı", "es": "Capa de confianza en la medición"}, "pr4_b": {"en": "Health is surfaced explicitly, not assumed", "tr": "Sağlık açıkça gösterilir, varsayılmaz", "es": "La salud se muestra explícitamente, no se asume"}, "pr5_t": {"en": "Proactive signal delivery", "tr": "Proaktif sinyal iletimi", "es": "Entrega proactiva de señales"}, "pr5_b": {"en": "Critical changes surface via alerts, not only dashboards", "tr": "Kritik değişiklikler yalnızca gösterge panelleri değil, uyarılar aracılığıyla da öne çıkarılır", "es": "Los cambios críticos aparecen mediante alertas, no solo dashboards"}, "pr6_t": {"en": "Campaign and UTM normalisation", "tr": "Kampanya ve UTM normalleştirme", "es": "Normalización de campaña y UTM"}, "pr6_b": {"en": "Canonical campaign IDs across GA4, Ads, and paid social", "tr": "GA4, Ads ve ücretli sosyal medya genelinde standart kampanya kimlikleri", "es": "IDs de campaña canónicos en GA4, Ads y social de pago"}, "th_platform": {"en": "Platform", "tr": "Platform", "es": "Plataforma"}, "th_metrics": {"en": "Metrics", "tr": "Metrikler", "es": "Métricas"}, "th_phase": {"en": "Phase", "tr": "Aşama", "es": "Fase"}, "th_status": {"en": "Status", "tr": "Durum", "es": "Estado"}, "con_ga4_m": {"en": "Sessions, Engagement Rate, Conversions, Revenue", "tr": "Oturumlar, Etkileşim Oranı, Dönüşümler, Gelir", "es": "Sesiones, Tasa de Engagement, Conversiones, Ingresos"}, "con_ga4_p": {"en": "Phase 1", "tr": "Aşama 1", "es": "Fase 1"}, "con_ga4_s": {"en": "Live", "tr": "Canlı", "es": "Activo"}, "con_claude": {"en": "Claude AI", "tr": "Claude AI", "es": "Claude AI"}, "con_claude_m": {"en": "Daily audit, anomaly detection, sprint plan generation, to-do list", "tr": "Günlük denetim, anomali tespiti, sprint planı oluşturma, yapılacaklar listesi", "es": "Auditoría diaria, detección de anomalías, generación de sprint plan, lista de tareas"}, "con_claude_s": {"en": "Live", "tr": "Canlı", "es": "Activo"}, "con_gads_m": {"en": "Spend, Impressions, CTR, CPA", "tr": "Harcama, Gösterim, CTR, EBM", "es": "Gasto, Impresiones, CTR, CPA"}, "con_gads_p": {"en": "Phase 2", "tr": "Aşama 2", "es": "Fase 2"}, "con_meta_m": {"en": "Spend, Impressions, Link CTR, CPA", "tr": "Harcama, Gösterim, Bağlantı CTR, EBM", "es": "Gasto, Impresiones, CTR enlace, CPA"}, "con_li_m": {"en": "Spend, Impressions, CTR, Lead Gen CPL", "tr": "Harcama, Gösterim, CTR, Lead Gen CPL", "es": "Gasto, Impresiones, CTR, Lead Gen CPL"}, "con_sc_m": {"en": "Impressions, Clicks, CTR, Avg Position", "tr": "Gösterimler, Tıklamalar, CTR, Ort. Konum", "es": "Impresiones, Clics, CTR, Posición Media"}, "con_gtm_m": {"en": "Tag health, firing rate, missing triggers", "tr": "Etiket sağlığı, tetiklenme oranı, eksik tetikleyiciler", "es": "Salud de etiquetas, tasa de disparo, triggers faltantes"}, "con_crm_p": {"en": "Phase 3", "tr": "Aşama 3", "es": "Fase 3"}, "con_crm_m": {"en": "Pipeline velocity, MQL-SQL conversion", "tr": "Pipeline hızı, MQL-SQL dönüşümü", "es": "Velocidad de pipeline, conversión MQL-SQL"}, "alert_crit": {"en": "Critical", "tr": "Kritik", "es": "Crítico"}, "alert_warn": {"en": "Warning", "tr": "Uyarı", "es": "Advertencia"}, "alert_info": {"en": "Informational", "tr": "Bilgi", "es": "Informativo"}, "alert_crit_b": {"en": "Conversion tracking stopped firing. GA4 session drop above 30% week-over-week. Ad spend anomaly above 2x daily budget. Immediate action required.", "tr": "Dönüşüm takibi durdu. GA4 oturumu haftadan haftaya %30'un üzerinde düştü. Reklam harcaması günlük bütçenin 2 katını aştı. Acil aksiyon gerekli.", "es": "El tracking de conversiones dejó de funcionar. Caída de sesiones GA4 superior al 30% semana a semana. Gasto en anuncios superior a 2x el presupuesto diario. Acción inmediata requerida."}, "alert_warn_b": {"en": "ROAS below target 3 days running. Organic CTR declining 2 weeks consecutive. GTM tag misfiring on mobile. Review within 48 hours.", "tr": "ROAS 3 gün üst üste hedefin altında. Organik CTR 2 hafta üst üste düşüyor. GTM etiketi mobilde yanlış tetikleniyor. 48 saat içinde incelenmeli.", "es": "ROAS por debajo del objetivo 3 días seguidos. CTR orgánico bajando 2 semanas consecutivas. Tag GTM disparándose mal en móvil. Revisión en 48 horas."}, "alert_info_b": {"en": "New keyword ranking in top 10. Campaign entering learning phase. Monthly Health Score report ready. No action needed, for awareness only.", "tr": "Yeni anahtar kelime ilk 10'a girdi. Kampanya öğrenme aşamasına giriyor. Aylık Sağlık Skoru raporu hazır. Aksiyon gerekmez, bilgi amaçlıdır.", "es": "Nueva palabra clave en el top 10. Campaña entrando en fase de aprendizaje. Informe mensual de Health Score listo. Sin acción necesaria, solo informativo."}, "s_audit":{"en":"Analytics Infrastructure Audit","tr":"Analitik Altyapı Denetimi","es":"Auditoría de Infraestructura Analítica"},"audit_title":{"en":"Did you set up your analytics correctly? — No tool does this today.","tr":"Analitik altyapınızı doğru kurdunuz mu? — Bugün bunu yapan bir araç yok.","es":"¿Configuraste tu analítica correctamente? — Ninguna herramienta hace esto."},"audit_body":{"en":"Most companies invest in analytics tools but never verify their implementation is correct. GrowthWise introduces a first-of-its-kind Analytics Infrastructure Audit.","tr":"Çoğu şirket analitik araçlara yatırım yapar ama kurulumlarının doğru olup olmadığını kontrol etmez. GrowthWise, sektörde ilk olan Analitik Altyapı Denetimi sunar.","es":"La mayoría de empresas invierten en herramientas de analítica pero nunca verifican su implementación correcta."},"footer": {"en": "GrowthWise · Growth Companion Platform · Confidential · For qualified investors only · growthwisetech.com", "tr": "GrowthWise · Your Full-Stack Digital Growth Companion · Gizlidir · Yalnızca nitelikli yatırımcılar içindir · growthwisetech.com", "es": "GrowthWise · Plataforma Compañera de Crecimiento · Confidencial · Solo para inversores cualificados · growthwisetech.com"}};
+var curLang='en';
+function getLangFromURL(){var m=location.search.match(/lang=([a-z]{2})/);return m?m[1]:'en';}
+function applyLang(){
+  document.querySelectorAll('[data-i18n]').forEach(function(el){
+    var k=el.getAttribute('data-i18n');
+    if(T[k]){var v=T[k][curLang]||T[k]['en'];
+      if(el.getAttribute('data-i18n-html')==='1')el.innerHTML=v;
+      else el.textContent=v;}
+  });
+}
+window.addEventListener('DOMContentLoaded',function(){
+  curLang=getLangFromURL();
+  applyLang();
+});
+</script>
+</body></html>

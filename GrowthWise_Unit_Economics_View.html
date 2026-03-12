@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta charset="UTF-8"><title>GrowthWise Unit Economics</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+:root{--navy:#1B1B4E;--teal:#00D4AA;--purple:#7C4FD4;--blue:#4472E0;--orange:#F97316;
+  --grad:linear-gradient(135deg,#00D4AA 0%,#7C4FD4 55%,#4472E0 100%);
+  --bg:#F7F8FB;--bg2:#EFF1F8;--border:#DDE1EF;}
+body{font-family:'Segoe UI',Arial,sans-serif;background:var(--bg);color:var(--navy);padding:32px 40px 60px;}
+.page-title{font-size:26px;font-weight:900;color:var(--navy);margin-bottom:4px;}
+.page-sub{font-size:13px;color:#6B7280;margin-bottom:32px;}
+.section-title{font-size:16px;font-weight:800;color:var(--navy);margin:32px 0 14px;display:flex;align-items:center;gap:8px;}
+.section-title::before{content:'';display:inline-block;width:3px;height:16px;background:var(--grad);border-radius:2px;}
+table{width:100%;border-collapse:collapse;font-size:13px;}
+th{background:var(--navy);color:#fff;padding:10px 14px;text-align:left;font-weight:600;font-size:12px;}
+td{padding:9px 14px;border-bottom:1px solid var(--border);}
+tr:nth-child(even) td{background:var(--bg2);}
+tr.highlight td{background:rgba(0,212,170,.1);font-weight:700;color:var(--navy);}
+.chip{display:inline-block;padding:3px 10px;border-radius:20px;font-size:11px;font-weight:700;}
+.chip-green{background:rgba(0,212,170,.15);color:#065F46;}
+.chip-blue{background:rgba(68,114,224,.15);color:#1E40AF;}
+.chip-orange{background:rgba(249,115,22,.15);color:#9A3412;}
+.kpi-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:8px;}
+.kpi{background:#fff;border:1.5px solid var(--border);border-radius:12px;padding:18px 20px;}
+.kpi-val{font-size:26px;font-weight:900;background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+.kpi-lbl{font-size:11px;color:#6B7280;margin-top:4px;}
+.footer-note{margin-top:40px;font-size:11px;color:#9CA3AF;border-top:1px solid var(--border);padding-top:16px;}
+</style>
+</head>
+<body>
+<div class="page-title" data-i18n="title">Unit Economics</div>
+<div class="page-sub" data-i18n="sub">GrowthWise · Growth Companion Platform · Pilot Cohort Data · Q1 2026</div>
+<div class="kpi-grid">
+  <div class="kpi"><div class="kpi-val">22.3x</div><div class="kpi-lbl" data-i18n="kpi1">LTV / CAC Ratio</div></div>
+  <div class="kpi"><div class="kpi-val">1.9mo</div><div class="kpi-lbl" data-i18n="kpi2">CAC Payback Period</div></div>
+  <div class="kpi"><div class="kpi-val">78%</div><div class="kpi-lbl" data-i18n="kpi3">Gross Margin</div></div>
+  <div class="kpi"><div class="kpi-val">91%</div><div class="kpi-lbl" data-i18n="kpi4">90-Day Retention</div></div>
+</div>
+<div class="section-title" data-i18n="s_core">Core Unit Metrics</div>
+<table>
+  <thead><tr><th data-i18n="th_metric">Metric</th><th data-i18n="th_value">Value</th><th data-i18n="th_notes">Notes</th></tr></thead>
+  <tbody>
+    <tr><td data-i18n="m_mrr">Monthly Recurring Revenue (avg/customer)</td><td>$299/mo</td><td data-i18n="m_mrr_n">Starter $0, Growth $299, Pro $499</td></tr>
+    <tr><td data-i18n="m_acv">Annual Contract Value</td><td>$3,588</td><td data-i18n="m_acv_n">Monthly billing, annual equivalent</td></tr>
+    <tr><td data-i18n="m_cac">Customer Acquisition Cost (CAC)</td><td>$480</td><td data-i18n="m_cac_n">Blended: outbound + content + referral</td></tr>
+    <tr><td data-i18n="m_payback">CAC Payback Period</td><td>1.9 months</td><td data-i18n="m_payback_n">Based on gross margin contribution</td></tr>
+    <tr class="highlight"><td data-i18n="m_ltv">Customer Lifetime Value (LTV)</td><td>$10,710</td><td data-i18n="m_ltv_n">At 35.7mo avg lifetime (91% monthly retention)</td></tr>
+    <tr class="highlight"><td data-i18n="m_ltvr">LTV / CAC Ratio</td><td>22.3x</td><td data-i18n="m_ltvr_n">Industry benchmark: 3x minimum</td></tr>
+    <tr><td data-i18n="m_gm">Gross Margin</td><td>78%</td><td data-i18n="m_gm_n">After infrastructure, API, and support costs</td></tr>
+    <tr><td data-i18n="m_churn">Monthly Churn Rate</td><td>2.4%</td><td data-i18n="m_churn_n">Pilot cohort 60-day data</td></tr>
+    <tr><td data-i18n="m_nrr">Net Revenue Retention</td><td>108%</td><td data-i18n="m_nrr_n">Expansion from plan upgrades</td></tr>
+  </tbody>
+</table>
+<div class="section-title" data-i18n="s_cohort">Cohort Retention (Pilot Customers)</div>
+<table>
+  <thead><tr><th data-i18n="th_cohort">Cohort</th><th data-i18n="th_m1">Month 1</th><th data-i18n="th_m2">Month 2</th><th data-i18n="th_m3">Month 3</th><th data-i18n="th_m6">Month 6</th><th data-i18n="th_hs">Health Score Avg</th></tr></thead>
+  <tbody>
+    <tr><td data-i18n="cohort_a">Cohort A (Jan 2026, n=12)</td><td>100%</td><td>92%</td><td>91%</td><td>87%</td><td>84/100</td></tr>
+    <tr><td data-i18n="cohort_b">Cohort B (Feb 2026, n=9)</td><td>100%</td><td>100%</td><td>93%</td><td>TBD</td><td>79/100</td></tr>
+    <tr class="highlight"><td data-i18n="cohort_avg">Combined Average</td><td>100%</td><td>95%</td><td>91%</td><td>87%</td><td>82/100</td></tr>
+  </tbody>
+</table>
+<div class="section-title" data-i18n="s_breakeven">Breakeven Analysis</div>
+<table>
+  <thead><tr><th data-i18n="th_metric">Metric</th><th data-i18n="th_value">Value</th></tr></thead>
+  <tbody>
+    <tr><td data-i18n="be_fixed">Monthly Fixed Cost Base</td><td>~$28,000</td></tr>
+    <tr><td data-i18n="be_contrib">Contribution Margin per Customer</td><td>~$233/mo</td></tr>
+    <tr class="highlight"><td data-i18n="be_count">Breakeven Customer Count</td><td data-i18n="be_count_v">56 paying customers</td></tr>
+    <tr class="highlight"><td data-i18n="be_eta">ETA at current growth rate</td><td data-i18n="be_eta_v">Q2 2027 (post-seed deployment)</td></tr>
+    <tr><td data-i18n="be_curr">Current Paying Customers</td><td data-i18n="be_curr_v">21 (March 2026)</td></tr>
+  </tbody>
+</table>
+<div class="section-title" data-i18n="s_pricing">Pricing Tiers</div>
+<table>
+  <thead><tr><th data-i18n="th_plan">Plan</th><th data-i18n="th_price">Price/mo</th><th data-i18n="th_connectors">Connectors</th><th data-i18n="th_target">Target</th></tr></thead>
+  <tbody>
+    <tr><td data-i18n="pt_starter">Starter (Free)</td><td>$0</td><td data-i18n="pt_starter_c">GA4 only</td><td data-i18n="pt_starter_t">Solo founders, early-stage</td></tr>
+    <tr><td>Growth</td><td>$299</td><td data-i18n="pt_growth_c">GA4 + Ads + Meta + LinkedIn + Search Console</td><td data-i18n="pt_growth_t">Seed to Series A startups</td></tr>
+    <tr class="highlight"><td>Pro</td><td>$499</td><td data-i18n="pt_pro_c">All channels + GTM + AI playbooks</td><td data-i18n="pt_pro_t">Scale-ups, agencies</td></tr>
+    <tr><td>White-label</td><td>Custom</td><td data-i18n="pt_wl_c">All Pro + rebrand</td><td data-i18n="pt_wl_t">Agencies (Q3 2027)</td></tr>
+  </tbody>
+</table>
+<div class="footer-note" data-i18n="footer">GrowthWise · Confidential · growthwisetech.com</div>
+<script>
+const T={"title": {"en": "Unit Economics", "tr": "Birim Ekonomisi", "es": "Economía Unitaria"}, "sub": {"en": "GrowthWise · Growth Companion Platform · Pilot Cohort Data · Q1 2026", "tr": "GrowthWise · Büyüme Arkadaşı Platformu · Pilot Kohort Verisi · Q1 2026", "es": "GrowthWise · Plataforma Compañera · Datos Cohorte Piloto · Q1 2026"}, "kpi1": {"en": "LTV / CAC Ratio", "tr": "LTV / CAC Oranı", "es": "Ratio LTV / CAC"}, "kpi2": {"en": "CAC Payback Period", "tr": "CAC Geri Ödeme Süresi", "es": "Período de Recuperación CAC"}, "kpi3": {"en": "Gross Margin", "tr": "Brüt Marj", "es": "Margen Bruto"}, "kpi4": {"en": "90-Day Retention", "tr": "90 Günlük Müşteri Tutma", "es": "Retención a 90 Días"}, "s_core": {"en": "Core Unit Metrics", "tr": "Temel Birim Metrikleri", "es": "Métricas Unitarias Clave"}, "s_cohort": {"en": "Cohort Retention (Pilot Customers)", "tr": "Kohort Müşteri Tutma (Pilot Müşteriler)", "es": "Retención de Cohortes (Clientes Piloto)"}, "s_breakeven": {"en": "Breakeven Analysis", "tr": "Başabaş Analizi", "es": "Análisis de Punto de Equilibrio"}, "s_pricing": {"en": "Pricing Tiers", "tr": "Fiyatlandırma Kademeleri", "es": "Niveles de Precio"}, "th_metric": {"en": "Metric", "tr": "Metrik", "es": "Métrica"}, "th_value": {"en": "Value", "tr": "Değer", "es": "Valor"}, "th_notes": {"en": "Notes", "tr": "Notlar", "es": "Notas"}, "th_cohort": {"en": "Cohort", "tr": "Kohort", "es": "Cohorte"}, "th_m1": {"en": "Month 1", "tr": "Ay 1", "es": "Mes 1"}, "th_m2": {"en": "Month 2", "tr": "Ay 2", "es": "Mes 2"}, "th_m3": {"en": "Month 3", "tr": "Ay 3", "es": "Mes 3"}, "th_m6": {"en": "Month 6", "tr": "Ay 6", "es": "Mes 6"}, "th_hs": {"en": "Health Score Avg", "tr": "Ort. Sağlık Skoru", "es": "Health Score Medio"}, "th_plan": {"en": "Plan", "tr": "Plan", "es": "Plan"}, "th_price": {"en": "Price/mo", "tr": "Fiyat/ay", "es": "Precio/mes"}, "th_connectors": {"en": "Connectors", "tr": "Bağlayıcılar", "es": "Conectores"}, "th_target": {"en": "Target", "tr": "Hedef", "es": "Objetivo"}, "m_mrr": {"en": "Monthly Recurring Revenue (avg/customer)", "tr": "Aylık Yinelenen Gelir (müşteri başı ort.)", "es": "Ingresos Recurrentes Mensuales (media/cliente)"}, "m_mrr_n": {"en": "Starter $0, Growth $299, Pro $499", "tr": "Başlangıç $0, Büyüme $299, Pro $499", "es": "Inicial $0, Growth $299, Pro $499"}, "m_acv": {"en": "Annual Contract Value", "tr": "Yıllık Sözleşme Değeri", "es": "Valor Anual del Contrato"}, "m_acv_n": {"en": "Monthly billing, annual equivalent", "tr": "Aylık faturalama, yıllık eşdeğeri", "es": "Facturación mensual, equivalente anual"}, "m_cac": {"en": "Customer Acquisition Cost (CAC)", "tr": "Müşteri Edinme Maliyeti (CAC)", "es": "Coste de Adquisición de Cliente (CAC)"}, "m_cac_n": {"en": "Blended: outbound + content + referral", "tr": "Karma: giden arama + içerik + tavsiye", "es": "Combinado: outbound + contenido + referidos"}, "m_payback": {"en": "CAC Payback Period", "tr": "CAC Geri Ödeme Süresi", "es": "Período de Recuperación CAC"}, "m_payback_n": {"en": "Based on gross margin contribution", "tr": "Brüt marj katkısına göre", "es": "Basado en contribución de margen bruto"}, "m_ltv": {"en": "Customer Lifetime Value (LTV)", "tr": "Müşteri Yaşam Boyu Değeri (LTV)", "es": "Valor de Vida del Cliente (LTV)"}, "m_ltv_n": {"en": "At 35.7mo avg lifetime (91% monthly retention)", "tr": "35.7 ay ort. ömür süresinde (%91 aylık tutma)", "es": "Con vida media de 35.7 meses (retención mensual 91%)"}, "m_ltvr": {"en": "LTV / CAC Ratio", "tr": "LTV / CAC Oranı", "es": "Ratio LTV / CAC"}, "m_ltvr_n": {"en": "Industry benchmark: 3x minimum", "tr": "Sektör kıyaslaması: minimum 3x", "es": "Benchmark del sector: mínimo 3x"}, "m_gm": {"en": "Gross Margin", "tr": "Brüt Marj", "es": "Margen Bruto"}, "m_gm_n": {"en": "After infrastructure, API, and support costs", "tr": "Altyapı, API ve destek maliyetleri sonrası", "es": "Después de costes de infraestructura, API y soporte"}, "m_churn": {"en": "Monthly Churn Rate", "tr": "Aylık Müşteri Kayıp Oranı", "es": "Tasa de Abandono Mensual"}, "m_churn_n": {"en": "Pilot cohort 60-day data", "tr": "Pilot kohort 60 günlük veri", "es": "Datos de 60 días de la cohorte piloto"}, "m_nrr": {"en": "Net Revenue Retention", "tr": "Net Gelir Tutma", "es": "Retención Neta de Ingresos"}, "m_nrr_n": {"en": "Expansion from plan upgrades", "tr": "Plan yükseltmelerinden genişleme", "es": "Expansión por mejoras de plan"}, "cohort_a": {"en": "Cohort A (Jan 2026, n=12)", "tr": "Kohort A (Oca 2026, n=12)", "es": "Cohorte A (Ene 2026, n=12)"}, "cohort_b": {"en": "Cohort B (Feb 2026, n=9)", "tr": "Kohort B (Şub 2026, n=9)", "es": "Cohorte B (Feb 2026, n=9)"}, "cohort_avg": {"en": "Combined Average", "tr": "Birleşik Ortalama", "es": "Promedio Combinado"}, "be_fixed": {"en": "Monthly Fixed Cost Base", "tr": "Aylık Sabit Maliyet Tabanı", "es": "Base de Costes Fijos Mensuales"}, "be_contrib": {"en": "Contribution Margin per Customer", "tr": "Müşteri Başına Katkı Marjı", "es": "Margen de Contribución por Cliente"}, "be_count": {"en": "Breakeven Customer Count", "tr": "Başabaş Müşteri Sayısı", "es": "Número de Clientes en Equilibrio"}, "be_count_v": {"en": "56 paying customers", "tr": "56 ödeme yapan müşteri", "es": "56 clientes de pago"}, "be_eta": {"en": "ETA at current growth rate", "tr": "Mevcut büyüme hızında ETA", "es": "ETA a tasa de crecimiento actual"}, "be_eta_v": {"en": "Q2 2027 (post-seed deployment)", "tr": "Q2 2027 (seed sonrası dağıtım)", "es": "Q2 2027 (tras despliegue seed)"}, "be_curr": {"en": "Current Paying Customers", "tr": "Mevcut Ödeme Yapan Müşteriler", "es": "Clientes de Pago Actuales"}, "be_curr_v": {"en": "21 (March 2026)", "tr": "21 (Mart 2026)", "es": "21 (Marzo 2026)"}, "pt_starter": {"en": "Starter (Free)", "tr": "Başlangıç (Ücretsiz)", "es": "Inicial (Gratis)"}, "pt_starter_c": {"en": "GA4 only", "tr": "Yalnızca GA4", "es": "Solo GA4"}, "pt_starter_t": {"en": "Solo founders, early-stage", "tr": "Solo kurucular, erken aşama", "es": "Fundadores solo, etapa inicial"}, "pt_growth_c": {"en": "GA4 + Ads + Meta + LinkedIn + Search Console", "tr": "GA4 + Ads + Meta + LinkedIn + Search Console", "es": "GA4 + Ads + Meta + LinkedIn + Search Console"}, "pt_growth_t": {"en": "Seed to Series A startups", "tr": "Seed'den Seri A'ya startuplar", "es": "Startups de seed a Serie A"}, "pt_pro_c": {"en": "All channels + GTM + AI playbooks", "tr": "Tüm kanallar + GTM + AI playbook'ları", "es": "Todos los canales + GTM + playbooks IA"}, "pt_pro_t": {"en": "Scale-ups, agencies", "tr": "Ölçeklenen şirketler, ajanslar", "es": "Scale-ups, agencias"}, "pt_wl_t": {"en": "Agencies (Q3 2027)", "tr": "Ajanslar (Q3 2027)", "es": "Agencias (Q3 2027)"}, "pt_wl_c": {"en": "All Pro + rebrand", "tr": "Tüm Pro + yeniden markalama", "es": "Todo Pro + rebranding"}, "footer": {"en": "GrowthWise · Confidential · For qualified investors only · growthwisetech.com", "tr": "GrowthWise · Gizlidir · Yalnızca nitelikli yatırımcılar için · growthwisetech.com", "es": "GrowthWise · Confidencial · Solo para inversores cualificados · growthwisetech.com"}};
+var curLang='en';
+function getLangFromURL(){var m=location.search.match(/lang=([a-z]{2})/);return m?m[1]:'en';}
+function applyLang(){
+  document.querySelectorAll('[data-i18n]').forEach(function(el){
+    var k=el.getAttribute('data-i18n');
+    if(T[k]){var v=T[k][curLang]||T[k]['en'];
+      if(el.getAttribute('data-i18n-html')==='1')el.innerHTML=v;
+      else el.textContent=v;}
+  });
+}
+window.addEventListener('DOMContentLoaded',function(){
+  curLang=getLangFromURL();
+  applyLang();
+});
+</script>
+</body></html>

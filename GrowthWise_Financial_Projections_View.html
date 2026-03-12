@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta charset="UTF-8"><title>GrowthWise Financial Projections</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+:root{--navy:#1B1B4E;--teal:#00D4AA;--purple:#7C4FD4;--blue:#4472E0;--orange:#F97316;
+  --grad:linear-gradient(135deg,#00D4AA 0%,#7C4FD4 55%,#4472E0 100%);
+  --bg:#F7F8FB;--bg2:#EFF1F8;--border:#DDE1EF;}
+body{font-family:'Segoe UI',Arial,sans-serif;background:var(--bg);color:var(--navy);padding:32px 40px 60px;}
+.page-title{font-size:26px;font-weight:900;color:var(--navy);margin-bottom:4px;}
+.page-sub{font-size:13px;color:#6B7280;margin-bottom:32px;}
+.section-title{font-size:16px;font-weight:800;color:var(--navy);margin:32px 0 14px;display:flex;align-items:center;gap:8px;}
+.section-title::before{content:'';display:inline-block;width:3px;height:16px;background:var(--grad);border-radius:2px;}
+table{width:100%;border-collapse:collapse;font-size:13px;}
+th{background:var(--navy);color:#fff;padding:10px 14px;text-align:left;font-weight:600;font-size:12px;}
+td{padding:9px 14px;border-bottom:1px solid var(--border);}
+tr:nth-child(even) td{background:var(--bg2);}
+tr.highlight td{background:rgba(0,212,170,.1);font-weight:700;color:var(--navy);}
+.chip{display:inline-block;padding:3px 10px;border-radius:20px;font-size:11px;font-weight:700;}
+.chip-green{background:rgba(0,212,170,.15);color:#065F46;}
+.chip-blue{background:rgba(68,114,224,.15);color:#1E40AF;}
+.chip-orange{background:rgba(249,115,22,.15);color:#9A3412;}
+.kpi-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:8px;}
+.kpi{background:#fff;border:1.5px solid var(--border);border-radius:12px;padding:18px 20px;}
+.kpi-val{font-size:26px;font-weight:900;background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+.kpi-lbl{font-size:11px;color:#6B7280;margin-top:4px;}
+.footer-note{margin-top:40px;font-size:11px;color:#9CA3AF;border-top:1px solid var(--border);padding-top:16px;}
+.scenario-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;}
+.sc{background:#fff;border:1.5px solid var(--border);border-radius:12px;padding:20px;}
+.sc.base{border-color:var(--teal);}
+.sc-label{font-size:10px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;margin-bottom:6px;}
+.sc.base .sc-label{color:var(--teal);}
+.sc.bear .sc-label{color:#EF4444;}
+.sc.bull .sc-label{color:var(--blue);}
+.sc-val{font-size:28px;font-weight:900;color:var(--navy);}
+.sc-sub{font-size:12px;color:#6B7280;margin-top:4px;}
+.funds-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;}
+.fund-item{background:#fff;border:1.5px solid var(--border);border-radius:12px;padding:16px;}
+.fund-pct{font-size:26px;font-weight:900;background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+.fund-lbl{font-size:11px;color:#6B7280;margin-top:4px;}
+.fund-amt{font-size:13px;font-weight:700;color:var(--navy);margin-top:2px;}
+</style>
+</head>
+<body>
+<div class="page-title" data-i18n="title">Financial Projections</div>
+<div class="page-sub" data-i18n="sub">GrowthWise · Growth Companion Platform · 2026–2028 · Seed closes Q4 2026</div>
+<div class="kpi-grid">
+  <div class="kpi"><div class="kpi-val">Q4 2026</div><div class="kpi-lbl" data-i18n="kpi1">Seed Round Closes ($750K)</div></div>
+  <div class="kpi"><div class="kpi-val">Q2 2027</div><div class="kpi-lbl" data-i18n="kpi2">EBITDA Breakeven</div></div>
+  <div class="kpi"><div class="kpi-val">$2.1M</div><div class="kpi-lbl" data-i18n="kpi3">ARR Target EOY 2027</div></div>
+  <div class="kpi"><div class="kpi-val">~26mo</div><div class="kpi-lbl" data-i18n="kpi4">Runway from Seed Close</div></div>
+</div>
+<div class="section-title" data-i18n="s_pl">P&amp;L Summary — Quarterly (Base Case)</div>
+<table>
+  <thead><tr><th data-i18n="th_metric">Metric</th><th>Q2 2026</th><th>Q3 2026</th><th>Q4 2026</th><th>Q1 2027</th><th>Q2 2027</th><th>Q4 2027</th></tr></thead>
+  <tbody>
+    <tr><td data-i18n="pl_cust">Paying Customers</td><td>35</td><td>65</td><td>100</td><td>150</td><td>200</td><td>350</td></tr>
+    <tr><td data-i18n="pl_mrr">MRR</td><td>$10,500</td><td>$19,500</td><td>$29,900</td><td>$44,900</td><td>$59,800</td><td>$174,650</td></tr>
+    <tr><td data-i18n="pl_arr">ARR Run Rate</td><td>$126K</td><td>$234K</td><td>$359K</td><td>$539K</td><td>$718K</td><td>$2.1M</td></tr>
+    <tr><td data-i18n="pl_gp">Gross Profit (78%)</td><td>$16,380</td><td>$35,100</td><td>$58,188</td><td>$81,588</td><td>$116,610</td><td>$340,860</td></tr>
+    <tr><td data-i18n="pl_opex">Operating Expenses</td><td>($62,000)</td><td>($68,000)</td><td>($75,000)</td><td>($98,000)</td><td>($112,000)</td><td>($145,000)</td></tr>
+    <tr class="highlight"><td data-i18n="pl_ebitda">EBITDA</td><td>($45,620)</td><td>($32,900)</td><td>($16,812)</td><td>($16,412)</td><td>$4,610</td><td>$195,860</td></tr>
+  </tbody>
+</table>
+<div class="section-title" data-i18n="s_milestones">Key Milestones</div>
+<table>
+  <thead><tr><th data-i18n="th_date">Date</th><th data-i18n="th_milestone">Milestone</th><th data-i18n="th_milestone_m">Metric</th></tr></thead>
+  <tbody>
+    <tr><td>Q1–Q2 2026</td><td data-i18n="ms1_m">GA4 Health Score live, pre-seed runway</td><td data-i18n="ms1_v">50 paying customers</td></tr>
+    <tr><td>Q3 2026</td><td data-i18n="ms2_m">Full connector suite, seed process begins</td><td data-i18n="ms2_v">100 customers, $234K ARR</td></tr>
+    <tr class="highlight"><td>Q4 2026</td><td data-i18n="ms3_m">$750K seed round closes</td><td data-i18n="ms3_v">~26 months runway secured</td></tr>
+    <tr><td>Q1 2027</td><td data-i18n="ms4_m">Seed capital deployed, AI playbooks beta</td><td data-i18n="ms4_v">200 customers, $539K ARR</td></tr>
+    <tr class="highlight"><td>Q2 2027</td><td data-i18n="ms5_m">EBITDA breakeven</td><td data-i18n="ms5_v">$718K ARR</td></tr>
+    <tr><td>Q4 2027</td><td data-i18n="ms6_m">Series A preparation</td><td data-i18n="ms6_v">350 customers, $2.1M ARR</td></tr>
+  </tbody>
+</table>
+<div class="section-title" data-i18n="s_scenarios">Scenario Analysis — ARR at EOY 2027</div>
+<div class="scenario-grid">
+  <div class="sc bear"><div class="sc-label" data-i18n="bear">Bear Case</div><div class="sc-val">$1.1M</div><div class="sc-sub" data-i18n="bear_b">Slower sales, 5% churn, delayed seed close.</div></div>
+  <div class="sc base"><div class="sc-label" data-i18n="base">Base Case</div><div class="sc-val">$2.1M</div><div class="sc-sub" data-i18n="base_b">Seed closes Q4 2026, 2.4% churn, 30+ customers/month.</div></div>
+  <div class="sc bull"><div class="sc-label" data-i18n="bull">Bull Case</div><div class="sc-val">$3.8M</div><div class="sc-sub" data-i18n="bull_b">White-label Q2 2027, DACH expansion, viral referral.</div></div>
+</div>
+<div class="section-title" data-i18n="s_funds">Use of Funds — $750K Seed Round</div>
+<div class="funds-grid">
+  <div class="fund-item"><div class="fund-pct">35%</div><div class="fund-lbl" data-i18n="f_prod">Product and Engineering</div><div class="fund-amt">$262,500</div></div>
+  <div class="fund-item"><div class="fund-pct">30%</div><div class="fund-lbl" data-i18n="f_sales">Sales and Marketing</div><div class="fund-amt">$225,000</div></div>
+  <div class="fund-item"><div class="fund-pct">15%</div><div class="fund-lbl" data-i18n="f_cs">Customer Success</div><div class="fund-amt">$112,500</div></div>
+  <div class="fund-item"><div class="fund-pct">20%</div><div class="fund-lbl" data-i18n="f_ga">G&amp;A and Reserve</div><div class="fund-amt">$150,000</div></div>
+</div>
+<div class="footer-note" data-i18n="footer">GrowthWise · Confidential · growthwisetech.com</div>
+<script>
+const T={"title": {"en": "Financial Projections", "tr": "Finansal Projeksiyonlar", "es": "Proyecciones Financieras"}, "sub": {"en": "GrowthWise · Growth Companion Platform · 2026–2028 · Seed closes Q4 2026", "tr": "GrowthWise · Büyüme Arkadaşı Platformu · 2026–2028 · Seed Q4 2026'da kapanıyor", "es": "GrowthWise · Plataforma Compañera · 2026–2028 · Seed cierra Q4 2026"}, "kpi1": {"en": "Seed Round Closes ($750K)", "tr": "Seed Turu Kapanıyor ($750K)", "es": "Cierre Ronda Seed ($750K)"}, "kpi2": {"en": "EBITDA Breakeven", "tr": "FAVÖK Başabaş Noktası", "es": "EBITDA Equilibrio"}, "kpi3": {"en": "ARR Target EOY 2027", "tr": "2027 Yıl Sonu ARR Hedefi", "es": "Objetivo ARR Fin 2027"}, "kpi4": {"en": "Runway from Seed Close", "tr": "Seed Kapanışından Pist", "es": "Pista desde Cierre Seed"}, "s_pl": {"en": "P&L Summary — Quarterly (Base Case)", "tr": "Kar/Zarar Özeti — Üç Aylık (Temel Senaryo)", "es": "Resumen P&L — Trimestral (Caso Base)"}, "s_milestones": {"en": "Key Milestones", "tr": "Temel Kilometre Taşları", "es": "Hitos Clave"}, "s_scenarios": {"en": "Scenario Analysis — ARR at EOY 2027", "tr": "Senaryo Analizi — 2027 Yıl Sonu ARR", "es": "Análisis de Escenarios — ARR a fin de 2027"}, "s_funds": {"en": "Use of Funds — $750K Seed Round", "tr": "Fonların Kullanımı — $750K Seed Turu", "es": "Uso de Fondos — Ronda Seed $750K"}, "th_metric": {"en": "Metric", "tr": "Metrik", "es": "Métrica"}, "th_date": {"en": "Date", "tr": "Tarih", "es": "Fecha"}, "th_milestone": {"en": "Milestone", "tr": "Kilometre Taşı", "es": "Hito"}, "th_milestone_m": {"en": "Metric", "tr": "Metrik", "es": "Métrica"}, "pl_cust": {"en": "Paying Customers", "tr": "Ödeme Yapan Müşteriler", "es": "Clientes de Pago"}, "pl_mrr": {"en": "MRR", "tr": "AYG", "es": "MRR"}, "pl_arr": {"en": "ARR Run Rate", "tr": "ARR Hızı", "es": "Tasa ARR"}, "pl_gp": {"en": "Gross Profit (78%)", "tr": "Brüt Kar (%78)", "es": "Beneficio Bruto (78%)"}, "pl_opex": {"en": "Operating Expenses", "tr": "İşletme Giderleri", "es": "Gastos Operativos"}, "pl_ebitda": {"en": "EBITDA", "tr": "FAVÖK", "es": "EBITDA"}, "ms1_m": {"en": "GA4 Health Score live, pre-seed runway", "tr": "GA4 Sağlık Skoru aktif, pre-seed pisti", "es": "GA4 Health Score activo, pista pre-seed"}, "ms1_v": {"en": "50 paying customers", "tr": "50 ödeme yapan müşteri", "es": "50 clientes de pago"}, "ms2_m": {"en": "Full connector suite, seed process begins", "tr": "Tam bağlayıcı paketi, seed süreci başlıyor", "es": "Suite completa de conectores, inicia proceso seed"}, "ms2_v": {"en": "100 customers, $234K ARR", "tr": "100 müşteri, $234K ARR", "es": "100 clientes, $234K ARR"}, "ms3_m": {"en": "$750K seed round closes", "tr": "$750K seed turu kapanıyor", "es": "Cierra ronda seed $750K"}, "ms3_v": {"en": "~26 months runway secured", "tr": "~26 aylık pist güvence altında", "es": "~26 meses de pista asegurados"}, "ms4_m": {"en": "Seed capital deployed, AI playbooks beta", "tr": "Seed sermayesi dağıtıldı, AI playbook'lar beta", "es": "Capital seed desplegado, beta playbooks IA"}, "ms4_v": {"en": "200 customers, $539K ARR", "tr": "200 müşteri, $539K ARR", "es": "200 clientes, $539K ARR"}, "ms5_m": {"en": "EBITDA breakeven", "tr": "FAVÖK başabaş noktası", "es": "EBITDA equilibrio"}, "ms5_v": {"en": "$718K ARR", "tr": "$718K ARR", "es": "$718K ARR"}, "ms6_m": {"en": "Series A preparation", "tr": "Seri A hazırlığı", "es": "Preparación Serie A"}, "ms6_v": {"en": "350 customers, $2.1M ARR", "tr": "350 müşteri, $2.1M ARR", "es": "350 clientes, $2.1M ARR"}, "bear": {"en": "Bear Case", "tr": "Kötümser Senaryo", "es": "Caso Pesimista"}, "base": {"en": "Base Case", "tr": "Temel Senaryo", "es": "Caso Base"}, "bull": {"en": "Bull Case", "tr": "İyimser Senaryo", "es": "Caso Optimista"}, "bear_b": {"en": "Slower sales, 5% monthly churn, delayed seed close (Q1 2027).", "tr": "Yavaş satışlar, aylık %5 kayıp, gecikmiş seed kapanışı (Q1 2027).", "es": "Ventas lentas, churn mensual 5%, cierre seed retrasado (Q1 2027)."}, "base_b": {"en": "Seed closes Q4 2026, 2.4% churn, 30+ new customers/month by Q3 2027.", "tr": "Seed Q4 2026'da kapanıyor, %2.4 kayıp, Q3 2027'ye kadar ayda 30+ yeni müşteri.", "es": "Seed cierra Q4 2026, churn 2.4%, 30+ clientes nuevos/mes en Q3 2027."}, "bull_b": {"en": "Agency white-label launch Q2 2027, DACH expansion, viral referral loop.", "tr": "Ajans özel marka lansmanı Q2 2027, DACH genişlemesi, viral yönlendirme döngüsü.", "es": "Lanzamiento marca blanca Q2 2027, expansión DACH, bucle viral de referidos."}, "f_prod": {"en": "Product and Engineering", "tr": "Ürün ve Mühendislik", "es": "Producto e Ingeniería"}, "f_sales": {"en": "Sales and Marketing", "tr": "Satış ve Pazarlama", "es": "Ventas y Marketing"}, "f_cs": {"en": "Customer Success", "tr": "Müşteri Başarısı", "es": "Éxito del Cliente"}, "f_ga": {"en": "G&A and Reserve", "tr": "G&Y ve Rezerv", "es": "G&A y Reserva"}, "footer": {"en": "GrowthWise · Confidential · For qualified investors only · growthwisetech.com", "tr": "GrowthWise · Gizlidir · Yalnızca nitelikli yatırımcılar için · growthwisetech.com", "es": "GrowthWise · Confidencial · Solo para inversores cualificados · growthwisetech.com"}};
+var curLang='en';
+function getLangFromURL(){var m=location.search.match(/lang=([a-z]{2})/);return m?m[1]:'en';}
+function applyLang(){
+  document.querySelectorAll('[data-i18n]').forEach(function(el){
+    var k=el.getAttribute('data-i18n');
+    if(T[k]){var v=T[k][curLang]||T[k]['en'];
+      if(el.getAttribute('data-i18n-html')==='1')el.innerHTML=v;
+      else el.textContent=v;}
+  });
+}
+window.addEventListener('DOMContentLoaded',function(){
+  curLang=getLangFromURL();
+  applyLang();
+});
+</script>
+</body></html>

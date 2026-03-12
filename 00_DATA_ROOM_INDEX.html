@@ -169,10 +169,61 @@ html,body{height:100%;overflow:hidden;font-family:'Segoe UI',Arial,sans-serif;ba
 function ndaEnter(){
   var f=document.getElementById('nda-fname').value.trim(),l=document.getElementById('nda-lname').value.trim(),em=document.getElementById('nda-email').value.trim(),c=document.getElementById('nda-check').checked;
   if(!f||!l||!em||em.indexOf('@')<1||!c){document.getElementById('nda-err').style.display='block';return;}
+  /* Save NDA entry */
+  var entry={firstName:f,lastName:l,email:em,timestamp:new Date().toISOString(),ua:navigator.userAgent};
+  try{var entries=JSON.parse(localStorage.getItem('nda_entries')||'[]');entries.push(entry);localStorage.setItem('nda_entries',JSON.stringify(entries));}catch(e){}
+  /* Send to Google Sheets webhook (set your URL below) */
+  var WEBHOOK_URL=localStorage.getItem('nda_webhook_url')||'';
+  if(WEBHOOK_URL){try{navigator.sendBeacon(WEBHOOK_URL,JSON.stringify(entry));}catch(e){try{fetch(WEBHOOK_URL,{method:'POST',mode:'no-cors',body:JSON.stringify(entry)});}catch(e2){}}}
   document.getElementById('nda-gate').style.opacity='0';
   document.getElementById('nda-gate').style.transition='opacity .4s';
   setTimeout(function(){document.getElementById('nda-gate').style.display='none';},400);
 }
+/* Admin Dashboard - Ctrl+Shift+A */
+document.addEventListener('keydown',function(e){if(e.ctrlKey&&e.shiftKey&&e.key==='A'){e.preventDefault();toggleAdmin();}});
+function toggleAdmin(){
+  var p=document.getElementById('nda-admin');
+  if(p){p.style.display=p.style.display==='none'?'flex':'none';if(p.style.display==='flex')renderAdmin();return;}
+  var d=document.createElement('div');d.id='nda-admin';
+  d.style.cssText='position:fixed;inset:0;z-index:99999;background:rgba(0,0,0,.7);display:flex;align-items:center;justify-content:center;';
+  d.innerHTML='<div style="background:#fff;border-radius:18px;padding:32px;max-width:720px;width:90%;max-height:80vh;overflow-y:auto;box-shadow:0 20px 60px rgba(0,0,0,.3);">'
+    +'<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;">'
+    +'<div style="font-size:20px;font-weight:800;color:#1B1B4E;">NDA Admin Dashboard</div>'
+    +'<div style="display:flex;gap:8px;">'
+    +'<button onclick="exportCSV()" style="padding:6px 14px;border-radius:8px;border:1.5px solid #DDE1EF;background:#F7F8FB;font-size:12px;font-weight:700;cursor:pointer;">Export CSV</button>'
+    +'<button onclick="clearNDA()" style="padding:6px 14px;border-radius:8px;border:1.5px solid #F97316;background:#fff;color:#F97316;font-size:12px;font-weight:700;cursor:pointer;">Clear All</button>'
+    +'<button onclick="document.getElementById(\'nda-admin\').style.display=\'none\'" style="padding:6px 14px;border-radius:8px;border:none;background:#1B1B4E;color:#fff;font-size:12px;font-weight:700;cursor:pointer;">Close</button>'
+    +'</div></div>'
+    +'<div style="margin-bottom:14px;font-size:11px;color:#6B7280;">Webhook URL: <input id="webhook-url-input" type="text" placeholder="Paste Google Sheets Web App URL here..." style="width:70%;padding:4px 8px;border:1px solid #DDE1EF;border-radius:6px;font-size:11px;" value="'+(localStorage.getItem('nda_webhook_url')||'')+'"> <button onclick="localStorage.setItem(\'nda_webhook_url\',document.getElementById(\'webhook-url-input\').value);alert(\'Saved!\')" style="padding:4px 10px;border:1px solid #00D4AA;border-radius:6px;background:#00D4AA;color:#fff;font-size:11px;font-weight:700;cursor:pointer;">Save</button></div>'
+    +'<div id="nda-admin-table"></div>'
+    +'<div style="margin-top:14px;font-size:10px;color:#9CA3AF;">Tip: Entries are stored in browser localStorage. Use Google Sheets webhook for persistent tracking across devices.</div>'
+    +'</div>';
+  d.onclick=function(ev){if(ev.target===d)d.style.display='none';};
+  document.body.appendChild(d);
+  renderAdmin();
+}
+function renderAdmin(){
+  var entries=JSON.parse(localStorage.getItem('nda_entries')||'[]');
+  var t=document.getElementById('nda-admin-table');
+  if(!entries.length){t.innerHTML='<div style="text-align:center;padding:30px;color:#9CA3AF;font-size:14px;">No NDA entries yet.</div>';return;}
+  var h='<div style="font-size:12px;color:#6B7280;margin-bottom:8px;">'+entries.length+' investor(s) signed the NDA</div>'
+    +'<table style="width:100%;border-collapse:collapse;font-size:12px;">'
+    +'<tr style="background:#F7F8FB;"><th style="padding:8px 10px;text-align:left;border-bottom:2px solid #DDE1EF;font-weight:700;">Name</th><th style="padding:8px 10px;text-align:left;border-bottom:2px solid #DDE1EF;font-weight:700;">Email</th><th style="padding:8px 10px;text-align:left;border-bottom:2px solid #DDE1EF;font-weight:700;">Date/Time</th></tr>';
+  entries.forEach(function(e){
+    var dt=new Date(e.timestamp);
+    h+='<tr><td style="padding:8px 10px;border-bottom:1px solid #EEF0F6;">'+e.firstName+' '+e.lastName+'</td>'
+      +'<td style="padding:8px 10px;border-bottom:1px solid #EEF0F6;"><a href="mailto:'+e.email+'" style="color:#4472E0;">'+e.email+'</a></td>'
+      +'<td style="padding:8px 10px;border-bottom:1px solid #EEF0F6;color:#6B7280;">'+dt.toLocaleDateString('tr-TR')+' '+dt.toLocaleTimeString('tr-TR',{hour:'2-digit',minute:'2-digit'})+'</td></tr>';
+  });
+  h+='</table>';t.innerHTML=h;
+}
+function exportCSV(){
+  var entries=JSON.parse(localStorage.getItem('nda_entries')||'[]');
+  var csv='Name,Email,Date,Time,User Agent\n';
+  entries.forEach(function(e){var dt=new Date(e.timestamp);csv+='"'+e.firstName+' '+e.lastName+'","'+e.email+'","'+dt.toLocaleDateString('tr-TR')+'","'+dt.toLocaleTimeString('tr-TR')+'","'+(e.ua||'').replace(/"/g,"'")+'"\n';});
+  var blob=new Blob([csv],{type:'text/csv'});var a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='nda_entries_'+new Date().toISOString().slice(0,10)+'.csv';a.click();
+}
+function clearNDA(){if(confirm('Are you sure you want to clear all NDA entries?')){localStorage.removeItem('nda_entries');renderAdmin();}}
 </script>
 
 
@@ -200,7 +251,7 @@ function ndaEnter(){
   <div class="nav-sep"></div>
   <div class="nav-sec">Sections</div>
   <a class="nav-item" id="nav-pricing" onclick="scrollToSec('sec-pricing-anchor','nav-pricing');return false;" href="#"><span class="ico">&#127991;</span><span data-i18n="nav_pricing">Pricing</span></a>
-  <a class="nav-item" id="nav-team" onclick="scrollToSec('sec-team-anchor','nav-team');return false;" href="#"><span class="ico">&#128101;</span><span data-i18n="nav_team">Team</span></a>
+
   <a class="nav-item" id="nav-ask" onclick="scrollToSec('sec-ask-anchor','nav-ask');return false;" href="#"><span class="ico">&#128188;</span><span data-i18n="nav_ask">The Ask</span></a>
 </nav>
 
@@ -333,29 +384,6 @@ function ndaEnter(){
       </div>
     </div>
 
-    <div class="sec-team" id="sec-team-anchor">
-      <div class="sh" data-i18n="team_title">Team</div>
-      <div class="team-sub" data-i18n="sub_founders">Founders</div>
-      <div class="team-grid">
-        <div class="person"><div class="p-av" style="background:linear-gradient(135deg,#00D4AA,#7C4FD4)">OD</div><div class="p-name">Ozlem Degirmenci Gulser</div><div class="p-role" data-i18n="role_ceo">CEO and Co-Founder</div></div>
-        <div class="person"><div class="p-av" style="background:linear-gradient(135deg,#7C4FD4,#4472E0)">DH</div><div class="p-name">Dilara Holat Güldiker</div><div class="p-role" data-i18n="role_hog">Head of Growth and Co-Founder</div></div>
-      </div>
-      <div class="team-sub" data-i18n="sub_eng">Engineering</div>
-      <div class="team-grid">
-        <div class="person"><div class="p-av" style="background:linear-gradient(135deg,#3B72E8,#1E40AF)">HC</div><div class="p-name">Hitesh Chopra</div><div class="p-role" data-i18n="role_cto">CTO</div></div>
-        <div class="person"><div class="p-av" style="background:linear-gradient(135deg,#0891b2,#06b6d4)">TU</div><div class="p-name">Tolga Uzun</div><div class="p-role" data-i18n="role_be">Backend Engineer</div></div>
-        <div class="person"><div class="p-av" style="background:linear-gradient(135deg,#0891b2,#4472E0)">KBO</div><div class="p-name">Kadri Bugra Ozutemiz</div><div class="p-role" data-i18n="role_fe">Frontend Engineer</div></div>
-      </div>
-      <div class="team-sub" data-i18n="sub_mktg">Marketing and Growth</div>
-      <div class="team-grid">
-        <div class="person"><div class="p-av" style="background:linear-gradient(135deg,#7c3aed,#a855f7)">CB</div><div class="p-name">Ceren Baran</div><div class="p-role" data-i18n="role_ge">Growth Engineer</div></div>
-        <div class="person"><div class="p-av" style="background:linear-gradient(135deg,#7c3aed,#a855f7)">DR</div><div class="p-name">Dogukan Rendeci</div><div class="p-role" data-i18n="role_ge">Growth Engineer</div></div>
-      </div>
-      <div class="team-sub" data-i18n="sub_adv">Advisory Board</div>
-      <div class="team-grid">
-        <div class="person" style="border-color:var(--teal);"><div class="p-av" style="background:linear-gradient(135deg,#4472E0,#7C4FD4)">LD</div><div class="p-name">Lawrence Du Pre</div><div class="p-role" data-i18n="role_adv">Strategic Advisor &middot; ex-Salesforce VP</div></div>
-      </div>
-    </div>
 
     <div class="sec-footer">
       <div><strong style="color:#fff;">GrowthWise</strong> &middot; growthwisetech.com &middot; ozlem@growthwise.tech<br><span data-i18n="footer_conf">Confidential. For qualified investors only. March 2026.</span></div>

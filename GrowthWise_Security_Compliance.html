@@ -1,0 +1,772 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<base href="https://ozlemgrowthwise.github.io/GrowthWise-Data-Room/" target="_blank">
+<title>GrowthWise Security & Compliance</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+:root{
+  --navy:#1B1B4E;--teal:#00D4AA;--purple:#7C4FD4;--blue:#4472E0;--orange:#F97316;
+  --grad:linear-gradient(135deg,#00D4AA 0%,#7C4FD4 55%,#4472E0 100%);
+  --bg:#F7F8FB;--bg2:#EFF1F8;--border:#DDE1EF;
+  --drive-blue:#1a73e8;--drive-bg:#f8f9fa;--drive-hover:#e8f0fe;
+}
+body{font-family:'Segoe UI',Arial,sans-serif;background:var(--bg);color:var(--navy);padding:32px 40px 60px;}
+.page-title{font-size:26px;font-weight:900;color:var(--navy);margin-bottom:4px;}
+.page-sub{font-size:13px;color:#6B7280;margin-bottom:28px;}
+
+/* Breadcrumb */
+.breadcrumb{display:flex;align-items:center;gap:6px;font-size:13px;color:#6B7280;margin-bottom:24px;padding:10px 16px;background:#fff;border:1.5px solid var(--border);border-radius:10px;}
+.bc-icon{font-size:18px;}
+.bc-sep{color:#CBD5E1;}
+.bc-current{color:var(--navy);font-weight:600;}
+
+/* Section */
+.section-title{font-size:15px;font-weight:800;color:var(--navy);margin:28px 0 12px;display:flex;align-items:center;gap:8px;}
+.section-title::before{content:'';display:inline-block;width:3px;height:15px;background:var(--grad);border-radius:2px;}
+
+/* Status/Overview badge */
+.status-badge{background:linear-gradient(135deg,rgba(0,212,170,.06),rgba(68,114,224,.06));border:1.5px solid rgba(0,212,170,.3);border-radius:12px;padding:16px 20px;margin-bottom:20px;display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px;}
+.badge-item{flex:1;padding:12px;background:#fff;border-radius:8px;border:1px solid var(--border);}
+.badge-label{font-size:11px;font-weight:700;color:#6B7280;text-transform:uppercase;letter-spacing:0.5px;margin-bottom:6px;}
+.badge-value{font-size:14px;font-weight:800;color:var(--navy);display:flex;align-items:center;gap:8px;}
+.badge-icon{font-size:18px;}
+
+/* Info card */
+.info-card{background:linear-gradient(135deg,rgba(0,212,170,.08),rgba(68,114,224,.06));border:1.5px solid rgba(0,212,170,.25);border-radius:12px;padding:16px 20px;margin-bottom:16px;display:flex;gap:12px;}
+.info-icon{font-size:20px;flex-shrink:0;}
+.info-body{flex:1;font-size:13px;line-height:1.6;color:#3a3a3a;}
+.info-body strong{color:var(--navy);font-weight:700;}
+
+/* Content card */
+.card{background:#fff;border:1.5px solid var(--border);border-radius:12px;padding:20px;margin-bottom:16px;transition:border .2s,box-shadow .2s;}
+.card:hover{border-color:rgba(0,212,170,.3);box-shadow:0 2px 8px rgba(0,0,0,.06);}
+.card-title{font-size:14px;font-weight:800;color:var(--navy);margin-bottom:12px;display:flex;align-items:center;gap:8px;}
+.card-icon{font-size:18px;}
+.card-content{font-size:13px;line-height:1.7;color:#4a4a4a;}
+.card-list{list-style:none;padding:0;margin:8px 0 0;}
+.card-list li{padding:6px 0;padding-left:24px;position:relative;}
+.card-list li:before{content:'✓';position:absolute;left:0;color:var(--teal);font-weight:800;}
+
+/* Data flow grid */
+.data-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px;margin-bottom:20px;}
+.data-box{background:linear-gradient(135deg,rgba(0,212,170,.05),rgba(68,114,224,.05));border:1.5px solid var(--border);border-radius:10px;padding:14px;display:flex;flex-direction:column;}
+.data-box-title{font-size:12px;font-weight:700;color:#6B7280;text-transform:uppercase;letter-spacing:0.4px;margin-bottom:8px;}
+.data-box-content{font-size:13px;font-weight:600;color:var(--navy);}
+.data-box-icon{font-size:22px;margin-bottom:6px;}
+
+/* Roadmap */
+.roadmap{margin:20px 0;}
+.roadmap-item{display:flex;gap:16px;margin-bottom:16px;align-items:flex-start;}
+.roadmap-circle{width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:800;flex-shrink:0;color:#fff;font-size:14px;}
+.roadmap-circle.done{background:var(--teal);}
+.roadmap-circle.active{background:var(--orange);box-shadow:0 0 12px rgba(249,115,22,.3);}
+.roadmap-circle.pending{background:#CBD5E1;}
+.roadmap-body{flex:1;padding-top:2px;}
+.roadmap-phase{font-size:13px;font-weight:800;color:var(--navy);}
+.roadmap-desc{font-size:12px;color:#6B7280;margin-top:4px;}
+.roadmap-tasks{font-size:12px;color:#4a4a4a;margin-top:6px;padding-left:16px;}
+.roadmap-tasks li{list-style:disc;margin-bottom:4px;}
+
+/* Roles table */
+.roles-table{width:100%;border-collapse:collapse;margin-top:12px;}
+.roles-table thead{background:var(--bg2);}
+.roles-table th{padding:10px 12px;text-align:left;font-weight:700;font-size:12px;color:var(--navy);border-bottom:2px solid var(--border);}
+.roles-table td{padding:10px 12px;border-bottom:1px solid var(--border);font-size:13px;}
+.roles-table tbody tr:hover{background:rgba(0,212,170,.04);}
+.role-badge{display:inline-block;background:linear-gradient(135deg,rgba(0,212,170,.2),rgba(68,114,224,.1));color:var(--navy);padding:3px 8px;border-radius:4px;font-weight:600;font-size:11px;}
+
+/* Encryption details */
+.encryption-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px;margin-top:12px;}
+.encryption-box{background:linear-gradient(135deg,rgba(0,212,170,.06),rgba(248,248,248,.5));border:1.5px solid rgba(0,212,170,.2);border-radius:10px;padding:14px;display:flex;flex-direction:column;}
+.encryption-label{font-size:12px;font-weight:700;color:#6B7280;text-transform:uppercase;letter-spacing:0.4px;margin-bottom:6px;}
+.encryption-value{font-size:13px;font-weight:700;color:var(--navy);display:flex;align-items:center;gap:6px;}
+.encryption-detail{font-size:11px;color:#6B7280;margin-top:6px;}
+.lock-icon{color:var(--teal);font-size:16px;}
+
+/* Highlight box */
+.highlight-box{background:linear-gradient(135deg,rgba(124,79,212,.08),rgba(248,248,248,.4));border-left:4px solid var(--purple);border-radius:8px;padding:14px 16px;margin:12px 0;display:flex;gap:12px;}
+.highlight-icon{font-size:18px;flex-shrink:0;}
+.highlight-text{font-size:13px;line-height:1.6;color:#3a3a3a;}
+
+/* Footer */
+.footer-note{margin-top:44px;font-size:11px;color:#9CA3AF;border-top:1px solid var(--border);padding-top:16px;}
+
+/* Responsive */
+@media(max-width:768px){
+  body{padding:24px 20px 40px;}
+  .page-title{font-size:22px;}
+  .status-badge{grid-template-columns:1fr;}
+  .data-grid{grid-template-columns:1fr;}
+  .encryption-grid{grid-template-columns:1fr;}
+}
+</style>
+</head>
+<body>
+
+<div class="page-title" data-i18n="title">🛡️ Security & Compliance</div>
+<div class="page-sub" data-i18n="sub">GrowthWise · GDPR & ISO 27001 Documentation · Confidential</div>
+
+<!-- Breadcrumb -->
+<div class="breadcrumb">
+  <span class="bc-icon">📁</span>
+  <span>My Drive</span>
+  <span class="bc-sep">›</span>
+  <span>GrowthWise</span>
+  <span class="bc-sep">›</span>
+  <span class="bc-current" data-i18n="breadcrumb">Security & Compliance</span>
+</div>
+
+<!-- Overview badges -->
+<div class="status-badge">
+  <div class="badge-item">
+    <div class="badge-label" data-i18n="badge_phase">Status</div>
+    <div class="badge-value"><span class="badge-icon">📋</span>Phase 2 Readiness (v1.0)</div>
+  </div>
+  <div class="badge-item">
+    <div class="badge-label" data-i18n="badge_standards">Standards</div>
+    <div class="badge-value"><span class="badge-icon">✅</span>GDPR + ISO 27001</div>
+  </div>
+  <div class="badge-item">
+    <div class="badge-label" data-i18n="badge_scope">Scope</div>
+    <div class="badge-value"><span class="badge-icon">🌐</span>Web + Backend</div>
+  </div>
+  <div class="badge-item">
+    <div class="badge-label" data-i18n="badge_updated">Last Updated</div>
+    <div class="badge-value"><span class="badge-icon">📅</span>March 2026</div>
+  </div>
+</div>
+
+<div class="info-card">
+  <span class="info-icon">ℹ️</span>
+  <div class="info-body"><strong>Scope Overview:</strong> This documentation covers GrowthWise platform (web + backend), data ingestion from third-party platforms, user authentication, analytics & AI pipelines. Our commitment to GDPR compliance and ISO 27001 readiness ensures investor confidence in our data governance practices.</div>
+</div>
+
+<!-- 1. GDPR & ISO 27001 Overview -->
+<div class="section-title" data-i18n="s_overview">1. GDPR & ISO 27001 Overview</div>
+
+<div class="card">
+  <div class="card-title"><span class="card-icon">🔐</span><span data-i18n="c_purpose">Purpose & Scope</span></div>
+  <div class="card-content">
+    <strong>GDPR Compliance Initiative:</strong> Ensures lawful processing of personal data and compliance with EU data protection regulations. Applies to all customer data processed within our platform.
+    <ul class="card-list">
+      <li>Legitimate basis for data processing established</li>
+      <li>User rights fully implemented (access, deletion, portability)</li>
+      <li>Data minimization principles enforced</li>
+      <li>Regular compliance audits scheduled</li>
+    </ul>
+    <br>
+    <strong>ISO 27001 Readiness:</strong> Establishes Information Security Management System (ISMS) to protect confidentiality, integrity, and availability of all information assets.
+    <ul class="card-list">
+      <li>Risk assessment framework in place</li>
+      <li>Access control policies implemented</li>
+      <li>Incident management procedures documented</li>
+      <li>Formal certification planned for Phase 4</li>
+    </ul>
+  </div>
+</div>
+
+<!-- 2. Data Classification -->
+<div class="section-title" data-i18n="s_data_class">2. Data Classification</div>
+
+<div class="data-grid">
+  <div class="data-box">
+    <div class="data-box-icon">👤</div>
+    <div class="data-box-title" data-i18n="dc_personal">Personal Data</div>
+    <div class="data-box-content">Limited Scope:<br>• User name<br>• Email address<br>• Workspace/Account IDs</div>
+  </div>
+  <div class="data-box">
+    <div class="data-box-icon">📊</div>
+    <div class="data-box-title" data-i18n="dc_business">Business Data</div>
+    <div class="data-box-content">Primary Focus:<br>• GA4/Ads metrics<br>• Campaign data<br>• Aggregated analytics</div>
+  </div>
+  <div class="data-box">
+    <div class="data-box-icon">🔒</div>
+    <div class="data-box-title" data-i18n="dc_sensitive">Sensitive Data</div>
+    <div class="data-box-content">NOT Processed:<br>• Special category data<br>• Health information<br>• Biometric data</div>
+  </div>
+</div>
+
+<div class="card">
+  <div class="card-title"><span class="card-icon">👥</span><span data-i18n="c_roles">Data Roles & Responsibilities</span></div>
+  <div class="card-content">
+    <table class="roles-table">
+      <thead>
+        <tr>
+          <th data-i18n="role_entity">Entity</th>
+          <th data-i18n="role_definition">Definition</th>
+          <th data-i18n="role_responsibility">Responsibility</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><span class="role-badge">GrowthWise</span></td>
+          <td>Data Processor</td>
+          <td>Process data per customer instructions; implement security measures; ensure GDPR compliance</td>
+        </tr>
+        <tr>
+          <td><span class="role-badge">Customer</span></td>
+          <td>Data Controller</td>
+          <td>Determine lawfulness; manage user consent; respond to data subject requests</td>
+        </tr>
+        <tr>
+          <td><span class="role-badge">Third Parties</span></td>
+          <td>Independent Controllers</td>
+          <td>Manage own GDPR obligations (GA4, Ads platforms); sign own data sharing agreements</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- 3. GDPR Compliance -->
+<div class="section-title" data-i18n="s_gdpr">3. GDPR Compliance Framework</div>
+
+<div class="card">
+  <div class="card-title"><span class="card-icon">⚖️</span><span data-i18n="c_lawful">Lawful Basis</span></div>
+  <div class="card-content">
+    <strong>Primary Basis for Processing:</strong>
+    <ul class="card-list">
+      <li><strong>Contractual Necessity (Article 6(1)(b)):</strong> Processing required to provide analytics services under customer agreement</li>
+      <li><strong>Legitimate Interest (Article 6(1)(f)):</strong> Improving service quality, platform optimization, fraud prevention</li>
+      <li><strong>Consent (Article 7):</strong> OAuth-based authentication for third-party platform access (GA4, Ads platforms)</li>
+    </ul>
+    <div class="highlight-box">
+      <span class="highlight-icon">✅</span>
+      <div class="highlight-text"><strong>Compliance:</strong> All lawful bases documented in Data Processing Addendum (DPA) and Terms of Service. Clear disclosure provided during onboarding.</div>
+    </div>
+  </div>
+</div>
+
+<div class="card">
+  <div class="card-title"><span class="card-icon">📏</span><span data-i18n="c_minimization">Data Minimization</span></div>
+  <div class="card-content">
+    GrowthWise follows strict data minimization principles:
+    <ul class="card-list">
+      <li>Only required data collected for stated purpose</li>
+      <li>Aggregated metrics preferred over individual-level data</li>
+      <li>No collection of special category personal data</li>
+      <li>Regular review of data collection requirements</li>
+      <li>Automatic purging of unnecessary data streams</li>
+    </ul>
+  </div>
+</div>
+
+<div class="card">
+  <div class="card-title"><span class="card-icon">🎯</span><span data-i18n="c_purpose">Purpose Limitation</span></div>
+  <div class="card-content">
+    Data may be used for specified purposes only:
+    <ul class="card-list">
+      <li>Analytics processing and insights generation</li>
+      <li>Performance alerting and reporting</li>
+      <li>Platform optimization and feature improvements</li>
+      <li>Security monitoring and fraud prevention</li>
+    </ul>
+    <strong>Restrictions:</strong> Data NOT used for: marketing, profiling, automated decision-making, or third-party sales.
+  </div>
+</div>
+
+<div class="card">
+  <div class="card-title"><span class="card-icon">👤</span><span data-i18n="c_rights">User Rights Implementation</span></div>
+  <div class="card-content">
+    GrowthWise implements all GDPR data subject rights:
+    <div style="margin-top:12px;background:#f0fdf4;border-left:4px solid var(--teal);padding:12px;border-radius:6px;font-size:13px;">
+      <strong>Right to Access:</strong> Users can request their personal data via API endpoint (GET /user-data) or support request. Response within 30 days.
+    </div>
+    <div style="margin-top:8px;background:#f0fdf4;border-left:4px solid var(--teal);padding:12px;border-radius:6px;font-size:13px;">
+      <strong>Right to Rectification:</strong> Users can correct inaccurate data through account settings or by contacting support. Changes reflected within 24 hours.
+    </div>
+    <div style="margin-top:8px;background:#fef3c7;border-left:4px solid var(--orange);padding:12px;border-radius:6px;font-size:13px;">
+      <strong>Right to Erasure ("Right to be Forgotten"):</strong> Users can request deletion via API (DELETE /user-data). All data removed within 30 days. Some logs retained per legal requirements (encrypted, access-restricted).
+    </div>
+    <div style="margin-top:8px;background:#fef3c7;border-left:4px solid var(--orange);padding:12px;border-radius:6px;font-size:13px;">
+      <strong>Right to Restrict Processing:</strong> Users can restrict processing while dispute is resolved. Restricted data preserved but not actively processed. Lifting restrictions requires user request.
+    </div>
+  </div>
+</div>
+
+<div class="card">
+  <div class="card-title"><span class="card-icon">⏰</span><span data-i18n="c_retention">Data Retention Schedules</span></div>
+  <div class="card-content">
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px;margin-top:12px;">
+      <div style="background:#f0fdf4;border:1.5px solid #86efac;border-radius:8px;padding:12px;">
+        <strong style="color:var(--navy);">User Account Data</strong>
+        <div style="font-size:12px;color:#6B7280;margin-top:6px;">Retained until account deletion. No automatic expiration.</div>
+      </div>
+      <div style="background:#fef3c7;border:1.5px solid #fcd34d;border-radius:8px;padding:12px;">
+        <strong style="color:var(--navy);">Analytics & Metrics</strong>
+        <div style="font-size:12px;color:#6B7280;margin-top:6px;">12–24 months rolling. Older data automatically archived/deleted.</div>
+      </div>
+      <div style="background:#fee2e2;border:1.5px solid #fca5a5;border-radius:8px;padding:12px;">
+        <strong style="color:var(--navy);">System Logs</strong>
+        <div style="font-size:12px;color:#6B7280;margin-top:6px;">30–90 days. Critical security logs retained longer (encrypted, audit trail).</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="card">
+  <div class="card-title"><span class="card-icon">🌍</span><span data-i18n="c_transfers">Data Transfers & Safeguards</span></div>
+  <div class="card-content">
+    <strong>Transfer Locations:</strong> Data processed in AWS data centers (EU Ireland, US N. Virginia, with future multi-region expansion).
+    <ul class="card-list">
+      <li><strong>EU ↔ US Transfers:</strong> Governed by Standard Contractual Clauses (SCCs) as approved by GDPR regulators</li>
+      <li><strong>AWS Data Processing Agreements:</strong> Executed under AWS Data Processing Addendum (DPA), compliant with GDPR Article 28</li>
+      <li><strong>Sub-processor Management:</strong> AWS sub-processors disclosed; customer consent required before new sub-processors added</li>
+      <li><strong>Encryption in Transit:</strong> TLS 1.2+ ensures all cross-border transfers encrypted</li>
+    </ul>
+  </div>
+</div>
+
+<!-- 4. Security Measures (Article 32) -->
+<div class="section-title" data-i18n="s_security">4. Security Measures (Article 32 & ISO 27001)</div>
+
+<div class="card">
+  <div class="card-title"><span class="card-icon">🔒</span><span data-i18n="c_encryption">Encryption Standards</span></div>
+  <div class="card-content">
+    <strong>In Transit:</strong>
+    <ul class="card-list">
+      <li>TLS 1.2+ enforced for all API communications</li>
+      <li>HSTS (HTTP Strict Transport Security) enabled</li>
+      <li>Certificate pinning for critical endpoints</li>
+    </ul>
+    <strong style="margin-top:12px;display:block;">At Rest:</strong>
+    <ul class="card-list">
+      <li>AES-256 encryption (AWS managed keys)</li>
+      <li>Database encryption enabled (Amazon RDS)</li>
+      <li>S3 bucket encryption with SSE-S3</li>
+      <li>AWS Secrets Manager for API keys & credentials</li>
+    </ul>
+    <div class="encryption-grid">
+      <div class="encryption-box">
+        <div class="encryption-label">Protocol</div>
+        <div class="encryption-value"><span class="lock-icon">🔐</span>TLS 1.2+</div>
+        <div class="encryption-detail">All external communications encrypted</div>
+      </div>
+      <div class="encryption-box">
+        <div class="encryption-label">Algorithm</div>
+        <div class="encryption-value"><span class="lock-icon">🔑</span>AES-256</div>
+        <div class="encryption-detail">Military-grade encryption at rest</div>
+      </div>
+      <div class="encryption-box">
+        <div class="encryption-label">Key Management</div>
+        <div class="encryption-value"><span class="lock-icon">🛡️</span>AWS KMS</div>
+        <div class="encryption-detail">Automated rotation and access control</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="card">
+  <div class="card-title"><span class="card-icon">👮</span><span data-i18n="c_access">Access Control & IAM</span></div>
+  <div class="card-content">
+    <strong>Authentication & Authorization:</strong>
+    <ul class="card-list">
+      <li>JWT (JSON Web Tokens) for API authentication</li>
+      <li>OAuth 2.0 for third-party integrations (GA4, Ads platforms)</li>
+      <li>Role-Based Access Control (RBAC) enforced at application level</li>
+      <li>Least privilege principle: users only access required resources</li>
+      <li>MFA (Multi-Factor Authentication) recommended for high-privilege accounts</li>
+      <li>Unique user accounts (no shared credentials)</li>
+      <li>Periodic access reviews (quarterly) to remove unnecessary permissions</li>
+    </ul>
+    <div class="highlight-box">
+      <span class="highlight-icon">🔑</span>
+      <div class="highlight-text">All AWS IAM policies follow least-privilege principles. Admin access requires approval, MFA authentication, and audit logging.</div>
+    </div>
+  </div>
+</div>
+
+<div class="card">
+  <div class="card-title"><span class="card-icon">📊</span><span data-i18n="c_monitoring">Monitoring & Logging</span></div>
+  <div class="card-content">
+    <strong>Real-time Security Monitoring:</strong>
+    <ul class="card-list">
+      <li>AWS CloudWatch logs all API calls, authentication attempts, and errors</li>
+      <li>Centralized logging aggregates all service logs for forensic analysis</li>
+      <li>Alerts configured for suspicious activities: failed auth attempts, unusual data access, configuration changes</li>
+      <li>Audit trails maintained for all data access and modifications</li>
+      <li>Automated threat detection identifies patterns consistent with data breaches or unauthorized access</li>
+    </ul>
+    <strong style="margin-top:12px;display:block;">Logging Retention:</strong> Security logs retained for 90 days (immediate access), archived beyond 90 days for forensic investigation capability.
+  </div>
+</div>
+
+<div class="card">
+  <div class="card-title"><span class="card-icon">🏛️</span><span data-i18n="c_internal">Internal Controls & Governance</span></div>
+  <div class="card-content">
+    <ul class="card-list">
+      <li>Access to production systems restricted to authorized engineers</li>
+      <li>Code review process mandatory before deployment (no single-person deployments)</li>
+      <li>Separation of duties: developers, QA, and deployment roles segregated</li>
+      <li>Database backups encrypted and access-controlled</li>
+      <li>Regular security training for all employees</li>
+      <li>Incident response playbooks documented and tested quarterly</li>
+      <li>Third-party security assessments scheduled annually</li>
+    </ul>
+  </div>
+</div>
+
+<!-- 5. ISO 27001 Implementation -->
+<div class="section-title" data-i18n="s_iso">5. ISO 27001 Implementation</div>
+
+<div class="card">
+  <div class="card-title"><span class="card-icon">🎯</span><span data-i18n="c_iso_obj">Core Objectives</span></div>
+  <div class="card-content">
+    ISO 27001 certification roadmap targets three core information security objectives:
+    <div style="margin-top:12px;display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;">
+      <div style="background:linear-gradient(135deg,rgba(0,212,170,.1),rgba(248,248,248,.5));border:1.5px solid rgba(0,212,170,.3);border-radius:8px;padding:12px;text-align:center;">
+        <div style="font-size:20px;margin-bottom:6px;">🔐</div>
+        <strong style="color:var(--navy);display:block;margin-bottom:4px;">Confidentiality</strong>
+        <div style="font-size:12px;color:#6B7280;">Data only accessible to authorized parties</div>
+      </div>
+      <div style="background:linear-gradient(135deg,rgba(124,79,212,.1),rgba(248,248,248,.5));border:1.5px solid rgba(124,79,212,.3);border-radius:8px;padding:12px;text-align:center;">
+        <div style="font-size:20px;margin-bottom:6px;">✅</div>
+        <strong style="color:var(--navy);display:block;margin-bottom:4px;">Integrity</strong>
+        <div style="font-size:12px;color:#6B7280;">Data remains accurate & complete</div>
+      </div>
+      <div style="background:linear-gradient(135deg,rgba(68,114,224,.1),rgba(248,248,248,.5));border:1.5px solid rgba(68,114,224,.3);border-radius:8px;padding:12px;text-align:center;">
+        <div style="font-size:20px;margin-bottom:6px;">🌐</div>
+        <strong style="color:var(--navy);display:block;margin-bottom:4px;">Availability</strong>
+        <div style="font-size:12px;color:#6B7280;">Services accessible when needed</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="card">
+  <div class="card-title"><span class="card-icon">⚠️</span><span data-i18n="c_risk">Risk Management Framework</span></div>
+  <div class="card-content">
+    <strong>Key Risk Categories Identified:</strong>
+    <ul class="card-list">
+      <li><strong>Data Breach Risk:</strong> Unauthorized access to personal/business data → Mitigated by encryption, access controls, monitoring</li>
+      <li><strong>API Vulnerabilities:</strong> Exploitation of API endpoints → Mitigated by code review, security testing, rate limiting</li>
+      <li><strong>Unauthorized Access:</strong> Compromised credentials or privilege escalation → Mitigated by MFA, RBAC, audit logging</li>
+      <li><strong>Data Inconsistency:</strong> Loss of data integrity during processing → Mitigated by validation, backup/recovery, transaction logs</li>
+      <li><strong>Third-Party Risk:</strong> Breaches in AWS or third-party platforms → Mitigated by SLA agreements, data encryption, incident response plans</li>
+    </ul>
+    <div class="highlight-box">
+      <span class="highlight-icon">📋</span>
+      <div class="highlight-text"><strong>Risk Assessment:</strong> Conducted annually. Updated threat landscape reviewed quarterly. High-risk findings escalated to CTO & Security Committee.</div>
+    </div>
+  </div>
+</div>
+
+<div class="card">
+  <div class="card-title"><span class="card-icon">👥</span><span data-i18n="c_access_policy">Access Policy</span></div>
+  <div class="card-content">
+    <strong>User Account Management:</strong>
+    <ul class="card-list">
+      <li>Each user has unique account (no shared credentials)</li>
+      <li>Passwords must meet minimum complexity (12+ characters, mixed case, numbers, symbols)</li>
+      <li>MFA recommended for engineering & admin roles (mandatory by 2026 Q3)</li>
+      <li>Automatic account deactivation 30 days after employee departure</li>
+      <li>Access rights reviewed quarterly; unused accounts disabled</li>
+      <li>High-privilege operations (production deployments, database changes) require dual authorization</li>
+    </ul>
+  </div>
+</div>
+
+<div class="card">
+  <div class="card-title"><span class="card-icon">🔑</span><span data-i18n="c_crypto">Cryptography Policy</span></div>
+  <div class="card-content">
+    <strong>Encryption Standards:</strong>
+    <ul class="card-list">
+      <li>Industry-standard algorithms: AES-256 (symmetric), RSA-2048 (asymmetric)</li>
+      <li>AWS Secrets Manager manages all encryption keys, API tokens, database credentials</li>
+      <li>Key rotation enabled: automatic rotation every 90 days (AWS managed)</li>
+      <li>No hardcoded secrets in source code (enforced via pre-commit hooks)</li>
+      <li>All certificates from trusted CAs; HTTPS enforced site-wide</li>
+    </ul>
+  </div>
+</div>
+
+<div class="card">
+  <div class="card-title"><span class="card-icon">⚙️</span><span data-i18n="c_operations">Operations & Incident Management</span></div>
+  <div class="card-content">
+    <strong>Service Logging:</strong>
+    <ul class="card-list">
+      <li>All API requests logged with timestamp, user, action, result</li>
+      <li>Authentication events logged (success, failure, MFA challenges)</li>
+      <li>Data access logged (what data, who accessed, when, from where)</li>
+      <li>System errors/exceptions logged for debugging</li>
+      <li>Logs analyzed for patterns indicating security incidents</li>
+    </ul>
+    <strong style="margin-top:12px;display:block;">CI/CD Security (Planned Phase 3):</strong>
+    <ul class="card-list">
+      <li>Automated security scanning in build pipeline</li>
+      <li>SAST (Static Analysis) for code vulnerabilities</li>
+      <li>Dependency scanning to identify vulnerable libraries</li>
+      <li>Container image scanning before deployment</li>
+    </ul>
+    <strong style="margin-top:12px;display:block;">Backup & Recovery Strategy:</strong>
+    <ul class="card-list">
+      <li>Daily automated backups of all databases (encrypted, cross-region)</li>
+      <li>Recovery Time Objective (RTO): 1 hour</li>
+      <li>Recovery Point Objective (RPO): 1 day</li>
+      <li>Backup restoration tested quarterly</li>
+      <li>Off-site backup copies retained for 90 days</li>
+    </ul>
+  </div>
+</div>
+
+<div class="card">
+  <div class="card-title"><span class="card-icon">🚨</span><span data-i18n="c_incident">Incident Management Process</span></div>
+  <div class="card-content">
+    <strong>5-Step Incident Response Lifecycle:</strong>
+    <div style="margin-top:12px;">
+      <div style="background:#fef3c7;border-left:4px solid var(--orange);padding:12px;border-radius:6px;margin-bottom:8px;">
+        <strong style="color:var(--navy);">1. Detection</strong>
+        <div style="font-size:12px;color:#6B7280;margin-top:4px;">Suspicious activity identified via monitoring alerts, user reports, or automated detection</div>
+      </div>
+      <div style="background:#fef3c7;border-left:4px solid var(--orange);padding:12px;border-radius:6px;margin-bottom:8px;">
+        <strong style="color:var(--navy);">2. Logging & Containment</strong>
+        <div style="font-size:12px;color:#6B7280;margin-top:4px;">All details logged; affected systems isolated to prevent spread (if breach suspected)</div>
+      </div>
+      <div style="background:#fef3c7;border-left:4px solid var(--orange);padding:12px;border-radius:6px;margin-bottom:8px;">
+        <strong style="color:var(--navy);">3. Severity Assessment</strong>
+        <div style="font-size:12px;color:#6B7280;margin-top:4px;">Critical, High, Medium, Low. GDPR notification triggered if personal data involved</div>
+      </div>
+      <div style="background:#fef3c7;border-left:4px solid var(--orange);padding:12px;border-radius:6px;margin-bottom:8px;">
+        <strong style="color:var(--navy);">4. Response & Remediation</strong>
+        <div style="font-size:12px;color:#6B7280;margin-top:4px;">Root cause analysis, fix deployed, systems restored. Customer & regulator communication as needed</div>
+      </div>
+      <div style="background:#fef3c7;border-left:4px solid var(--orange);padding:12px;border-radius:6px;">
+        <strong style="color:var(--navy);">5. Post-Incident Review</strong>
+        <div style="font-size:12px;color:#6B7280;margin-top:4px;">Lessons learned documented; security controls strengthened to prevent recurrence</div>
+      </div>
+    </div>
+    <div class="highlight-box" style="margin-top:12px;">
+      <span class="highlight-icon">📞</span>
+      <div class="highlight-text"><strong>GDPR Incident Notification:</strong> If incident involves personal data, DPA regulators notified within 72 hours. Affected users notified without undue delay if high risk identified.</div>
+    </div>
+  </div>
+</div>
+
+<div class="card">
+  <div class="card-title"><span class="card-icon">🏢</span><span data-i18n="c_continuity">Business Continuity & Disaster Recovery</span></div>
+  <div class="card-content">
+    <strong>Disaster Recovery Strategy:</strong>
+    <ul class="card-list">
+      <li>Multi-zone AWS deployment ensures service availability across regional failures</li>
+      <li>Load balancing distributes traffic; automatic failover to healthy zones</li>
+      <li>Database replication to secondary region (planned Phase 3)</li>
+      <li>Redundant DNS and SSL certificates across multiple providers</li>
+    </ul>
+    <strong style="margin-top:12px;display:block;">Business Continuity Objectives:</strong>
+    <ul class="card-list">
+      <li><strong>RTO (Recovery Time Objective):</strong> 1 hour - System restored and operational</li>
+      <li><strong>RPO (Recovery Point Objective):</strong> 1 day - Acceptable data loss limit</li>
+      <li><strong>Backup Testing:</strong> Quarterly disaster recovery drills verify restoration capability</li>
+    </ul>
+  </div>
+</div>
+
+<!-- 6. Implementation Roadmap -->
+<div class="section-title" data-i18n="s_roadmap">6. Implementation Roadmap</div>
+
+<div class="roadmap">
+
+  <div class="roadmap-item">
+    <div class="roadmap-circle done">✓</div>
+    <div class="roadmap-body">
+      <div class="roadmap-phase" data-i18n="r_phase1">Phase 1: Foundation (Complete)</div>
+      <div class="roadmap-desc">Core security infrastructure, access controls, basic monitoring</div>
+      <div class="roadmap-tasks">
+        <ul style="margin:6px 0;padding-left:16px;font-size:12px;color:#4a4a4a;">
+          <li>Encryption at rest & in transit implemented</li>
+          <li>IAM policies configured</li>
+          <li>CloudWatch logging enabled</li>
+          <li>GDPR compliance foundation (data minimization, retention)</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="roadmap-item">
+    <div class="roadmap-circle active">▶</div>
+    <div class="roadmap-body">
+      <div class="roadmap-phase" data-i18n="r_phase2">Phase 2: Readiness (Current - March 2026)</div>
+      <div class="roadmap-desc">Documentation, internal audit prep, incident response testing</div>
+      <div class="roadmap-tasks">
+        <ul style="margin:6px 0;padding-left:16px;font-size:12px;color:#4a4a4a;">
+          <li>This security & compliance documentation drafted</li>
+          <li>Risk assessment framework defined</li>
+          <li>GDPR DPA signed with customers</li>
+          <li>Data protection impact assessment (DPIA) conducted</li>
+          <li>Incident response playbooks documented</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="roadmap-item">
+    <div class="roadmap-circle pending">→</div>
+    <div class="roadmap-body">
+      <div class="roadmap-phase" data-i18n="r_phase3">Phase 3: Hardening (Q2 2026)</div>
+      <div class="roadmap-desc">Internal audit, penetration testing, formal ISMS documentation</div>
+      <div class="roadmap-tasks">
+        <ul style="margin:6px 0;padding-left:16px;font-size:12px;color:#4a4a4a;">
+          <li>Third-party security audit completed</li>
+          <li>Penetration testing conducted (external + internal)</li>
+          <li>CI/CD security pipeline implemented (SAST, dependency scanning)</li>
+          <li>Multi-zone AWS deployment (backup region)</li>
+          <li>Formal Information Security Management System (ISMS) documentation</li>
+          <li>MFA enforcement for all staff (mandatory)</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="roadmap-item">
+    <div class="roadmap-circle pending">→</div>
+    <div class="roadmap-body">
+      <div class="roadmap-phase" data-i18n="r_phase4">Phase 4: Certification (Q3 2026)</div>
+      <div class="roadmap-desc">ISO 27001 audit & formal certification</div>
+      <div class="roadmap-tasks">
+        <ul style="margin:6px 0;padding-left:16px;font-size:12px;color:#4a4a4a;">
+          <li>ISO 27001 external audit by accredited body</li>
+          <li>Non-conformity remediation</li>
+          <li>ISO 27001 certification awarded</li>
+          <li>Certification maintained through annual surveillance audits</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- 7. Roles & Responsibilities -->
+<div class="section-title" data-i18n="s_roles">7. Security Roles & Responsibilities</div>
+
+<div class="card">
+  <div class="card-content">
+    <table class="roles-table">
+      <thead>
+        <tr>
+          <th data-i18n="role_title">Role</th>
+          <th data-i18n="role_resp">Primary Responsibility</th>
+          <th data-i18n="role_accountability">Accountability</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><span class="role-badge" data-i18n="role_cto">CTO</span></td>
+          <td>Security architecture, threat assessment, compliance strategy</td>
+          <td>Quarterly security reviews; roadmap execution</td>
+        </tr>
+        <tr>
+          <td><span class="role-badge" data-i18n="role_eng">Engineering Team</span></td>
+          <td>Implement security controls, secure coding, incident response</td>
+          <td>Code reviews with security focus; alert response time SLAs</td>
+        </tr>
+        <tr>
+          <td><span class="role-badge" data-i18n="role_prod">Product Lead</span></td>
+          <td>Data governance, feature security requirements, privacy-by-design</td>
+          <td>Data usage sign-offs; user communication for incidents</td>
+        </tr>
+        <tr>
+          <td><span class="role-badge" data-i18n="role_legal">Legal/Compliance (External)</span></td>
+          <td>GDPR validation, DPA negotiation, regulatory correspondence</td>
+          <td>Annual compliance certification; regulator communications</td>
+        </tr>
+        <tr>
+          <td><span class="role-badge" data-i18n="role_ops">Operations</span></td>
+          <td>Cloud infrastructure security, backup management, disaster recovery</td>
+          <td>Incident response; RTO/RPO targets met; quarterly drills</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- Summary -->
+<div class="info-card" style="background:linear-gradient(135deg,rgba(0,212,170,.06),rgba(68,114,224,.06));border:1.5px solid rgba(0,212,170,.3);margin-top:28px;">
+  <span class="info-icon">✅</span>
+  <div class="info-body"><strong>Investor Confidence:</strong> GrowthWise demonstrates proactive commitment to data security and regulatory compliance. Phase 2 readiness (March 2026) provides institutional investors confidence in our security posture. ISO 27001 certification (targeted Q3 2026) will establish industry-recognized security standards and position GrowthWise as a trustworthy data processor for enterprise customers.</div>
+</div>
+
+<div class="footer-note" data-i18n="footer">GrowthWise · Confidential · For qualified investors only · growthwisetech.com</div>
+
+<script>
+const T={
+  "title": {"en": "🛡️ Security & Compliance", "tr": "🛡️ Güvenlik ve Uyum", "es": "🛡️ Seguridad y Cumplimiento"},
+  "sub": {"en": "GrowthWise · GDPR & ISO 27001 Documentation · Confidential", "tr": "GrowthWise · GDPR ve ISO 27001 Belgeleri · Gizlidir", "es": "GrowthWise · Documentación GDPR e ISO 27001 · Confidencial"},
+  "breadcrumb": {"en": "Security & Compliance", "tr": "Güvenlik ve Uyum", "es": "Seguridad y Cumplimiento"},
+  "badge_phase": {"en": "Status", "tr": "Durum", "es": "Estado"},
+  "badge_standards": {"en": "Standards", "tr": "Standartlar", "es": "Estándares"},
+  "badge_scope": {"en": "Scope", "tr": "Kapsam", "es": "Alcance"},
+  "badge_updated": {"en": "Last Updated", "tr": "Son Güncelleme", "es": "Última Actualización"},
+  "s_overview": {"en": "1. GDPR & ISO 27001 Overview", "tr": "1. GDPR ve ISO 27001 Genel Bakış", "es": "1. Descripción General de GDPR e ISO 27001"},
+  "c_purpose": {"en": "Purpose & Scope", "tr": "Amaç ve Kapsam", "es": "Propósito y Alcance"},
+  "s_data_class": {"en": "2. Data Classification", "tr": "2. Veri Sınıflandırması", "es": "2. Clasificación de Datos"},
+  "dc_personal": {"en": "Personal Data", "tr": "Kişisel Veriler", "es": "Datos Personales"},
+  "dc_business": {"en": "Business Data", "tr": "İş Verileri", "es": "Datos Comerciales"},
+  "dc_sensitive": {"en": "Sensitive Data", "tr": "Hassas Veriler", "es": "Datos Sensibles"},
+  "c_roles": {"en": "Data Roles & Responsibilities", "tr": "Veri Rolleri ve Sorumlulukları", "es": "Roles y Responsabilidades de Datos"},
+  "role_entity": {"en": "Entity", "tr": "Varlık", "es": "Entidad"},
+  "role_definition": {"en": "Definition", "tr": "Tanım", "es": "Definición"},
+  "role_responsibility": {"en": "Responsibility", "tr": "Sorumluluk", "es": "Responsabilidad"},
+  "s_gdpr": {"en": "3. GDPR Compliance Framework", "tr": "3. GDPR Uyum Çerçevesi", "es": "3. Marco de Cumplimiento GDPR"},
+  "c_lawful": {"en": "Lawful Basis", "tr": "Yasal Dayanak", "es": "Base Legal"},
+  "c_minimization": {"en": "Data Minimization", "tr": "Veri Minimizasyonu", "es": "Minimización de Datos"},
+  "c_purpose": {"en": "Purpose Limitation", "tr": "Amaç Sınırlaması", "es": "Limitación de Propósito"},
+  "c_rights": {"en": "User Rights Implementation", "tr": "Kullanıcı Hakları Uygulanması", "es": "Implementación de Derechos del Usuario"},
+  "c_retention": {"en": "Data Retention Schedules", "tr": "Veri Saklama Takvimi", "es": "Calendarios de Retención de Datos"},
+  "c_transfers": {"en": "Data Transfers & Safeguards", "tr": "Veri Transferleri ve Koruyucu Önlemler", "es": "Transferencias de Datos y Salvaguardas"},
+  "s_security": {"en": "4. Security Measures (Article 32 & ISO 27001)", "tr": "4. Güvenlik Önlemleri (Madde 32 ve ISO 27001)", "es": "4. Medidas de Seguridad (Artículo 32 e ISO 27001)"},
+  "c_encryption": {"en": "Encryption Standards", "tr": "Şifreleme Standartları", "es": "Estándares de Cifrado"},
+  "c_access": {"en": "Access Control & IAM", "tr": "Erişim Kontrolü ve IAM", "es": "Control de Acceso e IAM"},
+  "c_monitoring": {"en": "Monitoring & Logging", "tr": "İzleme ve Günlüğe Kaydetme", "es": "Monitoreo y Registro"},
+  "c_internal": {"en": "Internal Controls & Governance", "tr": "İç Kontroller ve Yönetim", "es": "Controles Internos y Gobernanza"},
+  "s_iso": {"en": "5. ISO 27001 Implementation", "tr": "5. ISO 27001 Uygulaması", "es": "5. Implementación de ISO 27001"},
+  "c_iso_obj": {"en": "Core Objectives", "tr": "Temel Amaçlar", "es": "Objetivos Principales"},
+  "c_risk": {"en": "Risk Management Framework", "tr": "Risk Yönetimi Çerçevesi", "es": "Marco de Gestión de Riesgos"},
+  "c_access_policy": {"en": "Access Policy", "tr": "Erişim Politikası", "es": "Política de Acceso"},
+  "c_crypto": {"en": "Cryptography Policy", "tr": "Şifreleme Politikası", "es": "Política de Criptografía"},
+  "c_operations": {"en": "Operations & Incident Management", "tr": "Operasyonlar ve Olay Yönetimi", "es": "Operaciones y Gestión de Incidentes"},
+  "c_incident": {"en": "Incident Management Process", "tr": "Olay Yönetimi Süreci", "es": "Proceso de Gestión de Incidentes"},
+  "c_continuity": {"en": "Business Continuity & Disaster Recovery", "tr": "İş Sürekliliği ve Afet Kurtarma", "es": "Continuidad de Negocio y Recuperación ante Desastres"},
+  "s_roadmap": {"en": "6. Implementation Roadmap", "tr": "6. Uygulama Yol Haritası", "es": "6. Hoja de Ruta de Implementación"},
+  "r_phase1": {"en": "Phase 1: Foundation (Complete)", "tr": "Aşama 1: Temel (Tamamlandı)", "es": "Fase 1: Fundación (Completada)"},
+  "r_phase2": {"en": "Phase 2: Readiness (Current - March 2026)", "tr": "Aşama 2: Hazırlık (Güncel - Mart 2026)", "es": "Fase 2: Preparación (Actual - Marzo 2026)"},
+  "r_phase3": {"en": "Phase 3: Hardening (Q2 2026)", "tr": "Aşama 3: Sertleştirme (Q2 2026)", "es": "Fase 3: Endurecimiento (Q2 2026)"},
+  "r_phase4": {"en": "Phase 4: Certification (Q3 2026)", "tr": "Aşama 4: Sertifikasyon (Q3 2026)", "es": "Fase 4: Certificación (Q3 2026)"},
+  "s_roles": {"en": "7. Security Roles & Responsibilities", "tr": "7. Güvenlik Rolleri ve Sorumlulukları", "es": "7. Roles y Responsabilidades de Seguridad"},
+  "role_title": {"en": "Role", "tr": "Rol", "es": "Función"},
+  "role_resp": {"en": "Primary Responsibility", "tr": "Temel Sorumluluk", "es": "Responsabilidad Principal"},
+  "role_accountability": {"en": "Accountability", "tr": "Sorumluluk", "es": "Rendición de Cuentas"},
+  "role_cto": {"en": "CTO", "tr": "CTO", "es": "CTO"},
+  "role_eng": {"en": "Engineering Team", "tr": "Mühendislik Ekibi", "es": "Equipo de Ingeniería"},
+  "role_prod": {"en": "Product Lead", "tr": "Ürün Lideri", "es": "Líder de Producto"},
+  "role_legal": {"en": "Legal/Compliance (External)", "tr": "Hukuk/Uyum (Dış)", "es": "Legal/Cumplimiento (Externo)"},
+  "role_ops": {"en": "Operations", "tr": "Operasyonlar", "es": "Operaciones"},
+  "footer": {"en": "GrowthWise · Confidential · For qualified investors only · growthwisetech.com", "tr": "GrowthWise · Gizlidir · Yalnızca nitelikli yatırımcılar içindir · growthwisetech.com", "es": "GrowthWise · Confidencial · Solo para inversores cualificados · growthwisetech.com"}
+};
+
+var curLang='en';
+
+function getLangFromURL(){
+  var m=location.search.match(/lang=([a-z]{2})/);
+  return m?m[1]:'en';
+}
+
+function applyLang(){
+  document.querySelectorAll('[data-i18n]').forEach(function(el){
+    var k=el.getAttribute('data-i18n');
+    if(T[k]){
+      var v=T[k][curLang]||T[k]['en'];
+      el.textContent=v;
+    }
+  });
+}
+
+window.addEventListener('DOMContentLoaded',function(){
+  curLang=getLangFromURL();
+  applyLang();
+});
+</script>
+
+</body>
+</html>

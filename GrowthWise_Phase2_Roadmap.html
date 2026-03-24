@@ -1,0 +1,688 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta charset="UTF-8">
+<base href="https://ozlemgrowthwise.github.io/GrowthWise-Data-Room/" target="_blank"><title>GrowthWise Phase 2 — Data Intelligence Platform</title>
+<style>*{box-sizing:border-box;margin:0;padding:0;}
+:root{--navy:#1B1B4E;--teal:#00D4AA;--purple:#7C4FD4;--blue:#4472E0;--orange:#F97316;
+  --grad:linear-gradient(135deg,#00D4AA 0%,#7C4FD4 55%,#4472E0 100%);
+  --bg:#F7F8FB;--bg2:#EFF1F8;--border:#DDE1EF;}
+body{font-family:'Segoe UI',Arial,sans-serif;background:var(--bg);color:var(--navy);padding:32px 40px 60px;}
+.page-title{font-size:28px;font-weight:900;color:var(--navy);margin-bottom:4px;}
+.page-sub{font-size:14px;color:#6B7280;margin-bottom:32px;line-height:1.5;}
+.section-title{font-size:16px;font-weight:800;color:var(--navy);margin:40px 0 18px;display:flex;align-items:center;gap:8px;}
+.section-title::before{content:'';display:inline-block;width:3px;height:16px;background:var(--grad);border-radius:2px;}
+
+/* Objectives Grid */
+.obj-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px;margin-bottom:24px;}
+.obj-card{background:#fff;border:1.5px solid var(--border);border-radius:12px;padding:20px;transition:all 0.3s ease;}
+.obj-card:hover{border-color:var(--teal);box-shadow:0 8px 24px rgba(0,212,170,0.12);}
+.obj-card.ingestion{border-top:4px solid #00D4AA;}
+.obj-card.normalization{border-top:4px solid #7C4FD4;}
+.obj-card.health{border-top:4px solid #4472E0;}
+.obj-card.alert{border-top:4px solid #F97316;}
+.obj-card.scorecard{border-top:4px solid #EC4899;}
+.obj-card.payment{border-top:4px solid #8B5CF6;}
+.obj-icon{font-size:24px;margin-bottom:10px;}
+.obj-title{font-size:13px;font-weight:800;color:var(--navy);margin-bottom:8px;}
+.obj-desc{font-size:12px;color:#6B7280;line-height:1.5;}
+
+/* Timeline */
+.timeline-container{background:#fff;border:1.5px solid var(--border);border-radius:12px;padding:24px;margin-bottom:24px;overflow-x:auto;}
+.timeline{display:flex;gap:12px;min-width:max-content;}
+.timeline-phase{flex:0 0 auto;width:160px;padding:16px;background:linear-gradient(135deg,#F7F8FB,#EFF1F8);border:1px solid var(--border);border-radius:10px;text-align:center;}
+.timeline-phase.current{background:linear-gradient(135deg,#00D4AA20,#00D4AA10);border-color:var(--teal);}
+.timeline-label{font-size:11px;font-weight:800;color:var(--navy);margin-bottom:10px;text-transform:uppercase;letter-spacing:0.5px;}
+.timeline-item{font-size:12px;color:#6B7280;margin:6px 0;padding:4px 0;border-bottom:1px solid rgba(0,0,0,0.05);}
+.timeline-item:last-child{border-bottom:none;}
+
+/* Architecture Flow Diagram */
+.arch-container{background:#fff;border:1.5px solid var(--border);border-radius:12px;padding:24px;margin-bottom:24px;}
+.arch-flow{display:flex;align-items:center;justify-content:center;flex-wrap:wrap;gap:8px;margin:20px 0;min-height:180px;overflow-x:auto;padding:12px;}
+.arch-box{background:linear-gradient(135deg,#00D4AA15,#00D4AA08);border:2px solid var(--teal);border-radius:8px;padding:12px 16px;font-size:11px;font-weight:700;color:var(--navy);white-space:nowrap;flex-shrink:0;}
+.arch-box.ingestion{border-color:#00D4AA;background:linear-gradient(135deg,#00D4AA20,#00D4AA08);}
+.arch-box.process{border-color:#7C4FD4;background:linear-gradient(135deg,#7C4FD420,#7C4FD408);}
+.arch-box.output{border-color:#4472E0;background:linear-gradient(135deg,#4472E020,#4472E008);}
+.arch-arrow{font-size:18px;color:var(--border);flex-shrink:0;}
+
+.arch-layers{margin-top:20px;padding-top:20px;border-top:1px solid var(--border);}
+.arch-layer{margin:12px 0;}
+.arch-layer-label{font-size:12px;font-weight:700;color:var(--navy);margin-bottom:6px;display:inline-block;background:var(--bg);padding:0 8px;}
+.arch-layer-items{font-size:12px;color:#6B7280;display:flex;flex-wrap:wrap;gap:12px;padding-left:16px;}
+.arch-item{padding:4px 0;}
+
+/* Tables */
+table{width:100%;border-collapse:collapse;font-size:13px;margin-bottom:24px;background:#fff;border-radius:12px;overflow:hidden;border:1.5px solid var(--border);}
+th{background:var(--navy);color:#fff;padding:12px 14px;text-align:left;font-weight:600;font-size:12px;}
+td{padding:10px 14px;border-bottom:1px solid var(--border);}
+tr:nth-child(even) td{background:var(--bg2);}
+tr:last-child td{border-bottom:none;}
+tr.highlight td{background:rgba(0,212,170,.1);font-weight:700;color:var(--navy);}
+
+/* Chips & Badges */
+.chip{display:inline-block;padding:3px 10px;border-radius:20px;font-size:11px;font-weight:700;}
+.chip-teal{background:rgba(0,212,170,.15);color:#065F46;}
+.chip-blue{background:rgba(68,114,224,.15);color:#1E40AF;}
+.chip-orange{background:rgba(249,115,22,.15);color:#9A3412;}
+.chip-purple{background:rgba(124,79,212,.15);color:#5B21B6;}
+.chip-pink{background:rgba(236,72,153,.15);color:#831843;}
+.severity-badge{display:inline-block;padding:4px 12px;border-radius:6px;font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:0.5px;}
+.severity-high{background:#FEE2E2;color:#991B1B;}
+.severity-medium{background:#FEF3C7;color:#92400E;}
+.severity-low{background:#DBEAFE;color:#0C4A6E;}
+
+/* Risk Cards */
+.risk-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px;margin-bottom:24px;}
+.risk-card{background:#fff;border:1.5px solid var(--border);border-radius:12px;padding:18px;border-left:4px solid #F97316;}
+.risk-card.high{border-left-color:#DC2626;}
+.risk-card.medium{border-left-color:#F97316;}
+.risk-card.low{border-left-color:#3B82F6;}
+.risk-title{font-size:13px;font-weight:800;color:var(--navy);margin-bottom:8px;display:flex;align-items:center;gap:8px;}
+.risk-mitigation{font-size:12px;color:#6B7280;line-height:1.5;}
+
+/* Pricing Cards */
+.pricing-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px;margin-bottom:24px;}
+.pricing-card{background:#fff;border:1.5px solid var(--border);border-radius:12px;padding:20px;text-align:center;transition:all 0.3s ease;}
+.pricing-card:hover{border-color:var(--teal);box-shadow:0 8px 24px rgba(0,212,170,0.12);}
+.pricing-card.featured{border-color:var(--teal);background:linear-gradient(135deg,#00D4AA08,#00D4AA04);}
+.pricing-name{font-size:14px;font-weight:800;color:var(--navy);margin-bottom:8px;}
+.pricing-price{font-size:20px;font-weight:900;color:var(--teal);margin-bottom:4px;}
+.pricing-freq{font-size:12px;color:#6B7280;margin-bottom:12px;border-bottom:1px solid var(--border);padding-bottom:12px;}
+.pricing-feature{font-size:12px;color:#6B7280;margin:8px 0;line-height:1.4;}
+
+/* Metrics & Success */
+.metrics-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px;margin-bottom:24px;}
+.metric-card{background:#fff;border:1.5px solid var(--border);border-radius:12px;padding:18px;}
+.metric-label{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;color:#6B7280;margin-bottom:8px;}
+.metric-value{font-size:18px;font-weight:900;color:var(--navy);margin-bottom:8px;}
+.metric-desc{font-size:12px;color:#6B7280;line-height:1.4;}
+
+/* Deliverables */
+.deliverables-list{background:#fff;border:1.5px solid var(--border);border-radius:12px;padding:20px;}
+.deliverable-item{display:flex;align-items:flex-start;gap:12px;margin:12px 0;padding:10px 0;border-bottom:1px solid var(--border);}
+.deliverable-item:last-child{border-bottom:none;}
+.deliverable-check{font-size:18px;color:var(--teal);font-weight:bold;flex-shrink:0;}
+.deliverable-text{flex:1;}
+.deliverable-title{font-size:13px;font-weight:800;color:var(--navy);margin-bottom:4px;}
+.deliverable-desc{font-size:12px;color:#6B7280;}
+
+/* Health Formula */
+.formula-box{background:linear-gradient(135deg,#4472E008,#4472E004);border:1.5px solid rgba(68,114,224,0.3);border-radius:12px;padding:20px;margin-bottom:24px;font-family:'Monaco','Courier New',monospace;}
+.formula-title{font-size:12px;font-weight:800;text-transform:uppercase;letter-spacing:0.5px;color:var(--navy);margin-bottom:12px;}
+.formula-text{font-size:13px;color:#1F2937;line-height:1.8;overflow-x:auto;}
+
+/* Responsive */
+@media(max-width:768px){
+  .obj-grid{grid-template-columns:1fr;}
+  .timeline{flex-direction:column;}
+  .pricing-grid{grid-template-columns:1fr;}
+  .risk-grid{grid-template-columns:1fr;}
+  .metrics-grid{grid-template-columns:1fr;}
+}
+
+.footer-note{margin-top:48px;padding-top:24px;border-top:1px solid var(--border);font-size:12px;color:#9CA3AF;text-align:center;}
+</style>
+</head>
+<body>
+
+<div class="page-title" data-i18n="title">Phase 2 — Data Intelligence Platform</div>
+<div class="page-sub" data-i18n="subtitle">Production-ready analytics infrastructure with multi-platform ingestion, measurement health, intelligent alerting & monetization. 6–8 Week Execution Plan.</div>
+
+<div class="section-title" data-i18n="s_objectives">Phase 2 Core Objectives (6 Strategic Modules)</div>
+<div class="obj-grid">
+  <div class="obj-card ingestion">
+    <div class="obj-icon">🔗</div>
+    <div class="obj-title" data-i18n="obj1_title">Multi-Platform Ingestion</div>
+    <div class="obj-desc" data-i18n="obj1_desc">Stable OAuth connectors for GA4, Google Ads, Meta, LinkedIn, GSC & GTM with automatic credential refresh</div>
+  </div>
+  <div class="obj-card normalization">
+    <div class="obj-icon">📊</div>
+    <div class="obj-title" data-i18n="obj2_title">Normalized Data Layer</div>
+    <div class="obj-desc" data-i18n="obj2_desc">Unified daily metrics schema with cross-platform comparison and canonical campaign ID mapping</div>
+  </div>
+  <div class="obj-card health">
+    <div class="obj-icon">🏥</div>
+    <div class="obj-title" data-i18n="obj3_title">Measurement Health Engine</div>
+    <div class="obj-desc" data-i18n="obj3_desc">Automated QA checks with confidence scoring (0-100) surfacing data gaps and anomalies</div>
+  </div>
+  <div class="obj-card alert">
+    <div class="obj-icon">🔔</div>
+    <div class="obj-title" data-i18n="obj4_title">Intelligent Alert System</div>
+    <div class="obj-desc" data-i18n="obj4_desc">Proactive threshold-based notifications via Email & Slack with deduplication & configurable triggers</div>
+  </div>
+  <div class="obj-card scorecard">
+    <div class="obj-icon">📈</div>
+    <div class="obj-title" data-i18n="obj5_title">Scorecard & Roadmap</div>
+    <div class="obj-desc" data-i18n="obj5_desc">Weekly aggregated scorecards with AI-powered growth roadmap and PDF export for stakeholders</div>
+  </div>
+  <div class="obj-card payment">
+    <div class="obj-icon">💳</div>
+    <div class="obj-title" data-i18n="obj6_title">Payment & Feature Gating</div>
+    <div class="obj-desc" data-i18n="obj6_desc">Stripe-powered monetization with tiered subscription plans and feature access control</div>
+  </div>
+</div>
+
+<div class="section-title" data-i18n="s_timeline">Execution Timeline (6–8 Weeks)</div>
+<div class="timeline-container">
+  <div class="timeline">
+    <div class="timeline-phase current">
+      <div class="timeline-label" data-i18n="tl_w12">W1–2</div>
+      <div class="timeline-item" data-i18n="tl_w12_title">Connectors & Ingestion</div>
+      <div class="timeline-item" data-i18n="tl_w12_1">OAuth setup</div>
+      <div class="timeline-item" data-i18n="tl_w12_2">API integration</div>
+      <div class="timeline-item" data-i18n="tl_w12_3">Backfill logic</div>
+    </div>
+    <div class="timeline-phase">
+      <div class="timeline-label" data-i18n="tl_w23">W2–3</div>
+      <div class="timeline-item" data-i18n="tl_w23_title">Normalization & Data Model</div>
+      <div class="timeline-item" data-i18n="tl_w23_1">Schema design</div>
+      <div class="timeline-item" data-i18n="tl_w23_2">Daily transforms</div>
+      <div class="timeline-item" data-i18n="tl_w23_3">Cross-platform mapping</div>
+    </div>
+    <div class="timeline-phase">
+      <div class="timeline-label" data-i18n="tl_w34">W3–4</div>
+      <div class="timeline-item" data-i18n="tl_w34_title">QA & Health Engine</div>
+      <div class="timeline-item" data-i18n="tl_w34_1">QA checks</div>
+      <div class="timeline-item" data-i18n="tl_w34_2">Scoring logic</div>
+      <div class="timeline-item" data-i18n="tl_w34_3">Diagnostics</div>
+    </div>
+    <div class="timeline-phase">
+      <div class="timeline-label" data-i18n="tl_w45">W4–5</div>
+      <div class="timeline-item" data-i18n="tl_w45_title">Alert Engine</div>
+      <div class="timeline-item" data-i18n="tl_w45_1">Threshold mgmt</div>
+      <div class="timeline-item" data-i18n="tl_w45_2">SES & Slack</div>
+      <div class="timeline-item" data-i18n="tl_w45_3">Deduplication</div>
+    </div>
+    <div class="timeline-phase">
+      <div class="timeline-label" data-i18n="tl_w56">W5–6</div>
+      <div class="timeline-item" data-i18n="tl_w56_title">Scorecard & Roadmap</div>
+      <div class="timeline-item" data-i18n="tl_w56_1">Weekly agg</div>
+      <div class="timeline-item" data-i18n="tl_w56_2">AI prompt</div>
+      <div class="timeline-item" data-i18n="tl_w56_3">PDF export</div>
+    </div>
+    <div class="timeline-phase">
+      <div class="timeline-label" data-i18n="tl_w67">W6–7</div>
+      <div class="timeline-item" data-i18n="tl_w67_title">Payment & Gating</div>
+      <div class="timeline-item" data-i18n="tl_w67_1">Stripe setup</div>
+      <div class="timeline-item" data-i18n="tl_w67_2">Plan tiers</div>
+      <div class="timeline-item" data-i18n="tl_w67_3">Webhooks</div>
+    </div>
+    <div class="timeline-phase">
+      <div class="timeline-label" data-i18n="tl_w78">W7–8</div>
+      <div class="timeline-item" data-i18n="tl_w78_title">Stabilization & QA</div>
+      <div class="timeline-item" data-i18n="tl_w78_1">Load testing</div>
+      <div class="timeline-item" data-i18n="tl_w78_2">Edge cases</div>
+      <div class="timeline-item" data-i18n="tl_w78_3">Go-live</div>
+    </div>
+  </div>
+</div>
+
+<div class="section-title" data-i18n="s_architecture">System Architecture</div>
+<div class="arch-container">
+  <div style="font-size:13px;font-weight:700;color:var(--navy);margin-bottom:16px;" data-i18n="arch_flow">Data Flow & Processing Pipeline</div>
+  <div class="arch-flow">
+    <div class="arch-box ingestion" data-i18n="arch_oauth">OAuth Connectors</div>
+    <div class="arch-arrow">→</div>
+    <div class="arch-box ingestion" data-i18n="arch_ingest">Data Ingestion</div>
+    <div class="arch-arrow">→</div>
+    <div class="arch-box ingestion" data-i18n="arch_raw">Raw Storage</div>
+    <div class="arch-arrow">→</div>
+    <div class="arch-box process" data-i18n="arch_norm">Normalization</div>
+    <div class="arch-arrow">→</div>
+    <div class="arch-box process" data-i18n="arch_metrics">Daily Metrics</div>
+    <div class="arch-arrow">→</div>
+    <div class="arch-box process" data-i18n="arch_qa">QA Engine</div>
+    <div class="arch-arrow">→</div>
+    <div class="arch-box output" data-i18n="arch_alert">Alert Engine</div>
+    <div class="arch-arrow">→</div>
+    <div class="arch-box output" data-i18n="arch_score">Scorecard</div>
+    <div class="arch-arrow">→</div>
+    <div class="arch-box output" data-i18n="arch_ai">AI Recommendations</div>
+    <div class="arch-arrow">→</div>
+    <div class="arch-box output" data-i18n="arch_roadmap">Roadmap Generator</div>
+  </div>
+
+  <div class="arch-layers">
+    <div class="arch-layer">
+      <div class="arch-layer-label" data-i18n="arch_compute">Compute & Infrastructure</div>
+      <div class="arch-layer-items">
+        <div class="arch-item">AWS Lambda (Node.js)</div>
+        <div class="arch-item">API Gateway</div>
+        <div class="arch-item">MS SQL Server</div>
+        <div class="arch-item">AWS Bedrock (AI)</div>
+        <div class="arch-item">CloudWatch</div>
+      </div>
+    </div>
+    <div class="arch-layer">
+      <div class="arch-layer-label" data-i18n="arch_auth">Authentication & Security</div>
+      <div class="arch-layer-items">
+        <div class="arch-item">Google OAuth 2.0</div>
+        <div class="arch-item">JWT Tokens</div>
+        <div class="arch-item">Encrypted Credential Storage</div>
+        <div class="arch-item">Automatic Token Refresh</div>
+      </div>
+    </div>
+    <div class="arch-layer">
+      <div class="arch-layer-label" data-i18n="arch_delivery">Alert Delivery & Integrations</div>
+      <div class="arch-layer-items">
+        <div class="arch-item">AWS SES (Email)</div>
+        <div class="arch-item">Slack Webhooks</div>
+        <div class="arch-item">In-App Notifications</div>
+        <div class="arch-item">Stripe Webhooks</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="section-title" data-i18n="s_connectors">Platform Connectors & OAuth Scopes</div>
+<table>
+  <thead><tr><th data-i18n="th_platform">Platform</th><th data-i18n="th_oauth">OAuth Scope</th><th data-i18n="th_metrics">Core Metrics</th><th data-i18n="th_strategy">Data Strategy</th></tr></thead>
+  <tbody>
+    <tr><td>GA4</td><td>analytics.readonly</td><td data-i18n="con_ga4">Sessions, users, events, conversions, revenue</td><td data-i18n="con_ga4_strat">90-day backfill, daily incremental</td></tr>
+    <tr><td>Google Ads</td><td>adwords</td><td data-i18n="con_gads">Clicks, impressions, cost, conversions, CPA</td><td data-i18n="con_gads_strat">Daily incremental, hourly precision</td></tr>
+    <tr style="background:rgba(124,79,212,.04)"><td>Meta Ads</td><td>ads_read</td><td data-i18n="con_meta">Reach, link_clicks, spend, results, ROAS</td><td data-i18n="con_meta_strat">Daily incremental, 28-day lookback</td></tr>
+    <tr><td>LinkedIn Ads</td><td>r_ads</td><td data-i18n="con_li">Clicks, impressions, spend, leads, CPL</td><td data-i18n="con_li_strat">Daily incremental, lead mapping</td></tr>
+    <tr><td>GSC</td><td>webmasters.readonly</td><td data-i18n="con_gsc">Clicks, impressions, CTR, position</td><td data-i18n="con_gsc_strat">Daily incremental, 16-month history</td></tr>
+    <tr style="background:rgba(236,72,153,.04)"><td>GTM</td><td>tagmanager.readonly</td><td data-i18n="con_gtm">Tag health, container config, firing rate</td><td data-i18n="con_gtm_strat">Real-time container version check</td></tr>
+  </tbody>
+</table>
+
+<div class="section-title" data-i18n="s_health">Measurement Health Engine</div>
+<div class="formula-box">
+  <div class="formula-title" data-i18n="health_score_title">Health Score Calculation</div>
+  <div class="formula-text">Score = 100 − (missing_days × 5) − (tracking_errors × 10) − mismatch_penalty − anomaly_penalty<br><br>
+  QA Checks:<br>
+  ✓ Missing data detection (>1 day)<br>
+  ✓ Spike/drop anomalies (>30% threshold)<br>
+  ✓ Zero conversions with active spend<br>
+  ✓ GTM container failures<br>
+  ✓ Duplicate tag detection<br>
+  ✓ GA4 ↔ Ads platform mismatch (>20%)<br>
+  ✓ Session/event consistency checks</div>
+</div>
+
+<div class="section-title" data-i18n="s_alerts">Alert System (Performance & Measurement)</div>
+<div style="margin-bottom:20px;">
+  <div style="font-size:13px;font-weight:700;color:var(--navy);margin-bottom:12px;" data-i18n="alert_perf_title">Performance Alerts</div>
+  <div style="background:rgba(220,38,38,.04);border-left:4px solid #DC2626;padding:14px;border-radius:8px;font-size:12px;color:#6B7280;line-height:1.6;">
+    <strong data-i18n="alert_perf_1">Sessions drop >30%</strong> • <strong data-i18n="alert_perf_2">Conversions drop >25%</strong> • <strong data-i18n="alert_perf_3">CPA increase >40%</strong> • <strong data-i18n="alert_perf_4">ROAS below target 3+ days</strong> • <strong data-i18n="alert_perf_5">Ad spend >2x daily budget</strong>
+  </div>
+</div>
+<div style="margin-bottom:24px;">
+  <div style="font-size:13px;font-weight:700;color:var(--navy);margin-bottom:12px;" data-i18n="alert_meas_title">Measurement Alerts</div>
+  <div style="background:rgba(249,115,22,.04);border-left:4px solid #F97316;padding:14px;border-radius:8px;font-size:12px;color:#6B7280;line-height:1.6;">
+    <strong data-i18n="alert_meas_1">Missing data >1 day</strong> • <strong data-i18n="alert_meas_2">GTM container failure</strong> • <strong data-i18n="alert_meas_3">Conversion tracking stopped</strong> • <strong data-i18n="alert_meas_4">Platform mismatch >20%</strong> • <strong data-i18n="alert_meas_5">Duplicate tags detected</strong>
+  </div>
+</div>
+<div>
+  <div style="font-size:13px;font-weight:700;color:var(--navy);margin-bottom:12px;" data-i18n="alert_channels">Delivery Channels</div>
+  <div style="display:flex;gap:12px;flex-wrap:wrap;">
+    <span class="chip chip-teal" data-i18n="alert_email">Email (AWS SES)</span>
+    <span class="chip chip-blue" data-i18n="alert_slack">Slack Webhook</span>
+    <span class="chip chip-purple" data-i18n="alert_inapp">In-App Notifications</span>
+  </div>
+</div>
+
+<div class="section-title" data-i18n="s_pricing">Subscription Plans & Monetization</div>
+<div class="pricing-grid">
+  <div class="pricing-card">
+    <div class="pricing-name" data-i18n="plan_starter">Starter</div>
+    <div class="pricing-price" data-i18n="plan_starter_price">Free</div>
+    <div class="pricing-freq" data-i18n="plan_starter_freq">Forever free tier</div>
+    <div class="pricing-feature" data-i18n="plan_starter_f1">GA4 dashboard</div>
+    <div class="pricing-feature" data-i18n="plan_starter_f2">Basic health score</div>
+    <div class="pricing-feature" data-i18n="plan_starter_f3">Weekly email</div>
+    <div class="pricing-feature" data-i18n="plan_starter_f4">1 user seat</div>
+  </div>
+  <div class="pricing-card featured">
+    <div class="pricing-name" data-i18n="plan_growth">Growth</div>
+    <div class="pricing-price" data-i18n="plan_growth_price">$299</div>
+    <div class="pricing-freq" data-i18n="plan_growth_freq">/ month</div>
+    <div class="pricing-feature" data-i18n="plan_growth_f1">All 6 connectors</div>
+    <div class="pricing-feature" data-i18n="plan_growth_f2">Real-time alerts</div>
+    <div class="pricing-feature" data-i18n="plan_growth_f3">Slack integration</div>
+    <div class="pricing-feature" data-i18n="plan_growth_f4">Health engine QA</div>
+    <div class="pricing-feature" data-i18n="plan_growth_f5">3 user seats</div>
+  </div>
+  <div class="pricing-card">
+    <div class="pricing-name" data-i18n="plan_pro">Pro</div>
+    <div class="pricing-price" data-i18n="plan_pro_price">$499</div>
+    <div class="pricing-freq" data-i18n="plan_pro_freq">/ month</div>
+    <div class="pricing-feature" data-i18n="plan_pro_f1">Everything in Growth</div>
+    <div class="pricing-feature" data-i18n="plan_pro_f2">AI-powered roadmaps</div>
+    <div class="pricing-feature" data-i18n="plan_pro_f3">PDF reports & exports</div>
+    <div class="pricing-feature" data-i18n="plan_pro_f4">Custom anomaly rules</div>
+    <div class="pricing-feature" data-i18n="plan_pro_f5">10 user seats</div>
+  </div>
+  <div class="pricing-card">
+    <div class="pricing-name" data-i18n="plan_wl">White-Label</div>
+    <div class="pricing-price" data-i18n="plan_wl_price">Custom</div>
+    <div class="pricing-freq" data-i18n="plan_wl_freq">Enterprise</div>
+    <div class="pricing-feature" data-i18n="plan_wl_f1">Full white-label</div>
+    <div class="pricing-feature" data-i18n="plan_wl_f2">Custom integrations</div>
+    <div class="pricing-feature" data-i18n="plan_wl_f3">SLA guarantees</div>
+    <div class="pricing-feature" data-i18n="plan_wl_f4">Unlimited users</div>
+  </div>
+</div>
+
+<div class="section-title" data-i18n="s_success_metrics">Success Metrics & KPIs</div>
+<div class="metrics-grid">
+  <div class="metric-card">
+    <div class="metric-label" data-i18n="m_technical">Technical</div>
+    <div class="metric-value">≥95%</div>
+    <div class="metric-desc" data-i18n="m_tech_desc">Data completeness daily</div>
+  </div>
+  <div class="metric-card">
+    <div class="metric-label" data-i18n="m_technical">Technical</div>
+    <div class="metric-value">&lt;24h</div>
+    <div class="metric-desc" data-i18n="m_ingest_desc">Data ingestion delay</div>
+  </div>
+  <div class="metric-card">
+    <div class="metric-label" data-i18n="m_technical">Technical</div>
+    <div class="metric-value">≥99%</div>
+    <div class="metric-desc" data-i18n="m_job_desc">Scheduled job success rate</div>
+  </div>
+  <div class="metric-card">
+    <div class="metric-label" data-i18n="m_product">Product</div>
+    <div class="metric-value">Weekly</div>
+    <div class="metric-desc" data-i18n="m_roadmap_desc">Roadmap generation cadence</div>
+  </div>
+  <div class="metric-card">
+    <div class="metric-label" data-i18n="m_product">Product</div>
+    <div class="metric-value">50+%</div>
+    <div class="metric-desc" data-i18n="m_alert_desc">Paying users with active alerts</div>
+  </div>
+  <div class="metric-card">
+    <div class="metric-label" data-i18n="m_product">Product</div>
+    <div class="metric-value">Daily</div>
+    <div class="metric-desc" data-i18n="m_health_desc">Health score reporting</div>
+  </div>
+  <div class="metric-card">
+    <div class="metric-label" data-i18n="m_business">Business</div>
+    <div class="metric-value">15%+</div>
+    <div class="metric-desc" data-i18n="m_conversion_desc">Free to Growth plan conversion</div>
+  </div>
+  <div class="metric-card">
+    <div class="metric-label" data-i18n="m_business">Business</div>
+    <div class="metric-value">$80K+</div>
+    <div class="metric-desc" data-i18n="m_mrr_desc">Monthly recurring revenue (MRR) by Q4</div>
+  </div>
+</div>
+
+<div class="section-title" data-i18n="s_risks">Risks & Mitigation Strategy</div>
+<div class="risk-grid">
+  <div class="risk-card high">
+    <div class="risk-title"><span class="severity-badge severity-high" data-i18n="risk_high">High</span> <span data-i18n="risk1_title">Data Inconsistencies</span></div>
+    <div class="risk-mitigation" data-i18n="risk1_mitigation">Strong schema normalization + dual-validation QA + reconciliation dashboards</div>
+  </div>
+  <div class="risk-card high">
+    <div class="risk-title"><span class="severity-badge severity-high" data-i18n="risk_high">High</span> <span data-i18n="risk2_title">API Failures & Rate Limits</span></div>
+    <div class="risk-mitigation" data-i18n="risk2_mitigation">Retry logic with exponential backoff + fallback caching + queue management</div>
+  </div>
+  <div class="risk-card medium">
+    <div class="risk-title"><span class="severity-badge severity-medium" data-i18n="risk_medium">Medium</span> <span data-i18n="risk3_title">Alert Noise & False Positives</span></div>
+    <div class="risk-mitigation" data-i18n="risk3_mitigation">Deduplication engine + configurable thresholds + baseline learning</div>
+  </div>
+  <div class="risk-card medium">
+    <div class="risk-title"><span class="severity-badge severity-medium" data-i18n="risk_medium">Medium</span> <span data-i18n="risk4_title">Slow Platform Adoption</span></div>
+    <div class="risk-mitigation" data-i18n="risk4_mitigation">Clear upgrade triggers in free tier + onboarding automation + ROI calculators</div>
+  </div>
+  <div class="risk-card low">
+    <div class="risk-title"><span class="severity-badge severity-low" data-i18n="risk_low">Low</span> <span data-i18n="risk5_title">Attribution & Conversion Mismatch</span></div>
+    <div class="risk-mitigation" data-i18n="risk5_mitigation">Surfaced as health issue with diagnostics + normalization mapping table</div>
+  </div>
+  <div class="risk-card low">
+    <div class="risk-title"><span class="severity-badge severity-low" data-i18n="risk_low">Low</span> <span data-i18n="risk6_title">Credential Expiration & Token Refresh</span></div>
+    <div class="risk-mitigation" data-i18n="risk6_mitigation">Automatic token refresh + proactive expiration alerts + fallback reauthentication</div>
+  </div>
+</div>
+
+<div class="section-title" data-i18n="s_deliverables">Phase 2 Deliverables (7 Core Components)</div>
+<div class="deliverables-list">
+  <div class="deliverable-item">
+    <div class="deliverable-check">✓</div>
+    <div class="deliverable-text">
+      <div class="deliverable-title" data-i18n="d1_title">Multi-Platform Ingestion Pipeline</div>
+      <div class="deliverable-desc" data-i18n="d1_desc">OAuth connectors (GA4, Google Ads, Meta, LinkedIn, GSC, GTM) with 90-day backfill and daily incremental sync</div>
+    </div>
+  </div>
+  <div class="deliverable-item">
+    <div class="deliverable-check">✓</div>
+    <div class="deliverable-text">
+      <div class="deliverable-title" data-i18n="d2_title">Normalized Data Schema & ETL</div>
+      <div class="deliverable-desc" data-i18n="d2_desc">Unified daily metrics layer with cross-platform reconciliation, campaign ID mapping, and hourly data granularity</div>
+    </div>
+  </div>
+  <div class="deliverable-item">
+    <div class="deliverable-check">✓</div>
+    <div class="deliverable-text">
+      <div class="deliverable-title" data-i18n="d3_title">Health Score & QA Engine</div>
+      <div class="deliverable-desc" data-i18n="d3_desc">Automated data quality checks with 0–100 confidence scoring, anomaly detection, and diagnostic insights</div>
+    </div>
+  </div>
+  <div class="deliverable-item">
+    <div class="deliverable-check">✓</div>
+    <div class="deliverable-text">
+      <div class="deliverable-title" data-i18n="d4_title">Real-Time Alert Engine</div>
+      <div class="deliverable-desc" data-i18n="d4_desc">Performance & measurement alerts via Email, Slack, and in-app with deduplication and threshold management</div>
+    </div>
+  </div>
+  <div class="deliverable-item">
+    <div class="deliverable-check">✓</div>
+    <div class="deliverable-text">
+      <div class="deliverable-title" data-i18n="d5_title">Weekly Scorecard & AI Roadmap</div>
+      <div class="deliverable-desc" data-i18n="d5_desc">Automated weekly aggregations powered by Claude AI with growth recommendations and PDF export</div>
+    </div>
+  </div>
+  <div class="deliverable-item">
+    <div class="deliverable-check">✓</div>
+    <div class="deliverable-text">
+      <div class="deliverable-title" data-i18n="d6_title">Stripe Payment & Feature Gating</div>
+      <div class="deliverable-desc" data-i18n="d6_desc">Subscription billing, plan tiers (Starter/Growth/Pro/White-Label), and feature access control</div>
+    </div>
+  </div>
+  <div class="deliverable-item">
+    <div class="deliverable-check">✓</div>
+    <div class="deliverable-text">
+      <div class="deliverable-title" data-i18n="d7_title">Dashboard, Documentation & Testing</div>
+      <div class="deliverable-desc" data-i18n="d7_desc">Investor-grade dashboards, API documentation, load testing, and production stability certification</div>
+    </div>
+  </div>
+</div>
+
+<div class="footer-note" data-i18n="footer">GrowthWise · Data Intelligence Platform · Phase 2 Technical Roadmap · Confidential · For Qualified Investors Only · growthwisetech.com</div>
+
+<script>
+const T={"title":{"en":"Phase 2 — Data Intelligence Platform","tr":"Aşama 2 — Veri İstihbaratı Platformu","es":"Fase 2 — Plataforma de Inteligencia de Datos"},
+"subtitle":{"en":"Production-ready analytics infrastructure with multi-platform ingestion, measurement health, intelligent alerting & monetization. 6–8 Week Execution Plan.","tr":"Multi-platform veri alımı, ölçüm sağlığı, akıllı uyarılar ve para kazanım ile üretim hazır analitik altyapısı. 6–8 Hafta Yürütme Planı.","es":"Infraestructura de análisis lista para producción con ingesta multi-plataforma, salud de medición, alertas inteligentes y monetización. Plan de ejecución de 6-8 semanas."},
+"s_objectives":{"en":"Phase 2 Core Objectives (6 Strategic Modules)","tr":"Aşama 2 Temel Hedefleri (6 Stratejik Modül)","es":"Objetivos Centrales de Fase 2 (6 módulos estratégicos)"},
+"obj1_title":{"en":"Multi-Platform Ingestion","tr":"Multi-Platform Veri Alımı","es":"Ingesta Multi-Plataforma"},
+"obj1_desc":{"en":"Stable OAuth connectors for GA4, Google Ads, Meta, LinkedIn, GSC & GTM with automatic credential refresh","tr":"GA4, Google Ads, Meta, LinkedIn, GSC ve GTM için otomatik kimlik bilgisi yenilemesi ile stabil OAuth bağlayıcıları","es":"Conectores OAuth estables para GA4, Google Ads, Meta, LinkedIn, GSC y GTM con actualización automática de credenciales"},
+"obj2_title":{"en":"Normalized Data Layer","tr":"Normalleştirilmiş Veri Katmanı","es":"Capa de Datos Normalizada"},
+"obj2_desc":{"en":"Unified daily metrics schema with cross-platform comparison and canonical campaign ID mapping","tr":"Platformlar arası karşılaştırma ve standart kampanya ID eşlemesi ile birleştirilmiş günlük metrikler şeması","es":"Esquema de métricas diarias unificado con comparación entre plataformas y mapeo de ID de campaña canónico"},
+"obj3_title":{"en":"Measurement Health Engine","tr":"Ölçüm Sağlığı Motoru","es":"Motor de Salud de Medición"},
+"obj3_desc":{"en":"Automated QA checks with confidence scoring (0-100) surfacing data gaps and anomalies","tr":"Veri boşluklarını ve anormallikleri ortaya koyan otomatik QA kontrolleri güven puanlaması ile (0-100)","es":"Comprobaciones QA automatizadas con calificación de confianza (0-100) mostrando lagunas de datos y anomalías"},
+"obj4_title":{"en":"Intelligent Alert System","tr":"Akıllı Uyarı Sistemi","es":"Sistema de Alertas Inteligente"},
+"obj4_desc":{"en":"Proactive threshold-based notifications via Email & Slack with deduplication & configurable triggers","tr":"Deduplikasyon ve yapılandırılabilir tetikleyiciler ile Email ve Slack üzerinden proaktif eşik tabanlı bildirimler","es":"Notificaciones proactivas basadas en umbral a través de Email y Slack con deduplicación y triggers configurables"},
+"obj5_title":{"en":"Scorecard & Roadmap","tr":"Scorecard ve Yol Haritası","es":"Scorecard y Hoja de Ruta"},
+"obj5_desc":{"en":"Weekly aggregated scorecards with AI-powered growth roadmap and PDF export for stakeholders","tr":"AI destekli büyüme yol haritası ile haftalık toplanmış scorecard'lar ve paydaşlar için PDF dışa aktarımı","es":"Scorecards agregados semanales con hoja de ruta de crecimiento impulsada por IA y exportación de PDF para stakeholders"},
+"obj6_title":{"en":"Payment & Feature Gating","tr":"Ödeme ve Özellik Kapıları","es":"Puertas de Pago y Funcionalidad"},
+"obj6_desc":{"en":"Stripe-powered monetization with tiered subscription plans and feature access control","tr":"Katmanlı abonelik planları ve özellik erişim kontrolü ile Stripe tarafından desteklenen para kazanım","es":"Monetización impulsada por Stripe con planes de suscripción por niveles y control de acceso a características"},
+"s_timeline":{"en":"Execution Timeline (6–8 Weeks)","tr":"Yürütme Zaman Çizelgesi (6–8 Hafta)","es":"Línea de Tiempo de Ejecución (6-8 semanas)"},
+"tl_w12":{"en":"W1–2","tr":"H1–2","es":"S1–2"},
+"tl_w12_title":{"en":"Connectors & Ingestion","tr":"Bağlayıcılar ve Veri Alımı","es":"Conectores e Ingesta"},
+"tl_w12_1":{"en":"OAuth setup","tr":"OAuth kurulumu","es":"Configuración OAuth"},
+"tl_w12_2":{"en":"API integration","tr":"API entegrasyonu","es":"Integración API"},
+"tl_w12_3":{"en":"Backfill logic","tr":"Geriye dönük doldurma","es":"Lógica de Backfill"},
+"tl_w23":{"en":"W2–3","tr":"H2–3","es":"S2–3"},
+"tl_w23_title":{"en":"Normalization & Data Model","tr":"Normalizasyon ve Veri Modeli","es":"Normalización y Modelo de Datos"},
+"tl_w23_1":{"en":"Schema design","tr":"Şema tasarımı","es":"Diseño de esquema"},
+"tl_w23_2":{"en":"Daily transforms","tr":"Günlük dönüşümler","es":"Transformaciones diarias"},
+"tl_w23_3":{"en":"Cross-platform mapping","tr":"Platformlar arası eşleme","es":"Mapeo entre plataformas"},
+"tl_w34":{"en":"W3–4","tr":"H3–4","es":"S3–4"},
+"tl_w34_title":{"en":"QA & Health Engine","tr":"QA ve Sağlık Motoru","es":"Motor QA y Salud"},
+"tl_w34_1":{"en":"QA checks","tr":"QA kontrolleri","es":"Comprobaciones QA"},
+"tl_w34_2":{"en":"Scoring logic","tr":"Puanlama mantığı","es":"Lógica de puntuación"},
+"tl_w34_3":{"en":"Diagnostics","tr":"Tanılama","es":"Diagnósticos"},
+"tl_w45":{"en":"W4–5","tr":"H4–5","es":"S4–5"},
+"tl_w45_title":{"en":"Alert Engine","tr":"Uyarı Motoru","es":"Motor de Alertas"},
+"tl_w45_1":{"en":"Threshold mgmt","tr":"Eşik yönetimi","es":"Gestión de umbral"},
+"tl_w45_2":{"en":"SES & Slack","tr":"SES ve Slack","es":"SES y Slack"},
+"tl_w45_3":{"en":"Deduplication","tr":"Çoğaltma kaldırma","es":"Deduplicación"},
+"tl_w56":{"en":"W5–6","tr":"H5–6","es":"S5–6"},
+"tl_w56_title":{"en":"Scorecard & Roadmap","tr":"Scorecard ve Yol Haritası","es":"Scorecard y Hoja de Ruta"},
+"tl_w56_1":{"en":"Weekly agg","tr":"Haftalık toplama","es":"Agregación semanal"},
+"tl_w56_2":{"en":"AI prompt","tr":"AI istemi","es":"Indicación IA"},
+"tl_w56_3":{"en":"PDF export","tr":"PDF dışa aktarma","es":"Exportación PDF"},
+"tl_w67":{"en":"W6–7","tr":"H6–7","es":"S6–7"},
+"tl_w67_title":{"en":"Payment & Gating","tr":"Ödeme ve Kapılar","es":"Pago y Puertas"},
+"tl_w67_1":{"en":"Stripe setup","tr":"Stripe kurulumu","es":"Configuración de Stripe"},
+"tl_w67_2":{"en":"Plan tiers","tr":"Plan katmanları","es":"Niveles de plan"},
+"tl_w67_3":{"en":"Webhooks","tr":"Web Hook'lar","es":"Webhooks"},
+"tl_w78":{"en":"W7–8","tr":"H7–8","es":"S7–8"},
+"tl_w78_title":{"en":"Stabilization & QA","tr":"Stabilizasyon ve QA","es":"Estabilización y QA"},
+"tl_w78_1":{"en":"Load testing","tr":"Yük testi","es":"Prueba de carga"},
+"tl_w78_2":{"en":"Edge cases","tr":"Kenar durumlar","es":"Casos límite"},
+"tl_w78_3":{"en":"Go-live","tr":"Canlı yayına geçme","es":"Ir en vivo"},
+"s_architecture":{"en":"System Architecture","tr":"Sistem Mimarisi","es":"Arquitectura del Sistema"},
+"arch_flow":{"en":"Data Flow & Processing Pipeline","tr":"Veri Akışı ve İşleme Ardışık Düzeni","es":"Flujo de Datos y Pipeline de Procesamiento"},
+"arch_oauth":{"en":"OAuth Connectors","tr":"OAuth Bağlayıcıları","es":"Conectores OAuth"},
+"arch_ingest":{"en":"Data Ingestion","tr":"Veri Alımı","es":"Ingesta de Datos"},
+"arch_raw":{"en":"Raw Storage","tr":"Ham Depolama","es":"Almacenamiento sin procesar"},
+"arch_norm":{"en":"Normalization","tr":"Normalleştirme","es":"Normalización"},
+"arch_metrics":{"en":"Daily Metrics","tr":"Günlük Metrikler","es":"Métricas Diarias"},
+"arch_qa":{"en":"QA Engine","tr":"QA Motoru","es":"Motor QA"},
+"arch_alert":{"en":"Alert Engine","tr":"Uyarı Motoru","es":"Motor de Alertas"},
+"arch_score":{"en":"Scorecard","tr":"Scorecard","es":"Scorecard"},
+"arch_ai":{"en":"AI Recommendations","tr":"AI Önerileri","es":"Recomendaciones IA"},
+"arch_roadmap":{"en":"Roadmap Generator","tr":"Yol Haritası Oluşturucusu","es":"Generador de Hoja de Ruta"},
+"arch_compute":{"en":"Compute & Infrastructure","tr":"İşlem ve Altyapı","es":"Compute e Infraestructura"},
+"arch_auth":{"en":"Authentication & Security","tr":"Kimlik Doğrulama ve Güvenlik","es":"Autenticación y Seguridad"},
+"arch_delivery":{"en":"Alert Delivery & Integrations","tr":"Uyarı İletişimi ve Entegrasyonlar","es":"Entrega de Alertas e Integraciones"},
+"s_connectors":{"en":"Platform Connectors & OAuth Scopes","tr":"Platform Bağlayıcıları ve OAuth Kapsamları","es":"Conectores de Plataforma y Alcances OAuth"},
+"th_platform":{"en":"Platform","tr":"Platform","es":"Plataforma"},
+"th_oauth":{"en":"OAuth Scope","tr":"OAuth Kapsamı","es":"Alcance OAuth"},
+"th_metrics":{"en":"Core Metrics","tr":"Temel Metrikler","es":"Métricas Principales"},
+"th_strategy":{"en":"Data Strategy","tr":"Veri Stratejisi","es":"Estrategia de Datos"},
+"con_ga4":{"en":"Sessions, users, events, conversions, revenue","tr":"Oturumlar, kullanıcılar, etkinlikler, dönüşümler, gelir","es":"Sesiones, usuarios, eventos, conversiones, ingresos"},
+"con_ga4_strat":{"en":"90-day backfill, daily incremental","tr":"90 günlük geriye dönük doldurma, günlük artımlı","es":"Backfill de 90 días, incremental diario"},
+"con_gads":{"en":"Clicks, impressions, cost, conversions, CPA","tr":"Tıklamalar, gösterimler, maliyet, dönüşümler, EBM","es":"Clics, impresiones, costo, conversiones, CPA"},
+"con_gads_strat":{"en":"Daily incremental, hourly precision","tr":"Günlük artımlı, saatlik hassasiyet","es":"Incremental diario, precisión por hora"},
+"con_meta":{"en":"Reach, link_clicks, spend, results, ROAS","tr":"Erişim, bağlantı tıklaması, harcama, sonuçlar, ROAS","es":"Alcance, clics de enlace, gasto, resultados, ROAS"},
+"con_meta_strat":{"en":"Daily incremental, 28-day lookback","tr":"Günlük artımlı, 28 gün geriye bakış","es":"Incremental diario, retrospectiva de 28 días"},
+"con_li":{"en":"Clicks, impressions, spend, leads, CPL","tr":"Tıklamalar, gösterimler, harcama, potansiyel müşteriler, CPL","es":"Clics, impresiones, gasto, leads, CPL"},
+"con_li_strat":{"en":"Daily incremental, lead mapping","tr":"Günlük artımlı, potansiyel müşteri eşlemesi","es":"Incremental diario, mapeo de leads"},
+"con_gsc":{"en":"Clicks, impressions, CTR, position","tr":"Tıklamalar, gösterimler, CTR, konum","es":"Clics, impresiones, CTR, posición"},
+"con_gsc_strat":{"en":"Daily incremental, 16-month history","tr":"Günlük artımlı, 16 aylık geçmiş","es":"Incremental diario, historial de 16 meses"},
+"con_gtm":{"en":"Tag health, container config, firing rate","tr":"Etiket sağlığı, kontainer konfigürasyonu, tetikleme oranı","es":"Salud de etiqueta, configuración de contenedor, tasa de disparo"},
+"con_gtm_strat":{"en":"Real-time container version check","tr":"Gerçek zamanlı kontainer sürümü kontrolü","es":"Verificación de versión de contenedor en tiempo real"},
+"s_health":{"en":"Measurement Health Engine","tr":"Ölçüm Sağlığı Motoru","es":"Motor de Salud de Medición"},
+"health_score_title":{"en":"Health Score Calculation","tr":"Sağlık Skoru Hesaplaması","es":"Cálculo de Puntuación de Salud"},
+"s_alerts":{"en":"Alert System (Performance & Measurement)","tr":"Uyarı Sistemi (Performans ve Ölçüm)","es":"Sistema de Alertas (Rendimiento y Medición)"},
+"alert_perf_title":{"en":"Performance Alerts","tr":"Performans Uyarıları","es":"Alertas de Rendimiento"},
+"alert_perf_1":{"en":"Sessions drop >30%","tr":"Oturumlar %30'dan fazla düşüş","es":"Caída de sesiones >30%"},
+"alert_perf_2":{"en":"Conversions drop >25%","tr":"Dönüşümler %25'ten fazla düşüş","es":"Caída de conversiones >25%"},
+"alert_perf_3":{"en":"CPA increase >40%","tr":"EBM %40'tan fazla artış","es":"Aumento de CPA >40%"},
+"alert_perf_4":{"en":"ROAS below target 3+ days","tr":"3+ gün boyunca ROAS hedefin altında","es":"ROAS por debajo del objetivo 3+ días"},
+"alert_perf_5":{"en":"Ad spend >2x daily budget","tr":"Reklam harcaması günlük bütçenin 2 katından fazla","es":"Gasto en anuncios >2x presupuesto diario"},
+"alert_meas_title":{"en":"Measurement Alerts","tr":"Ölçüm Uyarıları","es":"Alertas de Medición"},
+"alert_meas_1":{"en":"Missing data >1 day","tr":"Eksik veri >1 gün","es":"Datos faltantes >1 día"},
+"alert_meas_2":{"en":"GTM container failure","tr":"GTM kontainer hatası","es":"Fallo de contenedor GTM"},
+"alert_meas_3":{"en":"Conversion tracking stopped","tr":"Dönüşüm takibi durdu","es":"Rastreo de conversiones detenido"},
+"alert_meas_4":{"en":"Platform mismatch >20%","tr":"Platform uyuşmazlığı >20%","es":"Desajuste de plataforma >20%"},
+"alert_meas_5":{"en":"Duplicate tags detected","tr":"Yinelenen etiketler algılandı","es":"Etiquetas duplicadas detectadas"},
+"alert_channels":{"en":"Delivery Channels","tr":"İletişim Kanalları","es":"Canales de Entrega"},
+"alert_email":{"en":"Email (AWS SES)","tr":"Email (AWS SES)","es":"Email (AWS SES)"},
+"alert_slack":{"en":"Slack Webhook","tr":"Slack Web Hook'u","es":"Slack Webhook"},
+"alert_inapp":{"en":"In-App Notifications","tr":"Uygulama İçi Bildirimler","es":"Notificaciones en Aplicación"},
+"s_pricing":{"en":"Subscription Plans & Monetization","tr":"Abonelik Planları ve Para Kazanım","es":"Planes de Suscripción y Monetización"},
+"plan_starter":{"en":"Starter","tr":"Başlangıç","es":"Iniciador"},
+"plan_starter_price":{"en":"Free","tr":"Ücretsiz","es":"Gratis"},
+"plan_starter_freq":{"en":"Forever free tier","tr":"Sonsuza kadar ücretsiz katman","es":"Nivel gratuito para siempre"},
+"plan_starter_f1":{"en":"GA4 dashboard","tr":"GA4 gösterge paneli","es":"Dashboard GA4"},
+"plan_starter_f2":{"en":"Basic health score","tr":"Temel sağlık skoru","es":"Puntuación de salud básica"},
+"plan_starter_f3":{"en":"Weekly email","tr":"Haftalık email","es":"Email semanal"},
+"plan_starter_f4":{"en":"1 user seat","tr":"1 kullanıcı oturumu","es":"1 asiento de usuario"},
+"plan_growth":{"en":"Growth","tr":"Büyüme","es":"Crecimiento"},
+"plan_growth_price":{"en":"$299","tr":"$299","es":"$299"},
+"plan_growth_freq":{"en":"/ month","tr":"/ ay","es":"/ mes"},
+"plan_growth_f1":{"en":"All 6 connectors","tr":"Tüm 6 bağlayıcı","es":"Los 6 conectores"},
+"plan_growth_f2":{"en":"Real-time alerts","tr":"Gerçek zamanlı uyarılar","es":"Alertas en tiempo real"},
+"plan_growth_f3":{"en":"Slack integration","tr":"Slack entegrasyonu","es":"Integración de Slack"},
+"plan_growth_f4":{"en":"Health engine QA","tr":"Sağlık motoru QA","es":"QA del motor de salud"},
+"plan_growth_f5":{"en":"3 user seats","tr":"3 kullanıcı oturumu","es":"3 asientos de usuario"},
+"plan_pro":{"en":"Pro","tr":"Pro","es":"Pro"},
+"plan_pro_price":{"en":"$499","tr":"$499","es":"$499"},
+"plan_pro_freq":{"en":"/ month","tr":"/ ay","es":"/ mes"},
+"plan_pro_f1":{"en":"Everything in Growth","tr":"Büyümede her şey","es":"Todo en Crecimiento"},
+"plan_pro_f2":{"en":"AI-powered roadmaps","tr":"AI tarafından desteklenen yol haritaları","es":"Hojas de ruta impulsadas por IA"},
+"plan_pro_f3":{"en":"PDF reports & exports","tr":"PDF raporları ve dışa aktarmalar","es":"Reportes y exportaciones PDF"},
+"plan_pro_f4":{"en":"Custom anomaly rules","tr":"Özel anomali kuralları","es":"Reglas de anomalía personalizadas"},
+"plan_pro_f5":{"en":"10 user seats","tr":"10 kullanıcı oturumu","es":"10 asientos de usuario"},
+"plan_wl":{"en":"White-Label","tr":"Beyaz Etiket","es":"Etiqueta Blanca"},
+"plan_wl_price":{"en":"Custom","tr":"Özel","es":"Personalizado"},
+"plan_wl_freq":{"en":"Enterprise","tr":"Kurumsal","es":"Empresa"},
+"plan_wl_f1":{"en":"Full white-label","tr":"Tam beyaz etiket","es":"Etiqueta blanca completa"},
+"plan_wl_f2":{"en":"Custom integrations","tr":"Özel entegrasyonlar","es":"Integraciones personalizadas"},
+"plan_wl_f3":{"en":"SLA guarantees","tr":"SLA garantileri","es":"Garantías de SLA"},
+"plan_wl_f4":{"en":"Unlimited users","tr":"Sınırsız kullanıcılar","es":"Usuarios ilimitados"},
+"s_success_metrics":{"en":"Success Metrics & KPIs","tr":"Başarı Metrikleri ve KPI'ları","es":"Métricas de Éxito y KPI"},
+"m_technical":{"en":"Technical","tr":"Teknik","es":"Técnico"},
+"m_tech_desc":{"en":"Data completeness daily","tr":"Günlük veri tamlığı","es":"Completitud de datos diaria"},
+"m_ingest_desc":{"en":"Data ingestion delay","tr":"Veri alımı gecikmesi","es":"Retraso en ingesta de datos"},
+"m_job_desc":{"en":"Scheduled job success rate","tr":"Planlanmış iş başarı oranı","es":"Tasa de éxito de trabajo programado"},
+"m_product":{"en":"Product","tr":"Ürün","es":"Producto"},
+"m_roadmap_desc":{"en":"Roadmap generation cadence","tr":"Yol haritası oluşturma sıklığı","es":"Cadencia de generación de hoja de ruta"},
+"m_alert_desc":{"en":"Paying users with active alerts","tr":"Aktif uyarılara sahip ödeme yapan kullanıcılar","es":"Usuarios de pago con alertas activas"},
+"m_health_desc":{"en":"Health score reporting","tr":"Sağlık skoru raporlaması","es":"Reporte de puntuación de salud"},
+"m_business":{"en":"Business","tr":"İşletme","es":"Negocio"},
+"m_conversion_desc":{"en":"Free to Growth plan conversion","tr":"Ücretsizden Büyüme planına dönüşüm","es":"Conversión de plan gratuito a crecimiento"},
+"m_mrr_desc":{"en":"Monthly recurring revenue (MRR) by Q4","tr":"Aylık tekrarlayan gelir (MTG) Q4'e kadar","es":"Ingresos mensuales recurrentes (MRR) por Q4"},
+"s_risks":{"en":"Risks & Mitigation Strategy","tr":"Risikler ve Azaltma Stratejisi","es":"Riesgos y Estrategia de Mitigación"},
+"risk_high":{"en":"HIGH","tr":"YÜKSEK","es":"ALTO"},
+"risk_medium":{"en":"MEDIUM","tr":"ORTA","es":"MEDIO"},
+"risk_low":{"en":"LOW","tr":"DÜŞÜK","es":"BAJO"},
+"risk1_title":{"en":"Data Inconsistencies","tr":"Veri Tutarsızlıkları","es":"Inconsistencias de Datos"},
+"risk1_mitigation":{"en":"Strong schema normalization + dual-validation QA + reconciliation dashboards","tr":"Güçlü şema normalleştirmesi + çift doğrulama QA + uzlaştırma panoları","es":"Normalización de esquema fuerte + QA de validación dual + dashboards de reconciliación"},
+"risk2_title":{"en":"API Failures & Rate Limits","tr":"API Hataları ve Hız Sınırları","es":"Fallos de API y Límites de Velocidad"},
+"risk2_mitigation":{"en":"Retry logic with exponential backoff + fallback caching + queue management","tr":"Üstel geri çekilme ile yeniden deneme mantığı + yedek önbelleğe alma + sıra yönetimi","es":"Lógica de reintento con retroceso exponencial + almacenamiento en caché de respaldo + gestión de colas"},
+"risk3_title":{"en":"Alert Noise & False Positives","tr":"Uyarı Gürültüsü ve Yanlış Pozitifler","es":"Ruido de Alerta y Falsos Positivos"},
+"risk3_mitigation":{"en":"Deduplication engine + configurable thresholds + baseline learning","tr":"Çoğaltma kaldırma motoru + yapılandırılabilir eşikler + temel öğrenme","es":"Motor de deduplicación + umbrales configurables + aprendizaje de referencia"},
+"risk4_title":{"en":"Slow Platform Adoption","tr":"Yavaş Platform Benimseme","es":"Adopción Lenta de Plataforma"},
+"risk4_mitigation":{"en":"Clear upgrade triggers in free tier + onboarding automation + ROI calculators","tr":"Ücretsiz katmanda açık yükseltme tetikleyicileri + entegrasyon otomasyonu + ROI hesaplayıcıları","es":"Disparadores de actualización claros en nivel gratuito + automatización de incorporación + calculadoras de ROI"},
+"risk5_title":{"en":"Attribution & Conversion Mismatch","tr":"Atribüsyon ve Dönüşüm Uyuşmazlığı","es":"Desajuste de Atribución y Conversión"},
+"risk5_mitigation":{"en":"Surfaced as health issue with diagnostics + normalization mapping table","tr":"Sağlık sorunu olarak ortaya çıkarıldı tanılama ile + normalleştirme eşleme tablosu","es":"Mostrado como problema de salud con diagnósticos + tabla de mapeo de normalización"},
+"risk6_title":{"en":"Credential Expiration & Token Refresh","tr":"Kimlik Bilgisi Sona Erme ve Token Yenileme","es":"Expiración de Credenciales y Actualización de Token"},
+"risk6_mitigation":{"en":"Automatic token refresh + proactive expiration alerts + fallback reauthentication","tr":"Otomatik token yenileme + proaktif sona erme uyarıları + yedek yeniden kimlik doğrulama","es":"Actualización automática de token + alertas de expiración proactivas + reautenticación de respaldo"},
+"s_deliverables":{"en":"Phase 2 Deliverables (7 Core Components)","tr":"Aşama 2 Teslim Edilenler (7 Temel Bileşen)","es":"Entregables de Fase 2 (7 componentes principales)"},
+"d1_title":{"en":"Multi-Platform Ingestion Pipeline","tr":"Multi-Platform Veri Alımı Ardışık Düzeni","es":"Pipeline de Ingesta Multi-Plataforma"},
+"d1_desc":{"en":"OAuth connectors (GA4, Google Ads, Meta, LinkedIn, GSC, GTM) with 90-day backfill and daily incremental sync","tr":"OAuth bağlayıcıları (GA4, Google Ads, Meta, LinkedIn, GSC, GTM) 90 günlük geriye dönük doldurma ve günlük artımlı senkronizasyon ile","es":"Conectores OAuth (GA4, Google Ads, Meta, LinkedIn, GSC, GTM) con backfill de 90 días y sincronización incremental diaria"},
+"d2_title":{"en":"Normalized Data Schema & ETL","tr":"Normalleştirilmiş Veri Şeması ve ETL","es":"Esquema de Datos Normalizado y ETL"},
+"d2_desc":{"en":"Unified daily metrics layer with cross-platform reconciliation, campaign ID mapping, and hourly data granularity","tr":"Platformlar arası uzlaştırma, kampanya ID eşlemesi ve saatlik veri ayrıntılılığı ile birleştirilmiş günlük metrikler katmanı","es":"Capa de métricas diarias unificada con reconciliación entre plataformas, mapeo de ID de campaña y granularidad de datos por hora"},
+"d3_title":{"en":"Health Score & QA Engine","tr":"Sağlık Skoru ve QA Motoru","es":"Motor de Puntuación de Salud y QA"},
+"d3_desc":{"en":"Automated data quality checks with 0–100 confidence scoring, anomaly detection, and diagnostic insights","tr":"0–100 güven puanlaması, anomali tespiti ve tanılama içgörüleri ile otomatik veri kalitesi kontrolleri","es":"Comprobaciones de calidad de datos automatizadas con calificación de confianza 0–100, detección de anomalías e insights de diagnóstico"},
+"d4_title":{"en":"Real-Time Alert Engine","tr":"Gerçek Zamanlı Uyarı Motoru","es":"Motor de Alertas en Tiempo Real"},
+"d4_desc":{"en":"Performance & measurement alerts via Email, Slack, and in-app with deduplication and threshold management","tr":"Deduplikasyon ve eşik yönetimi ile Email, Slack ve uygulama içi aracılığıyla performans ve ölçüm uyarıları","es":"Alertas de rendimiento y medición a través de Email, Slack e in-app con deduplicación y gestión de umbral"},
+"d5_title":{"en":"Weekly Scorecard & AI Roadmap","tr":"Haftalık Scorecard ve AI Yol Haritası","es":"Scorecard Semanal y Hoja de Ruta IA"},
+"d5_desc":{"en":"Automated weekly aggregations powered by Claude AI with growth recommendations and PDF export","tr":"Claude AI tarafından desteklenen otomatik haftalık toplamalar büyüme önerileri ve PDF dışa aktarımı ile","es":"Agregaciones semanales automatizadas impulsadas por Claude AI con recomendaciones de crecimiento y exportación de PDF"},
+"d6_title":{"en":"Stripe Payment & Feature Gating","tr":"Stripe Ödeme ve Özellik Kapıları","es":"Pago de Stripe y Control de Funcionalidades"},
+"d6_desc":{"en":"Subscription billing, plan tiers (Starter/Growth/Pro/White-Label), and feature access control","tr":"Abonelik faturalandırması, plan katmanları (Başlangıç/Büyüme/Pro/Beyaz Etiket) ve özellik erişim kontrolü","es":"Facturación de suscripción, niveles de plan (Iniciador/Crecimiento/Pro/Etiqueta Blanca) y control de acceso a características"},
+"d7_title":{"en":"Dashboard, Documentation & Testing","tr":"Gösterge Paneli, Belgeler ve Test","es":"Dashboard, Documentación y Pruebas"},
+"d7_desc":{"en":"Investor-grade dashboards, API documentation, load testing, and production stability certification","tr":"Yatırımcı seviyesi gösterge panelleri, API belgeleri, yük testi ve üretim istikrarı sertifikası","es":"Dashboards de grado de inversor, documentación API, pruebas de carga y certificación de estabilidad de producción"},
+"footer":{"en":"GrowthWise · Data Intelligence Platform · Phase 2 Technical Roadmap · Confidential · For Qualified Investors Only · growthwisetech.com","tr":"GrowthWise · Veri İstihbaratı Platformu · Aşama 2 Teknik Yol Haritası · Gizlidir · Yalnızca Nitelikli Yatırımcılar İçin · growthwisetech.com","es":"GrowthWise · Plataforma de Inteligencia de Datos · Hoja de Ruta Técnica Fase 2 · Confidencial · Solo para Inversores Calificados · growthwisetech.com"}};
+var curLang='en';
+function getLangFromURL(){var m=location.search.match(/lang=([a-z]{2})/);return m?m[1]:'en';}
+function applyLang(){
+  document.querySelectorAll('[data-i18n]').forEach(function(el){
+    var k=el.getAttribute('data-i18n');
+    if(T[k]){var v=T[k][curLang]||T[k]['en'];
+      if(el.getAttribute('data-i18n-html')==='1')el.innerHTML=v;
+      else el.textContent=v;}
+  });
+}
+window.addEventListener('DOMContentLoaded',function(){
+  curLang=getLangFromURL();
+  applyLang();
+});
+</script>
+</body>
+</html>

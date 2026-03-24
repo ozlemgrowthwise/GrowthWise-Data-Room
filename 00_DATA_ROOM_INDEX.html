@@ -23,6 +23,9 @@ html,body{height:100%;overflow:hidden;font-family:'Segoe UI',Arial,sans-serif;ba
 .nav-item{display:flex;align-items:center;gap:9px;padding:8px 16px;font-size:13px;color:#4B5563;cursor:pointer;border-left:3px solid transparent;text-decoration:none;}
 .nav-item:hover{background:var(--bg2);color:var(--navy);}
 .nav-item.active{background:linear-gradient(90deg,rgba(0,212,170,.1),transparent);color:var(--navy);border-left-color:var(--teal);font-weight:600;}
+.nav-item.nav-sub{padding-left:38px;font-size:12px;color:#6B7280;border-left:3px solid transparent;}
+.nav-item.nav-sub .ico{font-size:11px;width:14px;}
+.nav-item.nav-sub.active{color:var(--navy);border-left-color:var(--purple);background:linear-gradient(90deg,rgba(124,79,212,.08),transparent);}
 .ico{font-size:14px;width:18px;text-align:center;}
 .nav-sep{height:1px;background:var(--border);margin:5px 16px;}
 #content-wrap{position:fixed;top:var(--topbar);left:var(--sidebar);right:0;bottom:0;display:flex;flex-direction:column;}
@@ -342,11 +345,11 @@ function clearNDA(){if(confirm('Are you sure you want to clear all NDA entries?'
   <div class="nav-sec">Documents</div>
   <a class="nav-item" id="nav-deck" onclick="openModal();return false;" href="#"><span class="ico">&#128202;</span><span data-i18n="nav_deck">Investor Deck</span></a>
   <a class="nav-item" id="nav-roadmap" onclick="openDoc('GrowthWise_Product_Roadmap.html','nav_roadmap','nav-roadmap');return false;" href="#"><span class="ico">&#128506;</span><span data-i18n="nav_roadmap">Product Roadmap</span></a>
+  <a class="nav-item nav-sub" id="nav-phase2" onclick="openDoc('GrowthWise_Phase2_Roadmap.html','nav_phase2','nav-phase2');return false;" href="#"><span class="ico">&#128640;</span><span data-i18n="nav_phase2">Phase 2 Roadmap</span></a>
   <a class="nav-item" id="nav-econ" onclick="openDoc('GrowthWise_Unit_Economics_View.html','nav_econ','nav-econ');return false;" href="#"><span class="ico">&#128200;</span><span data-i18n="nav_econ">Unit Economics</span></a>
   <a class="nav-item" id="nav-fin" onclick="openDoc('GrowthWise_Financial_Projections_View.html','nav_fin','nav-fin');return false;" href="#"><span class="ico">&#128185;</span><span data-i18n="nav_fin">Financial Projections</span></a>
   <a class="nav-item" id="nav-team-page" onclick="openDoc('GrowthWise_Team.html','nav_team_page','nav-team-page');return false;" href="#"><span class="ico">&#128101;</span><span data-i18n="nav_team_page">Team</span></a>
   <a class="nav-item" id="nav-dd" onclick="openDoc('GrowthWise_Due_Diligence.html','nav_dd','nav-dd');return false;" href="#"><span class="ico">&#128196;</span><span data-i18n="nav_dd">Due Diligence</span></a>
-  <a class="nav-item" id="nav-phase2" onclick="openDoc('GrowthWise_Phase2_Roadmap.html','nav_phase2','nav-phase2');return false;" href="#"><span class="ico">&#128640;</span><span data-i18n="nav_phase2">Phase 2 Roadmap</span></a>
   <a class="nav-item" id="nav-security" onclick="openDoc('GrowthWise_Security_Compliance.html','nav_security','nav-security');return false;" href="#"><span class="ico">&#128274;</span><span data-i18n="nav_security">Security & Compliance</span></a>
   <div class="nav-sep"></div>
   <div class="nav-sec">Sections</div>
